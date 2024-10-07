@@ -1,0 +1,7 @@
+[submodule "src/libs/SDL_ttf"]
+	path = src/libs/SDL_ttf
+	url = https://github.com/libsdl-org/SDL_ttf
+[submodule "src/libs/SDL"]
+	path = src/libs/SDL
+	url = https://github.com/libsdl-org/SDL
+	branch = SDL2
