@@ -1,0 +1,23 @@
+@startuml ecrire-texte
+hide footbox
+skinparam sequenceMessageAlign center
+
+actor Utilisateur
+participant "Editeur de texte"
+
+activate Utilisateur
+activate "Editeur de texte"
+
+== Accès à la plateforme ==
+
+Utilisateur -> "Editeur de texte": Demande l'accès à la plateforme
+Utilisateur <-- "Editeur de texte": Accepte la demande
+
+== Entrée du texte ==
+
+Utilisateur -> "Editeur de texte": Appuie sur des lettres
+Utilisateur <-- "Editeur de texte": Affiche les lettres saisies
+
+deactivate Utilisateur
+deactivate "Editeur de texte"
+@enduml
