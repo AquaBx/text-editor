@@ -1,7 +1,8 @@
-[submodule "src/libs/SDL_ttf"]
-	path = src/libs/SDL_ttf
+[submodule "TextEditor/libs/SDL_ttf"]
+	path = TextEditor/libs/SDL_ttf
 	url = https://github.com/libsdl-org/SDL_ttf
-[submodule "src/libs/SDL"]
-	path = src/libs/SDL
+	branch = SDL2
+[submodule "TextEditor/libs/SDL"]
+	path = TextEditor/libs/SDL
 	url = https://github.com/libsdl-org/SDL
 	branch = SDL2

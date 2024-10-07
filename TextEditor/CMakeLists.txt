@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.29)
 project(TextEditor)
-
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set (CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_CXX_STANDARD 26)
 
 add_subdirectory(libs/SDL)
@@ -10,4 +11,9 @@ add_subdirectory(libs/SDL_ttf)
 include_directories(libs/SDL_ttf)
 
 add_executable(TextEditor WIN32 main.cpp)
-target_link_libraries(TextEditor SDL SDL_ttf)
+target_link_libraries(TextEditor SDL2 SDL2_ttf)
+
+
+add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${CMAKE_SOURCE_DIR}/resources $<TARGET_FILE_DIR:${PROJECT_NAME}>/resources)

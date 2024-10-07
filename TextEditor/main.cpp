@@ -45,7 +45,7 @@ int main() {
     const char *font_path;
     int quit;
 
-    font_path = "OpenSans.ttf";
+    font_path = "resources/OpenSans.ttf";
 
     /* Inint TTF. */
     SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
