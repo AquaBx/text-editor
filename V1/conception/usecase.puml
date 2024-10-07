@@ -1,0 +1,14 @@
+@startuml diagoramme-cas-utlisation_mini-editeur
+left to right direction
+Actor Utilisateur
+package "Mini-éditeur" {
+  (Couper la sélection) .> (Copier la sélection) : extend
+  Utilisateur -- (Couper la sélection)
+  Utilisateur -- (Copier la sélection)
+  Utilisateur -- (Déplacer le curseur)
+  Utilisateur -- (Entrer du texte)
+  Utilisateur -- (Effacer du texte)
+  Utilisateur -- (Sélectionner du texte)
+  Utilisateur -- (Coller la sélection)
+}
+@enduml
