@@ -1,0 +1,93 @@
+@startuml
+interface Command {
+    + execute() : void
+    + undo() : void
+}
+
+class MoveCursorCommand {
+    - position : int
+    + execute() : void
+    + undo() : void
+}
+
+class EnterTextCommand {
+    - text : String
+    + execute() : void
+    + undo() : void
+}
+
+class DeleteTextCommand {
+    + execute() : void
+    + undo() : void
+}
+
+class SelectTextCommand {
+    - start : int
+    - end : int
+    + execute() : void
+    + undo() : void
+}
+
+class CopyCommand {
+    + execute() : void
+    + undo() : void
+}
+
+class PasteCommand {
+    + execute() : void
+    + undo() : void
+}
+
+class CutCommand {
+    + execute() : void
+    + undo() : void
+}
+
+class Renderer {
+    + render() : void
+}
+
+class Invoker {
+    - command : Command
+    + setCommand(cmd : Command) : void
+    + executeCommand() : void
+    + undoCommand() : void
+}
+
+class Client {
+    + main() : void
+}
+
+class TextBuffer {
+    - text : String
+    - selectionStart : int
+    - selectionEnd : int
+    + getSelection() : String
+    + setSelection(start : int, end : int) : void
+}
+
+class Clipboard {
+    - content : String
+    + getContent() : String
+    + setContent(content : String) : void
+}
+
+class Application {
+    + run() : void
+    + getTextBuffer() : TextBuffer
+}
+
+Command <|.. MoveCursorCommand
+Command <|.. EnterTextCommand
+Command <|.. DeleteTextCommand
+Command <|.. SelectTextCommand
+Command <|.. CopyCommand
+Command <|.. PasteCommand
+Command <|.. CutCommand
+
+Invoker o--> Command
+RenderCommand --> Renderer
+Client ..> Invoker
+Application --> TextBuffer
+Application --> Clipboard
+@enduml

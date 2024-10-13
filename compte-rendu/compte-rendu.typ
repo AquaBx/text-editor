@@ -103,37 +103,131 @@
 #show link: underline
 
 #pagebreak()
-= Intro
+= Introduction
+Ce deuxième travail pratique consiste à concevoir un mini-éditeur de texte. Tout comme pour le premier travail, il débutera par la création des différents diagrammes, mais contrairement à lui, ce projet est plus complet avec deux versions à réaliser et l'implémentation du code. Pour commencer, nous allons analyser différents design patterns et en choisir un qui correspond le mieux à notre problème. Une fois ce design pattern adapté à notre problématique, nous implémenterons la première version. Ensuite, nous ajusterons notre architecture pour intégrer les fonctionnalités supplémentaires de la seconde version, que nous implémenterons à son tour.
 
-= V1
+#pagebreak()
+= Version 1
 
+Dans le sujet, il est indiqué que la première version de l'application comportera uniquement les actions d’édition de base, c'est-à-dire :
+- la contenance du texte dans un buffer (zone de travail)
+- la sélection de texte (notions de début et fin de sélection)
+- la copie de la sélection dans le presse-papier
+- le coupage (c'est-à-dire la copie de la sélection dans le presse-papier puis effacement de la sélection)
+- le collage du contenu du presse-papier
+
+#pagebreak()
 == Diagramme de cas d'utilisation
+
+Voici le diagramme de cas d’utilisation que nous avons déduit des consignes :
 
 #figure(
   image("../V1/conception/cas-utilisation/usecase.png", width: 7cm),
   caption: [
-    Diagramme de cas d'utilisation V1
+    Diagramme de cas d'utilisation pour la première version.
   ],
 )
 
+#pagebreak()
+== Description des cas d'utilisation
+
+Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les acteurs puisque nous pensons qu'il n'y a qu'un acteur qui est l'utilisateur de l'application.
+
+#set text(8.49pt)
+#table(
+  columns: (auto, auto, auto, auto),
+  inset: 3pt,
+  
+  // Headers
+  [*Cas \d'utilisation*], [*Scénario nominal*], [*Scénario alternatif*], [*Scénario exception*],
+
+  [Déplacer le curseur], [
+    1. L'utilisateur clique sur l'écran ou appuie sur les touches directionnelles.
+    2. Le curseur se déplace sa nouvelle position est affichée.
+  ], [
+  ], [
+    1. La position cible du curseur est invalide (en dehors du texte) : le curseur s'arrête à la limite valide.
+  ],
+
+  [Entrer du texte], [
+    1. L'utilisateur saisit des caractères.
+    2. Les caractères sont ajoutés à la position du curseur et la zone de texte est mise à jour avec le nouveau contenu.
+  ], [
+    1. Le texte est ajouté à une sélection existante : remplace la sélection.
+  ], [
+    1. Le buffer de texte est plein : impossible d'ajouter plus de texte.
+  ],
+
+  [Effacer du texte], [
+    1. L'utilisateur appuie sur la touche "Supprimer" ou "Backspace".
+    2. Le caractère ou le texte sélectionné est supprimé et la zone de texte est mise à jour.
+  ], [
+    1. Aucun texte à supprimer (curseur au début du texte).
+  ], [
+    1. Le buffer est corrompu (le texte ne s'efface pas correctement).
+  ],
+
+  [Sélectionner du texte], [
+    1. L'utilisateur clique et fait glisser la souris ou utilise Shift + touches directionnelles.
+    2. La portion du texte souhaitée est sélectionnée.
+  ], [
+    1. L'utilisateur peut double-cliquer pour sélectionner un mot entier.
+    2. L'utilisateur peut sélectionner tout le texte avec Ctrl + A
+  ], [
+    1. Tentative de sélectionner au-delà des limites du texte : sélection seulement jusqu'aux limites autorisées
+  ],
+
+  [Copier la sélection], [
+    1. L'utilisateur sélectionne du texte.
+    2. L'utilisateur clique sur "Copier" ou  appuie sur Ctrl+C.
+  ], [
+    1. Aucun texte sélectionné : vide le presse-papier et rien n'est copié.
+  ], [
+    1. Le presse-papier est plein.
+  ],
+
+  [Coller la sélection], [
+    1. L'utilisateur positionne le curseur à l'endroit souhaité.
+    2. L'utilisateur clique sur "Coller" ou appuie sur Ctrl+V.
+    3. Le contenu du presse-papier est inséré à la position du curseur.
+  ], [
+    1. Le contenu du presse-papier est ajouté à une sélection existante : remplace la sélection.
+  ], [
+    1. Le presse-papier est vide : rien ne se passe
+  ],
+
+  [Couper la sélection], [
+    1. L'utilisateur sélectionne du texte.
+    2. L'utilisateur clique sur "Couper" ou appuie sur Ctrl+X.
+    3. Le texte est supprimé de la zone de texte et copié dans le presse-papier.
+  ], [
+    1. Aucun texte sélectionné : vide le presse-papier et rien n'est copié.
+  ], [
+    1. Le presse-papier est plein.
+  ]
+)
+
+#set text(11pt)
+
+#pagebreak()
 == Diagramme de classe 
 
 Au vu du problème que nous avons à modéliser, après avoir consulté le #link("https://refactoring.guru/design-patterns/catalog")[catalogue] des design pattern présent sur #link("https://refactoring.guru/")[Refactoring GURU], nous avons décidé de nous baser sur le design pattern nommé #link("https://refactoring.guru/design-patterns/command")[Command].
 
-
+#pagebreak()
 == Diagramme de séquence
 
 pour bien voir commment ça marche avec les interactions avec les classes
 
-
+#pagebreak()
 === Couper la sélection
 
 
-
+#pagebreak()
 === Entrer du texte
 
 
-= V2
+= Version 2
 
 == Diagramme de cas d'utilisation
 
