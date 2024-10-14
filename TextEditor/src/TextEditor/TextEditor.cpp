@@ -1,12 +1,5 @@
 #include "TextEditor.h"
 
-
-/*class TextEditor {
-    private:
-
-
-    public:
-*/
 TextEditor::TextEditor() {}
 
 void TextEditor::draw(Renderer renderer) {
@@ -24,13 +17,8 @@ void TextEditor::executeCommand() {
 void TextEditor::keyPressed(bool ctrl, bool alt, SDL_KeyCode key) {
 /*
 
-    if (key == SDLK_BACKSPACE) {
-        // effacer la sélection
-        return;
-    }
-
-    if (key == SDLK_DELETE) {
-        // effacer la sélection
+    if (key == SDLK_BACKSPACE || key == SDLK_DELETE) {
+        DeleteTextCommand.execute(selectionStart, selectionEnd, this);
         return;
     }
 
@@ -38,32 +26,38 @@ void TextEditor::keyPressed(bool ctrl, bool alt, SDL_KeyCode key) {
         case true:
             switch (key) {
                 case SDLK_c:
-                    new CopyCommand(selectionStart, selectionEnd, this)
-
-                    CopyCommand.execute();
+                    CopyCommand.execute(selectionStart, selectionEnd, this);
+                    return;
                 case SDLK_v:
-                    PasteCommand.execute();
+                    PasteCommand.execute(selectionStart, selectionEnd, this);
+                    return;
                 case SDLK_x:
-                    CutCommand.execute();
+                    CutCommand.execute(selectionStart, selectionEnd, this);
+                    return;
                 case SDLK_a:
-                    // sélectionner tout le texte
+                    MoveCursorCommand.execute(0, textBuffer.length - 1 , this);
+                    return;
                 default:
-                    // pas une commande
+                    return;
             }
         case false:
             switch (alt) {
                 case true:
                     switch (key) {
                         case (SDLK_UP):
-                            // sélection texte
+                            MoveCursorCommand.execute(selectionStart, selectionEnd - line_length, this);
+                            return;
                         case (SDLK_DOWN):
-                            // sélection texte
+                            MoveCursorCommand.execute(selectionStart, selectionEnd + line_length, this);
+                            return;
                         case (SDLK_LEFT):
-                            // sélection texte
+                            MoveCursorCommand.execute(selectionStart, selectionEnd - 1, this);
+                            return;
                         case (SDLK_RIGHT):
-                            // sélection texte
+                            MoveCursorCommand.execute(selectionStart, selectionEnd + 1, this);
+                            return;
                         default:
-                            // pas une commande
+                            return;
                     }
                 case false:
                     switch (key) {
@@ -71,11 +65,12 @@ void TextEditor::keyPressed(bool ctrl, bool alt, SDL_KeyCode key) {
                         case (SDLK_DOWN):
                         case (SDLK_LEFT):
                         case (SDLK_RIGHT):
-                            // pas une commande
+                            return;
                         default:
-                        // entrer texte
+                            EnterCharCommand.execute(selectionStart, selectionEnd, this);
+                            return;
                         default :
-                            // pas une commande
+                            return;
                     }
             }
     }
@@ -83,7 +78,7 @@ void TextEditor::keyPressed(bool ctrl, bool alt, SDL_KeyCode key) {
 }
 
 void TextEditor::undoCommand() {
-
+    // pour V2 ça non ???
 }
 
 TextEditor::~TextEditor() {}
