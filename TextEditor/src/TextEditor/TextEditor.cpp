@@ -9,7 +9,8 @@
 */
 TextEditor::TextEditor() {}
 
-void TextEditor::draw(Renderer renderer) {
+void TextEditor::draw(Renderer& renderer)
+{
     renderer.drawText(textBuffer);
 }
 
@@ -21,7 +22,11 @@ void TextEditor::executeCommand() {
 
 }
 
-void TextEditor::keyPressed(bool ctrl, bool alt, SDL_KeyCode key) {
+void TextEditor::keyPressed(bool ctrl, bool alt, bool shift, const SDL_KeyCode key) {
+    if( key )
+    {
+        textBuffer += static_cast<char>(key);
+    }
 /*
 
     if (key == SDLK_BACKSPACE) {

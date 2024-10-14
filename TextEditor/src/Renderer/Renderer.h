@@ -7,25 +7,23 @@
 #include <string>
 #include <SDL.h>
 #include <SDL_ttf.h>
+#include "../Texture/Texture.h"
+
 
 class Renderer {
-private:
-    SDL_Texture * texture;
-    SDL_Rect * rect;
-
-    SDL_Renderer * renderer;
-    SDL_Window *window;
-
     int width;
     int height;
+
     TTF_Font *font;
+    SDL_Renderer* renderer{};
+    SDL_Window* window{};
+
     void resize();
 public:
+    void drawText(const std::string& text) const;
 
-    void drawText(std::string text);
-
-    void render();
+    void render() const;
     Renderer(int width, int height);
-    void clear();
+    void clear() const;
     ~Renderer();
 };

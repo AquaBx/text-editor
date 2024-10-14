@@ -14,6 +14,11 @@ private:
     bool quit = false;
     void pollEvent();
 
+
+    bool ctrl = false;
+    bool alt = false;
+    bool shift = false;
+
 public:
     Client(int width,int height);
     void run();
