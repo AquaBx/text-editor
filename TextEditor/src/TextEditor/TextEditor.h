@@ -11,6 +11,7 @@ private:
     std::string clipboard;
     int selectionStart = 0;
     int selectionEnd = 0;
+    int lineLength = 50; // voir si y'a pas mieux
 public : 
     void draw(Renderer& renderer);
     std::string getTextBuffer();
