@@ -109,17 +109,20 @@ Ce deuxième travail pratique consiste à concevoir un mini-éditeur de texte. T
 #pagebreak()
 = Version 1
 
-Dans le sujet, il est indiqué que la première version de l'application comportera uniquement les actions d’édition de base, c'est-à-dire :
-- la contenance du texte dans un buffer (zone de travail)
-- la sélection de texte (notions de début et fin de sélection)
-- la copie de la sélection dans le presse-papier
-- le coupage (c'est-à-dire la copie de la sélection dans le presse-papier puis effacement de la sélection)
-- le collage du contenu du presse-papier
+Dans la première version, les fonctionnalités présentes sont :
+- La sélection du texte
+- L'écriture de texte
+- L'effacement du texte
+- Le déplacement du curseur
+- La copie de la sélection (sauvegardée dans le presse-papier)
+- Le coupage de la sélection (sauvegardée dans le presse-papier)
+- Le collage de la sélection qui fut au préalable stockée dans le presse-papier. Il y a deux cas possibles selon si la sélection en cours est vide ou non :
+  - Si vide : cette fonctionnalité insère le contenu du presse-papier à l'endroit où le curseur se situe. présent dans le presse-papier
+  - Si non vide : cette fonctionnalité remplace la sélection en cours par le contenu
 
-#pagebreak()
 == Diagramme de cas d'utilisation
 
-Voici le diagramme de cas d’utilisation que nous avons déduit des consignes :
+Au vu des fonctionnalités que doit proposer la première version de l'éditeur de texte, voici un diagramme de cas d'utilisation envisageable :
 
 #figure(
   image("../V1/conception/cas-utilisation/usecase.png", width: 7cm),
@@ -214,7 +217,22 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
 
 Au vu du problème que nous avons à modéliser, après avoir consulté le #link("https://refactoring.guru/design-patterns/catalog")[catalogue] des design pattern présent sur #link("https://refactoring.guru/")[Refactoring GURU], nous avons décidé de nous baser sur le design pattern nommé #link("https://refactoring.guru/design-patterns/command")[Command].
 
-#pagebreak()
+Ce design pattern est de type comportemental, c'est-à-dire qu'ils concernent les algorithmes et l'attribution des responsabilités entre les objets. Plus précisément, le design-pattern Command permet de transformer une requête en un objet qui contient toutes les informations relatives à la requête. Cette transformation est utile car elle permet de transmettre des requêtes en tant qu'arguments de méthode, de retarder ou de mettre en file d'attente l'exécution d'une requête et de prendre en charge des opérations annulables. C'est exactement le type de structure que l'on recherche pour notre mini-éditeur.
+
+Voici la structure exposée par ce design pattern : 
+
+#figure(
+  image("../V1/conception/design-pattern/command.png"),
+  caption: [
+    Diagramme de cas d'utilisation V1
+  ],
+)
+
+Cette structure est très générale. Nous devons l'adapter à notre problème. Pour ce faire, nous devons comprendre la structure ci-dessus. Une fois cela fait, nous pourrons la customiser pour produire notre diagramme de classe.
+
+Dans le cas de notre problème, nous avons :
+- ...
+
 == Diagramme de séquence
 
 pour bien voir commment ça marche avec les interactions avec les classes
@@ -239,3 +257,6 @@ https://refactoring.guru/design-patterns/catalog
 https://refactoring.guru/design-patterns/memento
 
 == Diagramme de classe 
+
+= Conclusion
+faire (max 10 lignes)
