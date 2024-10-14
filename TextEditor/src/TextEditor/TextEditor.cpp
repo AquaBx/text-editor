@@ -2,8 +2,23 @@
 
 TextEditor::TextEditor() {}
 
-void TextEditor::draw(Renderer& renderer)
-{
+std::string TextEditor::getTextBuffer() {
+    return textBuffer;
+}
+
+void TextEditor::setTextBuffer(std::string t) {
+    textBuffer = t;
+}
+
+std::string TextEditor::getClipboard() {
+    return clipboard;
+}
+
+void TextEditor::setClipboard(std::string c) {
+    clipboard = c;
+}
+
+void TextEditor::draw(Renderer& renderer) {
     renderer.drawText(textBuffer);
 }
 

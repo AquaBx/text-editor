@@ -13,6 +13,10 @@ private:
     int selectionEnd = 0;
 public : 
     void draw(Renderer& renderer);
+    std::string getTextBuffer();
+    void setTextBuffer(std::string t);
+    std::string getClipboard();
+    void setClipboard(std::string c);
     void setCommand(Command * cmd);
     void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key);
     void executeCommand();
