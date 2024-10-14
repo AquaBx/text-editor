@@ -1,6 +1,7 @@
 #include "MoveCursorCommand.h"
 
-MoveCursorCommand::~MoveCursorCommand() {}
+MoveCursorCommand::~MoveCursorCommand() = default;
+
 MoveCursorCommand::MoveCursorCommand(TextEditor& textEditor, const int start, const int end)
     : textEditor(textEditor),
       start(start),

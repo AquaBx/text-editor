@@ -12,7 +12,7 @@ PasteCommand::PasteCommand(TextEditor& textEditor, const int start, const int en
 
 void PasteCommand::execute()
 {
-    std::string clipboardContent = textEditor.getClipboard();
+    const std::string clipboardContent = textEditor.getClipboard();
     std::string textBuffer = textEditor.getTextBuffer();
     if (start == end) {
         textBuffer.insert(start, clipboardContent);
@@ -20,7 +20,7 @@ void PasteCommand::execute()
         textBuffer.replace(start, end - start, clipboardContent);
     }
     textEditor.setTextBuffer(textBuffer);
-    const int position = start + clipboardContent.length();
+    const unsigned long long position = start + clipboardContent.length();
     textEditor.setSelectionStart(position);
     textEditor.setSelectionEnd(position);
 }

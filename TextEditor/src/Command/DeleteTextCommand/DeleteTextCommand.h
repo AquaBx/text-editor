@@ -7,7 +7,7 @@ class DeleteTextCommand final : public Command {
     TextEditor& textEditor;
     int start,end;
     public :
-        explicit DeleteTextCommand(TextEditor &textEditor, int start, int end, char character);
+        explicit DeleteTextCommand(TextEditor &textEditor, int start, int end);
         ~DeleteTextCommand() override;
         void execute() override;
 };

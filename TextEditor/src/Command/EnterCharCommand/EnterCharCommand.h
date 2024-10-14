@@ -10,7 +10,7 @@ class EnterCharCommand final : public Command
     char character;
 
 public :
-    explicit EnterCharCommand(TextEditor& textEditor, int start, int end, char c);
+    explicit EnterCharCommand(TextEditor& textEditor, int start, int end, char character);
     void execute() override;
 
     ~EnterCharCommand() override;

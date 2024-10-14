@@ -1,6 +1,6 @@
 #include "TextEditor.h"
 
-TextEditor::TextEditor() {}
+TextEditor::TextEditor() = default;
 
 std::string TextEditor::getTextBuffer() {
     return textBuffer;
@@ -18,23 +18,28 @@ void TextEditor::setClipboard(std::string c) {
     clipboard = c;
 }
 
-int TextEditor::getSelectionStart() {
+unsigned long long TextEditor::getSelectionStart() const
+{
     return selectionStart;
 }
 
-void TextEditor::setSelectionStart(int start) {
+void TextEditor::setSelectionStart(const unsigned long long start)
+{
     selectionStart = start;
 }
 
-int TextEditor::getSelectionEnd() {
+unsigned long long TextEditor::getSelectionEnd() const
+{
     return selectionEnd;
 }
 
-void TextEditor::setSelectionEnd(int end) {
+void TextEditor::setSelectionEnd(const unsigned long long end)
+{
     selectionEnd = end;
 }
 
-void TextEditor::draw(Renderer& renderer) {
+void TextEditor::draw(const Renderer& renderer) const
+{
     renderer.drawText(textBuffer);
 }
 
@@ -114,4 +119,4 @@ void TextEditor::undoCommand() {
     // pour V2 ça non ???
 }
 
-TextEditor::~TextEditor() {}
+TextEditor::~TextEditor() = default;

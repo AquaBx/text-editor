@@ -5,7 +5,9 @@
 #include "Client.h"
 #include "../Texture/Texture.h"
 
-Client::Client(int width,int height) : renderer(Renderer(width,height)), textEditor(TextEditor()) {}
+Client::Client(const int width, const int height) : textEditor(TextEditor()), renderer(Renderer(width, height))
+{
+}
 
 void Client::pollEvent(){
     SDL_Event event;
@@ -18,7 +20,7 @@ void Client::pollEvent(){
         }
 
         SDL_Keycode key = event.key.keysym.sym;
-        bool isDown = event.type==SDL_KEYDOWN;
+        const bool isDown = event.type == SDL_KEYDOWN;
 
         switch (key) {
             case SDLK_LCTRL:

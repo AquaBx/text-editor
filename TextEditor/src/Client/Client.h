@@ -7,7 +7,6 @@
 #include "../TextEditor/TextEditor.h"
 
 class Client {
-private:
     TextEditor textEditor;
     Renderer renderer;
     //SDL_Event event;
