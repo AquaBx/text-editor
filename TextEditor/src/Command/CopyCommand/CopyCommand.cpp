@@ -1,11 +1,13 @@
 #include "CopyCommand.h"
 #include <string>
 
-CopyCommand::~CopyCommand() {}
+CopyCommand::~CopyCommand() = default;
 
-void CopyCommand::execute(int start, int end, TextEditor& textEditor) {
+CopyCommand::CopyCommand(TextEditor& textEditor, const int start, const int end):textEditor(textEditor), start(start), end(end){}
+
+void CopyCommand::execute() {
     if (start >= 0 && end <= textEditor.getTextBuffer().length() && start <= end) {
-        std::string selectedText = textEditor.getTextBuffer().substr(start, end - start);
+        const std::string selectedText = textEditor.getTextBuffer().substr(start, end - start);
         textEditor.setClipboard(selectedText);
     }
 }

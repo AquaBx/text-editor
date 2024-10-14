@@ -1,9 +1,17 @@
 #include "PasteCommand.h"
 #include <string>
 
-PasteCommand::~PasteCommand() {}
+PasteCommand::~PasteCommand() = default;
 
-void PasteCommand::execute(int start, int end, TextEditor& textEditor) {
+PasteCommand::PasteCommand(TextEditor& textEditor, const int start, const int end)
+    : textEditor(textEditor),
+      start(start),
+      end(end)
+{
+}
+
+void PasteCommand::execute()
+{
     std::string clipboardContent = textEditor.getClipboard();
     std::string textBuffer = textEditor.getTextBuffer();
     if (start == end) {
@@ -12,7 +20,7 @@ void PasteCommand::execute(int start, int end, TextEditor& textEditor) {
         textBuffer.replace(start, end - start, clipboardContent);
     }
     textEditor.setTextBuffer(textBuffer);
-    int position = start + clipboardContent.length();
+    const int position = start + clipboardContent.length();
     textEditor.setSelectionStart(position);
     textEditor.setSelectionEnd(position);
 }

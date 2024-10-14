@@ -1,8 +1,8 @@
 #pragma once
 
 #include <string>
-#include "../Command/Command.h"
 #include "../Renderer/Renderer.h"
+#include "../Command/Command.h"
 
 class TextEditor {
 private:

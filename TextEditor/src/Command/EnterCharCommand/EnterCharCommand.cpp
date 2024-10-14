@@ -1,16 +1,27 @@
 #include "EnterCharCommand.h"
 #include <string>
 
-EnterCharCommand::~EnterCharCommand() {}
+EnterCharCommand::~EnterCharCommand() = default;
 
-void EnterCharCommand::execute(int start, int end, char character, TextEditor& editor) {
-    if (start >= 0 && end <= editor.getTextBuffer().length() && start <= end) {
-        std::string textBuffer = editor.getTextBuffer();        
+
+EnterCharCommand::EnterCharCommand(TextEditor& textEditor, const int start, const int end, const char character)
+    : textEditor(textEditor),
+      start(start),
+      end(end),
+      character(character)
+{
+}
+
+void EnterCharCommand::execute()
+{
+    if (start >= 0 && end <= textEditor.getTextBuffer().length() && start <= end)
+    {
+        std::string textBuffer = textEditor.getTextBuffer();
         if (start == end) {
             textBuffer.insert(start, 1, character);
         } else {
             textBuffer.replace(start, end - start, 1, character);
         }
-        editor.setTextBuffer(textBuffer);
+        textEditor.setTextBuffer(textBuffer);
     }
 }
