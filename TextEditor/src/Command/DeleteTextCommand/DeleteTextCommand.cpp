@@ -12,5 +12,7 @@ void DeleteTextCommand::execute()
 {
     if (end <= textEditor.getTextBuffer().length() && start <= end) {
         textEditor.setTextBuffer(textEditor.getTextBuffer().erase(start, end - start));
+        textEditor.setSelectionStart(start);
+        textEditor.setSelectionEnd(start);
     }
 }
