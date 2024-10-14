@@ -13,11 +13,6 @@ activate "Editeur de texte"
 Utilisateur -> "Editeur de texte": Demande l'accès à la plateforme
 Utilisateur <-- "Editeur de texte": Accepte la demande
 
-== Entrée du texte ==
-
-Utilisateur -> "Editeur de texte": Appuie sur des lettres
-Utilisateur <-- "Editeur de texte": Affiche les lettres saisies
-
 == Sélection du texte ==
 
 Utilisateur -> "Editeur de texte": Sélectionne du texte
@@ -29,8 +24,8 @@ Utilisateur -> "Editeur de texte": Presse Ctrl + X pour couper la sélection
 alt La sélection est vide
 Utilisateur <-- "Editeur de texte": Vide le presse-papier
 else
-Utilisateur <-- "Editeur de texte": Stocke la sélection dans le presse-papier \n et écrase l'ancien contenu s'il était non-vide
-Utilisateur <-- "Editeur de texte": Enlève la sélection de la vue de l'utilisateur
+Utilisateur <-- "Editeur de texte": Stocke et écrase le contenu dans le presse-papier
+Utilisateur <-- "Editeur de texte": Enlève le contenu sélectionné du texte
 end
 
 deactivate Utilisateur

@@ -11,58 +11,24 @@ together with SDL on Debian
 #include <SDL_ttf.h>
 #include <string>
 
-#define WINDOW_WIDTH 600
-#define WINDOW_HEIGHT (WINDOW_WIDTH)
-
-/*
-- x, y: upper left corner.
-- texture, rect: outputs.
-*/
-void get_text_and_rect(SDL_Renderer *renderer, int x, int y, char *text,
-    TTF_Font *font, SDL_Texture **texture, SDL_Rect *rect) {
-    int text_width;
-    int text_height;
-    SDL_Surface *surface;
-    SDL_Color textColor = {255, 255, 255, 0};
-
-    surface = TTF_RenderText_Solid(font, text, textColor);
-    *texture = SDL_CreateTextureFromSurface(renderer, surface);
-    text_width = surface->w;
-    text_height = surface->h;
-    SDL_FreeSurface(surface);
-    rect->x = x;
-    rect->y = y;
-    rect->w = text_width;
-    rect->h = text_height;
-}
+#include "src/Client/Client.h"
 
 int main() {
+/*
+
     SDL_Event event;
     SDL_Rect rect1, rect2;
-    SDL_Renderer *renderer;
     SDL_Texture *texture1, *texture2;
-    SDL_Window *window;
-    const char *font_path;
+
     int quit;
 
-    font_path = "resources/OpenSans.ttf";
-
-    /* Inint TTF. */
-    SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
-    SDL_CreateWindowAndRenderer(WINDOW_WIDTH, WINDOW_WIDTH, 0, &window, &renderer);
-    TTF_Init();
-    TTF_Font *font = TTF_OpenFont(font_path, 24);
-    if (font == NULL) {
-        fprintf(stderr, "error: font not found\n");
-        exit(EXIT_FAILURE);
-    }
+    Renderer myRenderer(800,800);
 
     char text1[] = "hello";
     char text2[] = "world";
 
-    get_text_and_rect(renderer, 0, 0, text1, font, &texture1, &rect1);
-    get_text_and_rect(renderer, 0, rect1.y + rect1.h, text2, font, &texture2, &rect2);
-
+    get_text_and_rect(myRenderer.getRenderer(), 0, 0, text1, myRenderer.getFont(), &texture1, &rect1);
+    get_text_and_rect(myRenderer.getRenderer(), 0, rect1.y + rect1.h, text2, myRenderer.getFont(), &texture2, &rect2);
     quit = 0;
     while (!quit) {
         while (SDL_PollEvent(&event) == 1) {
@@ -70,22 +36,20 @@ int main() {
                 quit = 1;
             }
         }
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
-        SDL_RenderClear(renderer);
-        /* Use textures. */
-        SDL_RenderCopy(renderer, texture1, NULL, &rect1);
-        SDL_RenderCopy(renderer, texture2, NULL, &rect2);
-        SDL_RenderPresent(renderer);
-    }
+
+        SDL_RenderCopy(myRenderer.getRenderer(), texture1, NULL, &rect1);
+        SDL_RenderCopy(myRenderer.getRenderer(), texture2, NULL, &rect2);
+        SDL_RenderPresent(myRenderer.getRenderer());
+    }*/
 
     /* Deinit TTF. */
+    /*
     SDL_DestroyTexture(texture1);
     SDL_DestroyTexture(texture2);
-    TTF_Quit();
+*/
 
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
+    Client myClient(800,800);
+    myClient.run();
     return EXIT_SUCCESS;
 }
 

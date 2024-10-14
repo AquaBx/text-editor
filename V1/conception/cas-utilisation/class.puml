@@ -1,93 +1,71 @@
-@startuml
+@startuml classDiagram
 interface Command {
     + execute() : void
     + undo() : void
 }
 
 class MoveCursorCommand {
-    - position : int
-    + execute() : void
-    + undo() : void
 }
 
-class EnterTextCommand {
-    - text : String
-    + execute() : void
-    + undo() : void
+class EnterCharCommand {
 }
 
 class DeleteTextCommand {
-    + execute() : void
-    + undo() : void
-}
-
-class SelectTextCommand {
-    - start : int
-    - end : int
-    + execute() : void
-    + undo() : void
 }
 
 class CopyCommand {
-    + execute() : void
-    + undo() : void
 }
 
 class PasteCommand {
-    + execute() : void
-    + undo() : void
 }
 
 class CutCommand {
-    + execute() : void
-    + undo() : void
-}
-
-class Renderer {
-    + render() : void
-}
-
-class Invoker {
-    - command : Command
-    + setCommand(cmd : Command) : void
-    + executeCommand() : void
-    + undoCommand() : void
 }
 
 class Client {
-    + main() : void
+    - textEditor : TextEditor
+    - renderer : Renderer
+    - event : SDL_event
+    - pollEvent() : void
+    + run()
 }
 
-class TextBuffer {
-    - text : String
+class Renderer {
+    - renderer: SDL_Renderer;
+    - width : int
+    - height : int
+    - fontPath : string
+    - resize() : void
+
+    + Renderer(...)
+    + clear()
+    + ~Renderer()
+}
+
+class TextEditor {
+    - command : Command
+    - textBuffer : string
+    - clipboard : string
     - selectionStart : int
     - selectionEnd : int
-    + getSelection() : String
-    + setSelection(start : int, end : int) : void
+    + draw(renderer : Renderer) : void
+    + setCommand(cmd : Command) : void
+    + executeCommand() : void
+    + undoCommand() : void
+    +keyPressedctrl : boolean, alt : boolean, Key : string
 }
 
-class Clipboard {
-    - content : String
-    + getContent() : String
-    + setContent(content : String) : void
-}
-
-class Application {
-    + run() : void
-    + getTextBuffer() : TextBuffer
-}
 
 Command <|.. MoveCursorCommand
-Command <|.. EnterTextCommand
+Command <|.. EnterCharCommand
 Command <|.. DeleteTextCommand
-Command <|.. SelectTextCommand
 Command <|.. CopyCommand
 Command <|.. PasteCommand
 Command <|.. CutCommand
 
-Invoker o--> Command
-RenderCommand --> Renderer
-Client ..> Invoker
-Application --> TextBuffer
-Application --> Clipboard
+TextEditor o--> Command
+Client --> Renderer
+
+Client --> TextEditor
+
 @enduml

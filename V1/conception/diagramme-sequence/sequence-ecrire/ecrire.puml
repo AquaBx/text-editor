@@ -16,7 +16,8 @@ Utilisateur <-- "Editeur de texte": Accepte la demande
 == Entrée du texte ==
 
 Utilisateur -> "Editeur de texte": Appuie sur des lettres
-Utilisateur <-- "Editeur de texte": Affiche les lettres saisies
+Utilisateur <-- "Editeur de texte": Modifie le textBuffer
+Utilisateur <-- "Editeur de texte": Actualise l'affichage
 
 deactivate Utilisateur
 deactivate "Editeur de texte"
