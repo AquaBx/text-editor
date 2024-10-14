@@ -116,9 +116,7 @@ Dans la première version, les fonctionnalités présentes sont :
 - Le déplacement du curseur
 - La copie de la sélection (sauvegardée dans le presse-papier)
 - Le coupage de la sélection (sauvegardée dans le presse-papier)
-- Le collage de la sélection qui fut au préalable stockée dans le presse-papier. Il y a deux cas possibles selon si la sélection en cours est vide ou non :
-  - Si vide : cette fonctionnalité insère le contenu du presse-papier à l'endroit où le curseur se situe. présent dans le presse-papier
-  - Si non vide : cette fonctionnalité remplace la sélection en cours par le contenu
+- Le collage de la sélection qui fut au préalable stockée dans le presse-papier.
 
 == Diagramme de cas d'utilisation
 
@@ -145,7 +143,7 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
   [*Cas \d'utilisation*], [*Scénario nominal*], [*Scénario alternatif*], [*Scénario exception*],
 
   [Déplacer le curseur], [
-    1. L'utilisateur clique sur l'écran ou appuie sur les touches directionnelles.
+    1. L'utilisateur #highlight("clique sur l'écran") ou appuie sur les touches directionnelles.
     2. Le curseur se déplace sa nouvelle position est affichée.
   ], [
   ], [
@@ -167,14 +165,14 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
   ], [
     1. Aucun texte à supprimer (curseur au début du texte).
   ], [
-    1. Le buffer est corrompu (le texte ne s'efface pas correctement).
+    
   ],
 
   [Sélectionner du texte], [
-    1. L'utilisateur clique et fait glisser la souris ou utilise Shift + touches directionnelles.
+    1. L'utilisateur #highlight("clique et fait glisser la souris") ou utilise Shift + touches directionnelles.
     2. La portion du texte souhaitée est sélectionnée.
   ], [
-    1. L'utilisateur peut double-cliquer pour sélectionner un mot entier.
+    1. L'utilisateur peut #highlight("double-cliquer pour sélectionner un mot entier").
     2. L'utilisateur peut sélectionner tout le texte avec Ctrl + A
   ], [
     1. Tentative de sélectionner au-delà des limites du texte : sélection seulement jusqu'aux limites autorisées
@@ -182,7 +180,7 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
 
   [Copier la sélection], [
     1. L'utilisateur sélectionne du texte.
-    2. L'utilisateur clique sur "Copier" ou  appuie sur Ctrl+C.
+    2. L'utilisateur appuie sur Ctrl+C.
   ], [
     1. Aucun texte sélectionné : vide le presse-papier et rien n'est copié.
   ], [
@@ -191,7 +189,7 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
 
   [Coller la sélection], [
     1. L'utilisateur positionne le curseur à l'endroit souhaité.
-    2. L'utilisateur clique sur "Coller" ou appuie sur Ctrl+V.
+    2. L'utilisateur appuie sur Ctrl+V.
     3. Le contenu du presse-papier est inséré à la position du curseur.
   ], [
     1. Le contenu du presse-papier est ajouté à une sélection existante : remplace la sélection.
@@ -201,7 +199,7 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
 
   [Couper la sélection], [
     1. L'utilisateur sélectionne du texte.
-    2. L'utilisateur clique sur "Couper" ou appuie sur Ctrl+X.
+    2. L'utilisateur appuie sur Ctrl+X.
     3. Le texte est supprimé de la zone de texte et copié dans le presse-papier.
   ], [
     1. Aucun texte sélectionné : vide le presse-papier et rien n'est copié.
@@ -215,7 +213,7 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
 #pagebreak()
 == Diagramme de classe 
 
-Au vu du problème que nous avons à modéliser, après avoir consulté le #link("https://refactoring.guru/design-patterns/catalog")[catalogue] des design pattern présent sur #link("https://refactoring.guru/")[Refactoring GURU], nous avons décidé de nous baser sur le design pattern nommé #link("https://refactoring.guru/design-patterns/command")[Command].
+Au vu du problème que nous avons à modéliser, après avoir consulté le #link("https://refactoring.guru/design-patterns/catalog")[catalogue] des design pattern présent sur #link("https://refactoring.guru/")[Refactoring GURU], nous avons décidé de nous baser sur le design pattern nommé #link("https://refactoring.guru/design-patterns/command")[Command]. 
 
 Ce design pattern est de type comportemental, c'est-à-dire qu'ils concernent les algorithmes et l'attribution des responsabilités entre les objets. Plus précisément, le design-pattern Command permet de transformer une requête en un objet qui contient toutes les informations relatives à la requête. Cette transformation est utile car elle permet de transmettre des requêtes en tant qu'arguments de méthode, de retarder ou de mettre en file d'attente l'exécution d'une requête et de prendre en charge des opérations annulables. C'est exactement le type de structure que l'on recherche pour notre mini-éditeur.
 
@@ -224,39 +222,83 @@ Voici la structure exposée par ce design pattern :
 #figure(
   image("../V1/conception/design-pattern/command.png"),
   caption: [
-    Diagramme de cas d'utilisation V1
+    Design Pattern Command
   ],
 )
 
-Cette structure est très générale. Nous devons l'adapter à notre problème. Pour ce faire, nous devons comprendre la structure ci-dessus. Une fois cela fait, nous pourrons la customiser pour produire notre diagramme de classe.
+Cette structure est très générale. Nous devons l'adapter à notre problème. Pour ce faire, nous avons du comprendre la structure ci-dessus. Une fois cela fait, nous avons pu la customiser pour produire notre propre diagramme de classes modélisant notre problème. Voici comment nous l'avons adapté :
 
-Dans le cas de notre problème, nous avons :
-- ...
-
-== Diagramme de séquence
-
-pour bien voir commment ça marche avec les interactions avec les classes
+#highlight("mettre diagramme + expliquer nos choix en se référant au design pattern")
 
 #pagebreak()
+== Diagrammes de séquence
+
+Pour bien comprendre commment vont se produire les interactions avec les classes lors de l'utilisation de l'application, nous avons produit deux diagrammes de séquences.
+
 === Couper la sélection
 
+Voici notre diagramme de séquence pour la situation où l'on souhaite couper la sélection.
+
+#figure(
+  image("../V1/conception/diagramme-sequence/sequence-couper/couper.png", width:10cm),
+  caption: [
+    Diagramme de séquence pour couper la sélection
+  ],
+)
+
+#highlight("expliquer")
 
 #pagebreak()
 === Entrer du texte
 
+#figure(
+  image("../V1/conception/diagramme-sequence/sequence-ecrire/ecrire.png", width:10cm),
+  caption: [
+    Diagramme de séquence pour écrire du texte
+  ],
+)
 
+#highlight("expliquer")
+
+#pagebreak()
+== Implémentation du code
+
+Conformément aux consignes et aux diagrammes que nous avons pu établir, nous avons réalisé la première version de l'éditeur de texte. Vous pourrez le trouver #highlight("dire où")
+
+#highlight("il faudra pas non plus oublier de séparer les deux versions et de revoir les diagrammes si besoin -> surtout le diagramme des classes")
+
+#pagebreak()
 = Version 2
 
+Dans la seconde version, les fonctionnalités ajoutées par rapport à la première version sont les suivantes :
+- L'enregistrement des actions de l'utilisateur pour pouvoir les rejouer, par exemple dans un script
+- L'enregitrement de ses actions
+- L'annulation possiblité d'annuler de ses actions
+
+#pagebreak()
 == Diagramme de cas d'utilisation
 
-== Design pattern
+#pagebreak()
+== Description des cas d'utilisation
+
+#highlight("ceux de base + les autres")
+
+#pagebreak()
+== Diagramme de classe 
+
+#pagebreak()
+== Diagramme de séquence
+
+
+#pagebreak()
+== Implémentation du code
+
+
+= Conclusion
+faire (max 10 lignes)
+il fallait bien penser dès la v1 à la v2 pour avoir un code maintenable
 
 https://refactoring.guru/design-patterns
 https://refactoring.guru/design-patterns/catalog
 
 https://refactoring.guru/design-patterns/memento
-
-== Diagramme de classe 
-
-= Conclusion
-faire (max 10 lignes)

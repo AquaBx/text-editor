@@ -1,4 +1,4 @@
-@startuml ecrire-texte
+@startuml
 hide footbox
 skinparam sequenceMessageAlign center
 
@@ -15,7 +15,12 @@ Utilisateur <-- "Editeur de texte": Accepte la demande
 
 == Entrée du texte ==
 
-Utilisateur -> "Editeur de texte": Appuie sur des lettres
+Utilisateur -> "Editeur de texte": Appuie sur une lettre/caractères
+
+alt Du texte est sélectionné lors de l'appui
+  Utilisateur <- "Editeur de texte": Remplace le texte sélectionné \n par la lettre/caractère saisi
+end
+
 Utilisateur <-- "Editeur de texte": Modifie le textBuffer
 Utilisateur <-- "Editeur de texte": Actualise l'affichage
 
