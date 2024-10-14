@@ -48,6 +48,7 @@ void TextEditor::setSelectionEnd(const unsigned long long end)
 void TextEditor::draw(const Renderer& renderer) const
 {
     renderer.drawText(textBuffer);
+    renderer.drawCursor(textBuffer, selectionStart, selectionEnd);
 }
 
 void TextEditor::setCommand(Command *cmd) {

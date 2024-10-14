@@ -18,12 +18,13 @@ class Renderer {
     SDL_Renderer* renderer{};
     SDL_Window* window{};
 
-    void resize();
 public:
     void drawText(const std::string& text) const;
-
+    void drawCursor(const std::string& text, unsigned long long start, unsigned long long end) const;
     void render() const;
     Renderer(int width, int height);
     void clear() const;
+    void resize(int width, int height) const;
+
     ~Renderer();
 };
