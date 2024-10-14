@@ -18,6 +18,22 @@ void TextEditor::setClipboard(std::string c) {
     clipboard = c;
 }
 
+int TextEditor::getSelectionStart() {
+    return selectionStart;
+}
+
+void TextEditor::setSelectionStart(int start) {
+    selectionStart = start;
+}
+
+int TextEditor::getSelectionEnd() {
+    return selectionEnd;
+}
+
+void TextEditor::setSelectionEnd(int end) {
+    selectionEnd = end;
+}
+
 void TextEditor::draw(Renderer& renderer) {
     renderer.drawText(textBuffer);
 }

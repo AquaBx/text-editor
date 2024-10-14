@@ -17,6 +17,10 @@ public :
     void setTextBuffer(std::string t);
     std::string getClipboard();
     void setClipboard(std::string c);
+    int getSelectionStart();
+    void setSelectionStart(int start);
+    int getSelectionEnd();
+    void setSelectionEnd(int end);
     void setCommand(Command * cmd);
     void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key);
     void executeCommand();
