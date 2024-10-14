@@ -4,7 +4,8 @@
 EnterCharCommand::~EnterCharCommand() = default;
 
 
-EnterCharCommand::EnterCharCommand(TextEditor& textEditor, const int start, const int end, const char character)
+EnterCharCommand::EnterCharCommand(TextEditor& textEditor, const unsigned long long start, const unsigned long long end,
+                                   const char character)
     : textEditor(textEditor),
       start(start),
       end(end),

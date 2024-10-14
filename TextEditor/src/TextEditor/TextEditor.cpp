@@ -1,5 +1,12 @@
 #include "TextEditor.h"
 
+#include "../Command/CopyCommand/CopyCommand.h"
+#include "../Command/CutCommand/CutCommand.h"
+#include "../Command/DeleteTextCommand/DeleteTextCommand.h"
+#include "../Command/EnterCharCommand/EnterCharCommand.h"
+#include "../Command/MoveCursorCommand/MoveCursorCommand.h"
+#include "../Command/PasteCommand/PasteCommand.h"
+
 TextEditor::TextEditor() = default;
 
 std::string TextEditor::getTextBuffer() {
@@ -51,14 +58,23 @@ void TextEditor::executeCommand() {
 
 }
 
-void TextEditor::keyPressed(bool ctrl, bool alt, bool shift, const SDL_KeyCode key) {
-    /*
-    if (key) {
-        textBuffer += static_cast<char>(key);
+void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, const SDL_KeyCode key)
+{
+    if ((key == SDLK_BACKSPACE || key == SDLK_DELETE) && selectionStart != selectionEnd)
+    {
+        DeleteTextCommand(*this, selectionStart, selectionEnd).execute();
+        return;
     }
-
-    if (key == SDLK_BACKSPACE || key == SDLK_DELETE) {
-        DeleteTextCommand.execute(selectionStart, selectionEnd, this);
+    else if (key == SDLK_BACKSPACE)
+    {
+        // vérifier que start - 1 >= 0
+        DeleteTextCommand(*this, selectionStart - 1, selectionStart).execute();
+        return;
+    }
+    else if (key == SDLK_DELETE)
+    {
+        // vérifier que start + 1 < len
+        DeleteTextCommand(*this, selectionStart, selectionStart + 1).execute();
         return;
     }
 
@@ -66,18 +82,18 @@ void TextEditor::keyPressed(bool ctrl, bool alt, bool shift, const SDL_KeyCode k
         case true:
             switch (key) {
                 case SDLK_c:
-                    CopyCommand.execute(selectionStart, selectionEnd, this);
-                    return;
+                CopyCommand(*this, selectionStart, selectionEnd).execute();
+                return;
                 case SDLK_v:
-                    PasteCommand.execute(selectionStart, selectionEnd, this);
-                    return;
+                PasteCommand(*this, selectionStart, selectionEnd).execute();
+                return;
                 case SDLK_x:
-                    CutCommand.execute(selectionStart, selectionEnd, this);
-                    return;
+                CutCommand(*this, selectionStart, selectionEnd).execute();
+                return;
                 case SDLK_a:
-                    MoveCursorCommand.execute(0, textBuffer.length() - 1 , this);
-                    return;
-                default:
+                MoveCursorCommand(*this, 0, textBuffer.length() - 1).execute();
+                return;
+            default:
                     return;
             }
         case false:
@@ -85,19 +101,19 @@ void TextEditor::keyPressed(bool ctrl, bool alt, bool shift, const SDL_KeyCode k
                 case true:
                     switch (key) {
                         case (SDLK_UP):
-                            MoveCursorCommand.execute(selectionStart, selectionEnd - lineLength, this);
-                            return;
-                        case (SDLK_DOWN):
-                            MoveCursorCommand.execute(selectionStart, selectionEnd + lineLength, this);
-                            return;
-                        case (SDLK_LEFT):
-                            MoveCursorCommand.execute(selectionStart, selectionEnd - 1, this);
-                            return;
-                        case (SDLK_RIGHT):
-                            MoveCursorCommand.execute(selectionStart, selectionEnd + 1, this);
-                            return;
-                        default:
-                            return;
+                        MoveCursorCommand(*this, selectionStart, selectionEnd - lineLength).execute();
+                        return;
+                    case (SDLK_DOWN):
+                            MoveCursorCommand(*this, selectionStart, selectionEnd + lineLength).execute();
+                        return;
+                    case (SDLK_LEFT):
+                            MoveCursorCommand(*this, selectionStart, selectionEnd - 1).execute();
+                        return;
+                    case (SDLK_RIGHT):
+                            MoveCursorCommand(*this, selectionStart, selectionEnd + 1).execute();
+                        return;
+                    default:
+                        return;
                     }
                 case false:
                     switch (key) {
@@ -105,14 +121,14 @@ void TextEditor::keyPressed(bool ctrl, bool alt, bool shift, const SDL_KeyCode k
                         case (SDLK_DOWN):
                         case (SDLK_LEFT):
                         case (SDLK_RIGHT):
-                            return;
-                        default:
-                            EnterCharCommand.execute(selectionStart, selectionEnd, this);
-                            return;
+                        case (SDLK_UNKNOWN):
+                        return;
+                    default:
+                        EnterCharCommand(*this,selectionStart, selectionEnd, key).execute();
+                        return;
                     }
             }
     }
-    */
 }
 
 void TextEditor::undoCommand() {

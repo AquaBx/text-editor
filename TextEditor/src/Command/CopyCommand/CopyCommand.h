@@ -5,9 +5,10 @@
 
 class CopyCommand final : public Command {
     TextEditor& textEditor;
-    int start,end;
-    public :
-        explicit CopyCommand(TextEditor &textEditor, int start, int end);
-        ~CopyCommand() override;
+    unsigned long long start, end;
+
+public :
+    explicit CopyCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end);
+    ~CopyCommand() override;
         void execute() override;
 };

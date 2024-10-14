@@ -6,10 +6,10 @@
 class PasteCommand final : public Command
 {
     TextEditor& textEditor;
-    int start, end;
+    unsigned long long start, end;
 
 public :
-    explicit PasteCommand(TextEditor& textEditor, int start, int end);
+    explicit PasteCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end);
 
 
     ~PasteCommand() override;

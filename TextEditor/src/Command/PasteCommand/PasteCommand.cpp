@@ -3,7 +3,7 @@
 
 PasteCommand::~PasteCommand() = default;
 
-PasteCommand::PasteCommand(TextEditor& textEditor, const int start, const int end)
+PasteCommand::PasteCommand(TextEditor& textEditor, const unsigned long long start, const unsigned long long end)
     : textEditor(textEditor),
       start(start),
       end(end)

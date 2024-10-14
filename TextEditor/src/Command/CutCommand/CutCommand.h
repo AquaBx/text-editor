@@ -5,9 +5,10 @@
 
 class CutCommand final : public Command {
     TextEditor& textEditor;
-    int start,end;
-    public :
-        explicit CutCommand(TextEditor &textEditor, int start, int end);
-        ~CutCommand() override;
+    unsigned long long start, end;
+
+public :
+    explicit CutCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end);
+    ~CutCommand() override;
         void execute() override;
 };

@@ -6,11 +6,11 @@
 class EnterCharCommand final : public Command
 {
     TextEditor& textEditor;
-    int start, end;
+    unsigned long long start, end;
     char character;
 
 public :
-    explicit EnterCharCommand(TextEditor& textEditor, int start, int end, char character);
+    explicit EnterCharCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end, char character);
     void execute() override;
 
     ~EnterCharCommand() override;

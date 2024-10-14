@@ -6,10 +6,10 @@
 class MoveCursorCommand final : public Command
 {
     TextEditor& textEditor;
-    int start, end;
+    unsigned long long start, end;
 
 public :
-    explicit MoveCursorCommand(TextEditor& textEditor, int start, int end);
+    explicit MoveCursorCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end);
 
     void execute() override;
 
