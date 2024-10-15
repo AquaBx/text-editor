@@ -14,5 +14,6 @@ void CutCommand::execute()
         const std::string selectedText = textEditor.getTextBuffer().substr(start, end - start);
         textEditor.setClipboard(selectedText);
         textEditor.setTextBuffer(textEditor.getTextBuffer().erase(start, end - start));
+        textEditor.setSelectionEnd(textEditor.getSelectionStart());
     }
 }
