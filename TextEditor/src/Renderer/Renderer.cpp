@@ -47,7 +47,7 @@ Renderer::~Renderer() {
 
 void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) const {
     std::string delimiter = "\n";
-    int y = 0;
+    int y = 10;
 
     int actual_x = 0;
 
