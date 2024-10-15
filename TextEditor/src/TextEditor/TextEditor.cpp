@@ -67,13 +67,11 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
     }
     else if (key == SDLK_BACKSPACE)
     {
-        // vérifier que start - 1 >= 0
         DeleteTextCommand(*this, selectionStart - 1, selectionStart).execute();
         return;
     }
     else if (key == SDLK_DELETE)
     {
-        // vérifier que start + 1 < len
         DeleteTextCommand(*this, selectionStart, selectionStart + 1).execute();
         return;
     }
@@ -92,7 +90,7 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
                 CutCommand(*this, selectionStart, selectionEnd).execute();
                 return;
                 case SDLK_a:
-                MoveCursorCommand(*this, 0, textBuffer.length() - 1).execute();
+                MoveCursorCommand(*this, 0, textBuffer.length()).execute();
                 return;
             default:
                     return;
@@ -106,10 +104,10 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
                             MoveCursorCommand(*this, textBuffer.length(), textBuffer.length()).execute();
                         return;
                     case (SDLK_LEFT):
-                            MoveCursorCommand(*this, selectionStart - 1, selectionEnd - (shift ? 0 : 1)).execute();
+                            MoveCursorCommand(*this, (selectionStart == 0 ? 0 : selectionStart-1), selectionEnd - (shift ? 0 : 1)).execute();
                         return;
                     case (SDLK_RIGHT):
-                            MoveCursorCommand(*this, selectionStart + (shift ? 0 : 1), selectionEnd + 1).execute();
+                            MoveCursorCommand(*this, selectionStart + (shift ? 0 : 1), (selectionEnd == textBuffer.length() ? selectionEnd : selectionEnd+1)).execute();
                         return;
                     case (SDLK_UNKNOWN):
                         return;
