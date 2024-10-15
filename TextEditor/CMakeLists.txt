@@ -32,7 +32,10 @@ add_executable(TextEditor WIN32 main.cpp
         src/TextEditor/TextEditor.cpp
         src/Texture/Texture.cpp
         src/Texture/Texture.h
-        src/Command/Command.h)
+        src/Command/Command.h
+        src/Debug/Debug.cpp
+        src/Debug/Debug.h
+        src/Debug/Debug.h)
 target_link_libraries(TextEditor SDL2 SDL2_ttf)
 
 

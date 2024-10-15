@@ -17,16 +17,16 @@ class Texture
     SDL_Surface* surface;
 
 public:
-    Texture(const std::string& text, TTF_Font* font, SDL_Renderer* renderer)
+    Texture(const std::string& text, TTF_Font* font, SDL_Renderer* renderer, int x, int y)
     {
         constexpr SDL_Color textColor = {255, 255, 255, 0};
-        surface = TTF_RenderText_Solid(font, text.c_str(), textColor);
+        surface = TTF_RenderText_Blended(font, text.c_str(), textColor);
         texture = SDL_CreateTextureFromSurface(renderer, surface);
         SDL_FreeSurface(surface);
 
         rect = {
-            0,
-            0,
+            x,
+            y,
             surface->w,
             surface->h
         };

@@ -47,8 +47,7 @@ void TextEditor::setSelectionEnd(const unsigned long long end)
 
 void TextEditor::draw(const Renderer& renderer) const
 {
-    renderer.drawText(textBuffer);
-    renderer.drawCursor(textBuffer, selectionStart, selectionEnd);
+    renderer.drawText(textBuffer,selectionStart,selectionEnd);
 }
 
 void TextEditor::setCommand(Command *cmd) {
@@ -107,10 +106,10 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
                             MoveCursorCommand(*this, textBuffer.length(), textBuffer.length()).execute();
                         return;
                     case (SDLK_LEFT):
-                            MoveCursorCommand(*this, selectionStart - (shift ? 0 :1), selectionEnd - 1).execute();
+                            MoveCursorCommand(*this, selectionStart - 1, selectionEnd - (shift ? 0 : 1)).execute();
                         return;
                     case (SDLK_RIGHT):
-                            MoveCursorCommand(*this, selectionStart + (shift ? 0 :1), selectionEnd + 1).execute();
+                            MoveCursorCommand(*this, selectionStart + (shift ? 0 : 1), selectionEnd + 1).execute();
                         return;
                     case (SDLK_UNKNOWN):
                         return;

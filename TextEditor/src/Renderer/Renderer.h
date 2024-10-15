@@ -19,8 +19,8 @@ class Renderer {
     SDL_Window* window{};
 
 public:
-    void drawText(const std::string& text) const;
-    void drawCursor(const std::string& text, unsigned long long start, unsigned long long end) const;
+    void drawText(std::string text, size_t cursorStart, size_t cursorEnd) const;
+    void drawCursor(int x, int y, int w, int h) const;
     void render() const;
     Renderer(int width, int height);
     void clear() const;
