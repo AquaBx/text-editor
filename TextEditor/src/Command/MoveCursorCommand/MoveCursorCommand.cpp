@@ -11,6 +11,9 @@ MoveCursorCommand::MoveCursorCommand(TextEditor& textEditor, const unsigned long
 
 void MoveCursorCommand::execute()
 {
-    textEditor.setSelectionStart(start);
-    textEditor.setSelectionEnd(end);
+    if (start >= 0 && end <= textEditor.getTextBuffer().length()){
+        textEditor.setSelectionStart(start);
+        textEditor.setSelectionEnd(end);
+    }
+
 }

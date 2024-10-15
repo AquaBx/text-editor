@@ -79,6 +79,7 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
         return;
     }
 
+
     switch (ctrl) {
         case true:
             switch (key) {
@@ -98,36 +99,25 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
                     return;
             }
         case false:
-            switch (alt) {
-                case true:
-                    switch (key) {
-                        case (SDLK_UP):
-                        MoveCursorCommand(*this, selectionStart, selectionEnd - lineLength).execute();
+                switch (key) {
+                    case (SDLK_UP):
+                        MoveCursorCommand(*this, 0, 0).execute();
                         return;
                     case (SDLK_DOWN):
-                            MoveCursorCommand(*this, selectionStart, selectionEnd + lineLength).execute();
+                            MoveCursorCommand(*this, textBuffer.length(), textBuffer.length()).execute();
                         return;
                     case (SDLK_LEFT):
-                            MoveCursorCommand(*this, selectionStart, selectionEnd - 1).execute();
+                            MoveCursorCommand(*this, selectionStart - (shift ? 0 :1), selectionEnd - 1).execute();
                         return;
                     case (SDLK_RIGHT):
-                            MoveCursorCommand(*this, selectionStart, selectionEnd + 1).execute();
+                            MoveCursorCommand(*this, selectionStart + (shift ? 0 :1), selectionEnd + 1).execute();
                         return;
-                    default:
-                        return;
-                    }
-                case false:
-                    switch (key) {
-                        case (SDLK_UP):
-                        case (SDLK_DOWN):
-                        case (SDLK_LEFT):
-                        case (SDLK_RIGHT):
-                        case (SDLK_UNKNOWN):
+                    case (SDLK_UNKNOWN):
                         return;
                     default:
                         EnterCharCommand(*this,selectionStart, selectionEnd, key).execute();
                         return;
-                    }
+
             }
     }
 }
