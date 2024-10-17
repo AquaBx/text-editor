@@ -23,7 +23,7 @@ void test_case() {
     Tools::assert_equals(editor.getSelectionStart(),start+1, "");
     Tools::assert_equals(editor.getSelectionEnd(),end+1,"");
 
-    Tools::assert_equals(editor.getTextBuffer(),"aThis is a test","");
+    Tools::assert_equals(editor.getTextBuffer(),std::string("aThis is a test"),"");
 
 }
 int main()

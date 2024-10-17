@@ -13,8 +13,8 @@ namespace Tools
 
     typedef void (* vFunctionCall)();
 
-
-    void assert_equals(auto expected, auto actual, std::string message )
+    template <typename T>
+    void assert_equals(T expected, T actual, std::string message )
     {
         if (expected != actual) {
             throw std::runtime_error(message);
