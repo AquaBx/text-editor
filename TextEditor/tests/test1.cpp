@@ -6,7 +6,7 @@
 
 #include "../src/TextEditor/TextEditor.h"
 
-#include "tools.cpp"
+#include "tools.h"
 
 void test_case_1() {
     TextEditor editor;
@@ -50,13 +50,13 @@ int main()
 {
     int result;
     std::cout << "--------- test1 --------" << std::endl;
-    result = Tools::test(test_case_1);
+    result = Tools::boubiboulga(test_case_1);
     std::cout << "Error Code : " << result << std::endl;
     std::cout << "---- test1 finished ----" << std::endl;
 
 
     std::cout << "--------- test2 --------" << std::endl;
-    result = Tools::test(test_case_2);
+    result = Tools::boubiboulga(test_case_2);
     std::cout << "Error Code : " << result << std::endl;
     std::cout << "---- test2 finished ----" << std::endl;
 

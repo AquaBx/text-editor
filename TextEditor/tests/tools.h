@@ -7,10 +7,13 @@
 #include <string>
 #include <iostream>
 
-typedef void (* vFunctionCall)();
 
 namespace Tools
 {
+
+    typedef void (* vFunctionCall)();
+
+
     void assert_equals(auto expected, auto actual, std::string message )
     {
         if (expected != actual) {
@@ -18,7 +21,7 @@ namespace Tools
         }
     }
 
-    int test(const vFunctionCall function)
+    int boubiboulga(const vFunctionCall function)
     {
         try
         {

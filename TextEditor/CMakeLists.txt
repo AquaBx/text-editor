@@ -43,7 +43,7 @@ add_executable(TextEditor WIN32 main.cpp ${SourcesFiles})
 target_link_libraries(TextEditor SDL2 SDL2_ttf)
 
 # Tests
-add_executable(tests1 WIN32 tests/tools.cpp tests/test1.cpp ${SourcesFiles})
+add_executable(tests1 WIN32 tests/tools.h tests/test1.cpp ${SourcesFiles})
 target_link_libraries(tests1 SDL2 SDL2_ttf)
 
 enable_testing()
