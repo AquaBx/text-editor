@@ -72,14 +72,36 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
             TTF_SizeText(font, ligne.c_str(), &w, &h);
             Texture(ligne, font, renderer, 0, y).draw(renderer);
 
-            if(actual_x <= cursorStart && cursorStart <= actual_x + ligne.length()){
-                if(actual_x <= cursorEnd && cursorEnd <= actual_x + ligne.length()) {
-                    int ax=0;
-                    int aw=0;
-                    TTF_SizeText(font, ligne.substr(0,cursorStart).c_str(), &ax, nullptr);
-                    TTF_SizeText(font, ligne.substr(cursorStart,cursorEnd-cursorStart).c_str(), &aw, nullptr);
-                    drawCursor(ax,y,aw,h);
-                    //Debug::print(c)
+            if (w > width) {
+                int cut_pos = ligne.length();
+                for (size_t i = 1; i < ligne.length(); ++i) {
+                    std::string sub_ligne = ligne.substr(0, i);
+                    int sub_w = 0;
+                    TTF_SizeText(font, sub_ligne.c_str(), &sub_w, nullptr);
+
+                    if (sub_w > width) {
+                        cut_pos = i - 1;
+                        break;
+                    }
+                }
+
+                std::string ligne_a_afficher = ligne.substr(0, cut_pos);
+                ligne = ligne.substr(cut_pos);
+
+                Texture(ligne_a_afficher, font, renderer, 0, y).draw(renderer);
+
+                if (actual_x <= cursorStart && cursorStart <= actual_x + ligne_a_afficher.length()) {
+                    if (actual_x <= cursorEnd && cursorEnd <= actual_x + ligne_a_afficher.length()) {
+                        int ax = 0, aw = 0;
+                        TTF_SizeText(font, ligne_a_afficher.substr(0, cursorStart).c_str(), &ax, nullptr);
+                        TTF_SizeText(font, ligne_a_afficher.substr(cursorStart, cursorEnd - cursorStart).c_str(), &aw, nullptr);
+                        drawCursor(ax, y, aw, h);
+                    } else {
+                        int ax = 0, aw = 0;
+                        TTF_SizeText(font, ligne_a_afficher.substr(0, cursorStart).c_str(), &ax, nullptr);
+                        TTF_SizeText(font, ligne_a_afficher.substr(cursorStart).c_str(), &aw, nullptr);
+                        drawCursor(ax, y, aw, h);
+                    }
                 }
                 else{
 
