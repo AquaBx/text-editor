@@ -9,11 +9,12 @@
 #include <SDL_ttf.h>
 #include "../Texture/Texture.h"
 
-class Renderer {
+class Renderer
+{
     int width;
     int height;
 
-    TTF_Font *font;
+    TTF_Font* font;
     SDL_Renderer* renderer{};
     SDL_Window* window{};
 

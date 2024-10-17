@@ -4,8 +4,9 @@
 #include "../Renderer/Renderer.h"
 #include "../Command/Command.h"
 
-class TextEditor {
-    Command * command = nullptr;
+class TextEditor
+{
+    Command* command = nullptr;
     std::string textBuffer;
     std::string clipboard;
     unsigned long long selectionStart = 0;
@@ -21,7 +22,7 @@ public :
     void setSelectionStart(unsigned long long start);
     unsigned long long getSelectionEnd() const;
     void setSelectionEnd(unsigned long long end);
-    void setCommand(Command * cmd);
+    void setCommand(Command* cmd);
     void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key);
     void executeCommand();
     void undoCommand();
