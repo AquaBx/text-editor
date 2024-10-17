@@ -43,12 +43,16 @@ add_executable(TextEditor WIN32 main.cpp ${SourcesFiles})
 target_link_libraries(TextEditor SDL2 SDL2_ttf)
 
 # Tests
-add_executable(tests1 WIN32 tests/tools.h tests/test1.cpp ${SourcesFiles})
-target_link_libraries(tests1 SDL2 SDL2_ttf)
 
 enable_testing()
 
-add_test(NAME MyTests1 COMMAND tests1)
+add_executable(test1 WIN32 tests/tools.h tests/test1.cpp ${SourcesFiles})
+target_link_libraries(test1 SDL2 SDL2_ttf)
+add_test(NAME MyTest1 COMMAND test1)
+
+add_executable(test2 WIN32 tests/tools.h tests/test2.cpp ${SourcesFiles})
+target_link_libraries(test2 SDL2 SDL2_ttf)
+add_test(NAME MyTest2 COMMAND test2)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
