@@ -9,7 +9,6 @@
 #include <SDL_ttf.h>
 #include "../Texture/Texture.h"
 
-
 class Renderer {
     int width;
     int height;

@@ -10,7 +10,7 @@ include_directories(libs/SDL/include)
 add_subdirectory(libs/SDL_ttf)
 include_directories(libs/SDL_ttf)
 
-add_executable(TextEditor WIN32 main.cpp
+set(SourcesFiles
         src/Renderer/Renderer.cpp
         src/Renderer/Renderer.h
         src/Command/Command.h
@@ -35,9 +35,20 @@ add_executable(TextEditor WIN32 main.cpp
         src/Command/Command.h
         src/Debug/Debug.cpp
         src/Debug/Debug.h
-        src/Debug/Debug.h)
+        src/Debug/Debug.h
+)
+
+# Build
+add_executable(TextEditor WIN32 main.cpp ${SourcesFiles})
 target_link_libraries(TextEditor SDL2 SDL2_ttf)
 
+# Tests
+add_executable(tests1 WIN32 tests/test1.cpp ${SourcesFiles})
+target_link_libraries(tests1 SDL2 SDL2_ttf)
+
+enable_testing()
+
+add_test(NAME MyTests1 COMMAND tests1)
 
 add_custom_command(TARGET ${PROJECT_NAME} POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_directory
