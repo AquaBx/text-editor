@@ -22,7 +22,6 @@ public:
         constexpr SDL_Color textColor = {255, 255, 255, 0};
         surface = TTF_RenderText_Blended(font, text.c_str(), textColor);
         texture = SDL_CreateTextureFromSurface(renderer, surface);
-        SDL_FreeSurface(surface);
 
         rect = {
             x,
@@ -30,6 +29,7 @@ public:
             surface->w,
             surface->h
         };
+        SDL_FreeSurface(surface);
     };
 
     void draw(SDL_Renderer* renderer) const
