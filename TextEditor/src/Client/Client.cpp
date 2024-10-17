@@ -53,16 +53,18 @@ void Client::pollEvent(){
 
     }
 
-    textEditor.keyPressed(ctrl,alt,shift,static_cast<SDL_KeyCode>(latest));
+    if (latest != SDLK_UNKNOWN)
+    {
+        textEditor.keyPressed(ctrl,alt,shift,static_cast<SDL_KeyCode>(latest));
+    }
 }
 
 void Client::run(){
     while (!quit){
         pollEvent();
+
         renderer.clear();
-
         textEditor.draw(renderer);
-
         renderer.render();
     }
 }

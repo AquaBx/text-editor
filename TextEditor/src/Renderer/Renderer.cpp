@@ -13,7 +13,7 @@ Renderer::Renderer(const int width, const int height) : width(width), height(hei
     SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &window, &renderer);
     SDL_SetRenderDrawBlendMode(renderer, SDL_BLENDMODE_BLEND);
-    SDL_SetHint( SDL_HINT_RENDER_SCALE_QUALITY, "1" );
+    SDL_SetHint(SDL_HINT_RENDER_SCALE_QUALITY, "1");
 
     TTF_Init();
 
@@ -32,12 +32,15 @@ void Renderer::clear() const
     SDL_RenderClear(renderer);
 }
 
-void Renderer::resize(const int width, const int height) const
+void Renderer::resize(const int width, const int height)
 {
     SDL_SetWindowSize(window, width, height);
+    this->width = width;
+    this->height = height;
 }
 
-Renderer::~Renderer() {
+Renderer::~Renderer()
+{
     TTF_Quit();
 
     SDL_DestroyRenderer(renderer);
@@ -45,72 +48,79 @@ Renderer::~Renderer() {
     SDL_Quit();
 }
 
-void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) const {
-    std::string delimiter = "\n";
-    int y = 10;
-    int actual_x = 0;
+void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) const
+{
+    int x = 0;
+    int y = 0;
+
+    int space_size_x = 0;
+    int space_size_y = 0;
+    TTF_SizeText(font, " ", &space_size_x, &space_size_y);
 
     while (!text.empty()) {
-        std::size_t retour = text.find(delimiter);
+        std::size_t retour = text.find('\n');
         std::string ligne;
-
         if (retour != std::string::npos) {
             ligne = text.substr(0, retour);
-            text = text.erase(0, retour + delimiter.length());
-        } else {
+            text = '\r' + text.erase(0, retour+1);
+        }
+        else {
             ligne = text;
             text = "";
         }
+        int w = 0;
+        int h = space_size_y;
 
         while (!ligne.empty()) {
-            int w = 0, h = 0;
-            int char_pos = 0;
-            
-            while (char_pos < ligne.length()) {
-                std::string sub_ligne = ligne.substr(0, char_pos + 1);
-                TTF_SizeText(font, sub_ligne.c_str(), &w, &h);
+            std::size_t space = ligne.find(' ');
 
-                if (w > width) {
-                    std::string ligne_a_afficher = ligne.substr(0, char_pos);
-
-                    Texture(ligne_a_afficher, font, renderer, 0, y).draw(renderer);
-
-                    if (actual_x <= cursorStart && cursorStart <= actual_x + ligne_a_afficher.length()) {
-                        if (cursorEnd <= actual_x + ligne_a_afficher.length()) {
-                            int ax = 0, aw = 0;
-                            TTF_SizeText(font, ligne_a_afficher.substr(0, cursorStart - actual_x).c_str(), &ax, nullptr);
-                            TTF_SizeText(font, ligne_a_afficher.substr(cursorStart - actual_x, cursorEnd - cursorStart).c_str(), &aw, nullptr);
-                            drawCursor(ax, y, aw, h);
-                        }
-                    }
-
-                    ligne = ligne.substr(char_pos);
-                    actual_x += ligne_a_afficher.length();
-                    y += h;
-                    char_pos = 0;
-                } 
-                else {
-                    char_pos++;
-                }
+            std::string word;
+            if (space != std::string::npos)
+            {
+                word = ligne.substr(0, space + 1);
+                ligne = ligne.erase(0, space + 1);
             }
-
-            if (!ligne.empty()) {
-                Texture(ligne, font, renderer, 0, y).draw(renderer);
-
-                if (actual_x <= cursorStart && cursorStart <= actual_x + ligne.length()) {
-                    if (cursorEnd <= actual_x + ligne.length()) {
-                        int ax = 0, aw = 0;
-                        TTF_SizeText(font, ligne.substr(0, cursorStart - actual_x).c_str(), &ax, nullptr);
-                        TTF_SizeText(font, ligne.substr(cursorStart - actual_x, cursorEnd - cursorStart).c_str(), &aw, nullptr);
-                        drawCursor(ax, y, aw, h);
-                    }
-                }
-
-                actual_x += ligne.length();
-                y += h;
+            else
+            {
+                word = ligne;
                 ligne = "";
             }
+
+            TTF_SizeText(font, word.c_str(), &w, &h);
+            if (w + x > width) {
+                y += h;
+                x = 0;
+            }
+
+            if (0 <= cursorStart && cursorStart <= 0 + word.length()) {
+                int ax = 0;
+                int aw = 0;
+                TTF_SizeText(font, word.substr(0, cursorStart).c_str(), &ax, nullptr);
+                if (0 <= cursorEnd && cursorEnd <= 0 + word.length())
+                {
+                    TTF_SizeText(font, word.substr(cursorStart, cursorEnd - cursorStart).c_str(), &aw, nullptr);
+                }
+                else
+                {
+                    TTF_SizeText(font, word.substr(cursorStart,word.length()).c_str(), &aw, nullptr);
+                    cursorStart += word.length()-cursorStart;
+                }
+                drawCursor(x + ax, y, aw, h);
+
+            }
+
+            cursorStart -= word.length();
+            cursorEnd -= word.length();
+
+            const auto * a = new Texture(word, font, renderer, x, y);
+            a->draw(renderer);
+            delete a;
+
+            x += w;
+
         }
+        x = 0;
+        y += h;
     }
 }
 
@@ -123,12 +133,13 @@ void Renderer::render() const
 
 void Renderer::drawCursor(int x, int y, int w, int h) const
 {
-    if (w == 0){
+    if (w == 0)
+    {
         w = 4;
-        x-=w/2;
+        x -= w / 2;
     }
 
-    SDL_Rect r{x,y,w,h};
+    SDL_Rect r{x, y, w, h};
 
     // Set render color to blue ( rect will be rendered in this color )
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);

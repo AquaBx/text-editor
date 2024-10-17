@@ -23,7 +23,7 @@ public:
     void render() const;
     Renderer(int width, int height);
     void clear() const;
-    void resize(int width, int height) const;
+    void resize(int width, int height);
 
     ~Renderer();
 };
