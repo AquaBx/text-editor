@@ -57,6 +57,11 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
     int space_size_y = 0;
     TTF_SizeText(font, " ", &space_size_x, &space_size_y);
 
+    // ceci est juste pour décalé à droite la première ligne
+    text= "\r"+text;
+    cursorStart+=1;
+    cursorEnd+=1;
+
     while (!text.empty()) {
         std::size_t retour = text.find('\n');
         std::string ligne;
@@ -92,11 +97,11 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
                 x = 0;
             }
 
-            if (0 <= cursorStart && cursorStart <= 0 + word.length()) {
+            if (cursorStart <= 0 + word.length()) {
                 int ax = 0;
                 int aw = 0;
                 TTF_SizeText(font, word.substr(0, cursorStart).c_str(), &ax, nullptr);
-                if (0 <= cursorEnd && cursorEnd <= 0 + word.length())
+                if (cursorEnd <= 0 + word.length())
                 {
                     TTF_SizeText(font, word.substr(cursorStart, cursorEnd - cursorStart).c_str(), &aw, nullptr);
                 }
