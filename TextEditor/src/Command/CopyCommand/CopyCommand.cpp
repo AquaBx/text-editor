@@ -13,5 +13,6 @@ void CopyCommand::execute()
     if (end <= textEditor.getTextBuffer().length() && start <= end) {
         const std::string selectedText = textEditor.getTextBuffer().substr(start, end - start);
         textEditor.setClipboard(selectedText);
+        textEditor.setSelectionEnd(start);
     }
 }
