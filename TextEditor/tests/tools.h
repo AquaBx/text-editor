@@ -21,7 +21,7 @@ namespace Tools
         }
     }
 
-    int boubiboulga(const vFunctionCall function)
+    int test(const vFunctionCall function)
     {
         try
         {

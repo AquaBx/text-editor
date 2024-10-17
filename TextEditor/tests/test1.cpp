@@ -30,7 +30,7 @@ int main()
 {
     int result;
     std::cout << "--------- test1 --------" << std::endl;
-    result = Tools::boubiboulga(test_case);
+    result = Tools::test(test_case);
     std::cout << "Error Code : " << result << std::endl;
     std::cout << "---- test1 finished ----" << std::endl;
 
