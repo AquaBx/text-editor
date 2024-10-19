@@ -23,7 +23,8 @@ public :
     unsigned long long getSelectionEnd() const;
     void setSelectionEnd(unsigned long long end);
     void setCommand(Command* cmd);
-    void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key);
+    void keyPressed(const bool ctrl, const bool alt, const bool shift, const char key);
+    void keyPressed(const bool ctrl, const bool alt, const bool shift, const SDL_KeyCode key);
     void executeCommand();
     void undoCommand();
     ~TextEditor();

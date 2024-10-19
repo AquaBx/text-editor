@@ -86,50 +86,45 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
         return;
     }
 
-    switch (ctrl)
-    {
-    case true:
-        switch (key)
-        {
-        case SDLK_c:
+    if (ctrl) {
+        switch (key) {
+        case 'c': case 'C':
             CopyCommand(*this, selectionStart, selectionEnd).execute();
             return;
-        case SDLK_v:
+        case 'v': case 'V':
             PasteCommand(*this, selectionStart, selectionEnd).execute();
             return;
-        case SDLK_x:
+        case 'x': case 'X':
             CutCommand(*this, selectionStart, selectionEnd).execute();
             return;
-        case SDLK_a:
+        case 'a': case 'A':
             MoveCursorCommand(*this, 0, textBuffer.length()).execute();
-            return;
-        default:
-            return;
-        }
-    case false:
-        switch (key)
-        {
-        case (SDLK_UP):
-            MoveCursorCommand(*this, 0, 0).execute();
-            return;
-        case (SDLK_DOWN):
-            MoveCursorCommand(*this, textBuffer.length(), textBuffer.length()).execute();
-            return;
-        case (SDLK_LEFT):
-            MoveCursorCommand(*this, (selectionStart == 0 ? 0 : selectionStart - 1),
-                              selectionEnd - (shift ? 0 : 1)).execute();
-            return;
-        case (SDLK_RIGHT):
-            MoveCursorCommand(*this, selectionStart + (shift ? 0 : 1),
-                              (selectionEnd == textBuffer.length() ? selectionEnd : selectionEnd + 1)).execute();
-            return;
-        case (SDLK_UNKNOWN):
-            return;
-        default:
-            EnterCharCommand(*this, selectionStart, selectionEnd, key).execute();
-            return;
+        default: ;
         }
     }
+    else {
+        switch (key) {
+            case (SDLK_UP):
+                MoveCursorCommand(*this, 0, 0).execute();
+                return;
+            case (SDLK_DOWN):
+                MoveCursorCommand(*this, textBuffer.length(), textBuffer.length()).execute();
+                return;
+            case (SDLK_LEFT):
+                MoveCursorCommand(*this, (selectionStart == 0 ? 0 : selectionStart - 1),
+                                  selectionEnd - (shift ? 0 : 1)).execute();
+                return;
+            case (SDLK_RIGHT):
+                MoveCursorCommand(*this, selectionStart + (shift ? 0 : 1),
+                                  (selectionEnd == textBuffer.length() ? selectionEnd : selectionEnd + 1)).execute();
+            default: ;
+        }
+    }
+}
+
+
+void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, const char key) {
+    EnterCharCommand(*this, selectionStart, selectionEnd, key).execute();
 }
 
 void TextEditor::undoCommand()

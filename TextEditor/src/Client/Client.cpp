@@ -14,8 +14,15 @@ void Client::pollEvent()
 {
     SDL_Event event;
 
-    SDL_Keycode latest = SDLK_UNKNOWN;
+    std::string latest;
 
+    const Uint8* stateh = SDL_GetKeyboardState(nullptr);
+
+    const bool ctrl=stateh[SDL_SCANCODE_LCTRL] || stateh[SDL_SCANCODE_RCTRL];
+    const bool alt=stateh[SDL_SCANCODE_LALT] || stateh[SDL_SCANCODE_RALT];
+    const bool shift=stateh[SDL_SCANCODE_LSHIFT] || stateh[SDL_SCANCODE_RSHIFT];
+
+    SDL_StartTextInput();
     while (SDL_PollEvent(&event) == 1)
     {
         if (event.type == SDL_QUIT)
@@ -29,37 +36,15 @@ void Client::pollEvent()
                 renderer.resize(event.window.data1, event.window.data2);
             }
         }
-
-        SDL_Keycode key = event.key.keysym.sym;
-        const bool isDown = event.type == SDL_KEYDOWN;
-
-        switch (key)
+        else if (event.type == SDL_TEXTINPUT){
+            textEditor.keyPressed(ctrl, alt, shift, event.text.text[0]);
+        }
+        else if (event.type == SDL_KEYDOWN)
         {
-        case SDLK_LCTRL:
-        case SDLK_RCTRL:
-            ctrl = isDown;
-            break;
-
-        case SDLK_LALT:
-        case SDLK_RALT:
-            alt = isDown;
-            break;
-
-        case SDLK_LSHIFT:
-        case SDLK_RSHIFT:
-            shift = isDown;
-            break;
-
-        default:
-            latest = isDown ? key : latest;
-            break;
+            textEditor.keyPressed(ctrl, alt, shift, static_cast<SDL_KeyCode>(event.key.keysym.sym));
         }
     }
-
-    if (latest != SDLK_UNKNOWN)
-    {
-        textEditor.keyPressed(ctrl, alt, shift, static_cast<SDL_KeyCode>(latest));
-    }
+    SDL_StopTextInput();
 }
 
 void Client::run()
