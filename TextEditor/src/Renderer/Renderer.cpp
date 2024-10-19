@@ -134,7 +134,6 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
     }
 }
 
-
 void Renderer::render() const
 {
     SDL_RenderPresent(renderer);
@@ -148,11 +147,8 @@ void Renderer::drawCursor(int x, int y, int w, int h) const
         x -= w / 2;
     }
 
-    SDL_Rect r{x, y, w, h};
+    const SDL_Rect r{x, y, w, h};
 
-    // Set render color to blue ( rect will be rendered in this color )
     SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
-
-    // Render rect
     SDL_RenderFillRect(renderer, &r);
 }

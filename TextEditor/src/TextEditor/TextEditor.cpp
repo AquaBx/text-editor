@@ -68,40 +68,35 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
     if ((key == SDLK_BACKSPACE || key == SDLK_DELETE) && selectionStart != selectionEnd)
     {
         DeleteTextCommand(*this, selectionStart, selectionEnd).execute();
-        return;
     }
     else if (key == SDLK_BACKSPACE)
     {
         DeleteTextCommand(*this, selectionStart - 1, selectionStart).execute();
-        return;
     }
     else if (key == SDLK_DELETE)
     {
         DeleteTextCommand(*this, selectionStart, selectionStart + 1).execute();
-        return;
     }
     else if (key == SDLK_RETURN)
     {
         EnterCharCommand(*this, selectionStart, selectionEnd, '\n').execute();
-        return;
     }
-
-    if (ctrl)
+    else if (ctrl)
     {
         switch (key)
         {
         case 'c':
         case 'C':
             CopyCommand(*this, selectionStart, selectionEnd).execute();
-            return;
+            break;
         case 'v':
         case 'V':
             PasteCommand(*this, selectionStart, selectionEnd).execute();
-            return;
+            break;
         case 'x':
         case 'X':
             CutCommand(*this, selectionStart, selectionEnd).execute();
-            return;
+            break;
         case 'a':
         case 'A':
             MoveCursorCommand(*this, 0, textBuffer.length()).execute();
@@ -114,14 +109,14 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
         {
         case (SDLK_UP):
             MoveCursorCommand(*this, 0, 0).execute();
-            return;
+            break;
         case (SDLK_DOWN):
             MoveCursorCommand(*this, textBuffer.length(), textBuffer.length()).execute();
-            return;
+            break;
         case (SDLK_LEFT):
             MoveCursorCommand(*this, (selectionStart == 0 ? 0 : selectionStart - 1),
                               selectionEnd - (shift ? 0 : 1)).execute();
-            return;
+            break;
         case (SDLK_RIGHT):
             MoveCursorCommand(*this, selectionStart + (shift ? 0 : 1),
                               (selectionEnd == textBuffer.length() ? selectionEnd : selectionEnd + 1)).execute();
