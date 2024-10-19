@@ -57,7 +57,7 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
     int space_size_y = 0;
     TTF_SizeText(font, " ", &space_size_x, &space_size_y);
 
-    // ceci est juste pour décalé à droite la première ligne
+    // Décalage à droite pour la première ligne
     text = "\r" + text;
     cursorStart += 1;
     cursorEnd += 1;
@@ -96,10 +96,25 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
             }
 
             TTF_SizeText(font, word.c_str(), &w, &h);
-            if (w + x > width)
+        
+            while (w + x > width)
             {
-                y += h;
+                int charCount = 0;
+                int partialWidth = 0;
+                std::string partialWord;
+                for (charCount = 0; charCount < word.size(); ++charCount)
+                {
+                    std::string subWord = word.substr(0, charCount + 1);
+                    TTF_SizeText(font, subWord.c_str(), &partialWidth, nullptr);
+                    if (partialWidth + x > width)
+                        break;
+                }
+                partialWord = word.substr(0, charCount);
+                word = word.substr(charCount);
+                Texture(partialWord, font, renderer, x, y).draw(renderer);
                 x = space_size_x;
+                y += h;
+                TTF_SizeText(font, word.c_str(), &w, nullptr);
             }
 
             if (cursorStart <= 0 + word.length())
@@ -130,7 +145,6 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
         y += h;
     }
 }
-
 
 void Renderer::render() const
 {
