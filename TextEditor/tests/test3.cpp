@@ -13,21 +13,18 @@ void test_case() {
     editor.setTextBuffer("This is a test");
     editor.setClipboard("clipboard");
 
+    editor.keyPressed(false,false,false,SDLK_RIGHT);
+
     unsigned long long start = editor.getSelectionStart();
     unsigned long long end = editor.getSelectionEnd();
 
-    Tools::assert_equals(start,end, "start et end ne sont pas égaux à l'init");
+    editor.keyPressed(false,false,true,SDLK_RIGHT);
+    editor.keyPressed(false,false,true,SDLK_LEFT);
 
-    editor.keyPressed(false,false,false,'a');
-
-    Tools::assert_equals(editor.getSelectionStart(),start+1, "Position du curseur pas bon");
-    Tools::assert_equals(editor.getSelectionEnd(),end+1,"Position du curseur pas bon");
-
-    Tools::assert_equals(editor.getTextBuffer(),std::string("aThis is a test"),"Textepas bon");
-
+    Tools::assert_equals(editor.getSelectionStart(),start, "Pas le bon comportement");
+    Tools::assert_equals(editor.getSelectionEnd(),end,"Pas le bon comportement");
 }
-int main()
-{
+int main(){
     int result;
     std::cout << "--------- test1 --------" << std::endl;
     result = Tools::test(test_case);
