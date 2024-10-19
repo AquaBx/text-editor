@@ -11,7 +11,6 @@ class TextEditor
     std::string clipboard;
     unsigned long long selectionStart = 0;
     unsigned long long selectionEnd = 0;
-    int lineLength = 50; // voir si y'a pas mieux
 public :
     void draw(const Renderer& renderer) const;
     std::string getTextBuffer();
