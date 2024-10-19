@@ -137,9 +137,7 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
             cursorStart -= word.length();
             cursorEnd -= word.length();
 
-            const auto* a = new Texture(word, font, renderer, x, y);
-            a->draw(renderer);
-            delete a;
+            Texture(word, font, renderer, x, y).draw(renderer);
 
             x += w;
         }
