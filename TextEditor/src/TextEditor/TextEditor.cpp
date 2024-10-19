@@ -126,73 +126,7 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
         case (SDLK_UNKNOWN):
             return;
         default:
-            char character = static_cast<char>(key);
-
-            if (alt)
-            {
-                switch (key)
-                {
-                case SDLK_2: character = '~'; break;
-                case SDLK_3: character = '#'; break;
-                case SDLK_4: character = '{'; break;
-                case SDLK_5: character = '['; break;
-                case SDLK_6: character = '|'; break;
-                case SDLK_7: character = '`'; break;
-                case SDLK_8: character = '\\'; break;
-                case SDLK_9: character = '^'; break;
-                case SDLK_0: character = '@'; break;
-                case SDLK_LEFTBRACKET: character = ']'; break; // nothing appears
-                case SDLK_RIGHTBRACKET: character = '}'; break; // nothing appears
-                default:
-                    return;
-                }
-            }
-            else if (shift)
-            {
-                switch (key)
-                {
-                case SDLK_1: character = '1'; break;
-                case SDLK_2: character = '2'; break;
-                case SDLK_3: character = '3'; break;
-                case SDLK_4: character = '4'; break;
-                case SDLK_5: character = '5'; break;
-                case SDLK_6: character = '6'; break;
-                case SDLK_7: character = '7'; break;
-                case SDLK_8: character = '8'; break;
-                case SDLK_9: character = '9'; break;
-                case SDLK_0: character = '0'; break;
-                case SDLK_SEMICOLON: character = '.'; break;
-                case SDLK_COMMA: character = '?'; break;
-                // case SDLK_after : character = '°'; break; // for instance, ")"
-                // case SDLK_stillafter : character = '+'; break; // for instance, "+"
-                default:
-                    if (character >= 'a' && character <= 'z')
-                    {
-                        character = static_cast<char>(key - ('a' - 'A'));
-                    }
-                    break;
-                }
-            }
-            else
-            {
-                switch (key)
-                {
-                case SDLK_1: character = '&'; break;
-                case SDLK_2: character = 'é'; break; // does not work (c symbol for brands instead)
-                case SDLK_3: character = '"'; break;
-                case SDLK_4: character = '\''; break;
-                case SDLK_5: character = '('; break;
-                case SDLK_6: character = '-'; break;
-                case SDLK_7: character = 'è'; break; // does not work (¨ instead)
-                case SDLK_8: character = '_'; break;
-                case SDLK_9: character = 'ç'; break; // does not work (§ instead)
-                case SDLK_0: character = 'à'; break; // does not work (space instead)
-                default:
-                    break;
-                }
-            }
-
-            EnterCharCommand(*this, selectionStart, selectionEnd, character).execute();
+            EnterCharCommand(*this, selectionStart, selectionEnd, key).execute();
             return;
         }
     }
