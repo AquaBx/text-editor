@@ -79,7 +79,8 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
         int w = 0;
         int h = space_size_y;
 
-        while (!ligne.empty()) {
+        while (!ligne.empty())
+        {
             std::size_t space = ligne.find(' ');
 
             std::string word;
@@ -95,7 +96,8 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
             }
 
             TTF_SizeText(font, word.c_str(), &w, &h);
-            if (w + x > width) {
+            if (w + x > width)
+            {
                 word = '\r' + word;
                 cursorEnd += 1;
                 cursorStart += 1;

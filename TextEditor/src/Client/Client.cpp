@@ -18,9 +18,9 @@ void Client::pollEvent()
 
     const Uint8* stateh = SDL_GetKeyboardState(nullptr);
 
-    const bool ctrl=stateh[SDL_SCANCODE_LCTRL] || stateh[SDL_SCANCODE_RCTRL];
-    const bool alt=stateh[SDL_SCANCODE_LALT] || stateh[SDL_SCANCODE_RALT];
-    const bool shift=stateh[SDL_SCANCODE_LSHIFT] || stateh[SDL_SCANCODE_RSHIFT];
+    const bool ctrl = stateh[SDL_SCANCODE_LCTRL] || stateh[SDL_SCANCODE_RCTRL];
+    const bool alt = stateh[SDL_SCANCODE_LALT] || stateh[SDL_SCANCODE_RALT];
+    const bool shift = stateh[SDL_SCANCODE_LSHIFT] || stateh[SDL_SCANCODE_RSHIFT];
 
     SDL_StartTextInput();
     while (SDL_PollEvent(&event) == 1)
@@ -36,7 +36,8 @@ void Client::pollEvent()
                 renderer.resize(event.window.data1, event.window.data2);
             }
         }
-        else if (event.type == SDL_TEXTINPUT){
+        else if (event.type == SDL_TEXTINPUT)
+        {
             textEditor.keyPressed(ctrl, alt, shift, event.text.text[0]);
         }
         else if (event.type == SDL_KEYDOWN)
