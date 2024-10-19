@@ -99,7 +99,7 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
             if (w + x > width)
             {
                 y += h;
-                x = 0;
+                x = space_size_x;
             }
 
             if (cursorStart <= 0 + word.length())
