@@ -14,23 +14,23 @@ void test_case()
     editor.setTextBuffer("This is a test");
     editor.setClipboard("clipboard");
 
-    editor.keyPressed(false, false, false, SDLK_RIGHT);
+    editor.keyPressed(true, false, false, 'a');
 
     unsigned long long start = editor.getSelectionStart();
     unsigned long long end = editor.getSelectionEnd();
 
-    editor.keyPressed(false, false, true, SDLK_RIGHT);
-    editor.keyPressed(false, false, true, SDLK_LEFT);
+    editor.keyPressed(true, false, false, 'c');
 
-    Tools::assert_equals(editor.getSelectionStart(), start, "Pas le bon comportement");
-    Tools::assert_equals(editor.getSelectionEnd(), end, "Pas le bon comportement");
+    Tools::assert_equals(editor.getSelectionStart(), start, "Curseur pas au bon endroit");
+    Tools::assert_equals(editor.getSelectionEnd(), end, "Curseur pas au bon endroit");
+    Tools::assert_equals(editor.getClipboard(), editor.getTextBuffer(), "Pas le bon clipboard");
 }
 
 int main()
 {
     int result;
     std::cout << "--------- test --------" << std::endl;
-    std::cout << "Description : Se déplace en position 1, sélectionne le caractère 2, et le déselectionne" << std::endl;
+    std::cout << "Description : Sélectionne tout, puis copie" << std::endl;
     result = Tools::test(test_case);
     std::cout << "Error Code : " << result << std::endl;
     std::cout << "---- test finished ----" << std::endl;
