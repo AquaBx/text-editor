@@ -96,38 +96,38 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
             }
 
             TTF_SizeText(font, word.c_str(), &w, &h);
-            
-            while (w + x > width)
+            if (w + x > width)
             {
-                std::size_t cutIndex = word.length();
-                int currentWidth = 0;
-
-                for (std::size_t i = 0; i < word.length(); ++i)
-                {
-                    int tempWidth = 0;
-                    TTF_SizeText(font, word.substr(0, i + 1).c_str(), &tempWidth, nullptr);
-                    if (tempWidth + x > width)
-                    {
-                        cutIndex = i;
-                        break;
-                    }
-                }
-
-                std::string visiblePart = word.substr(0, cutIndex);
-                Texture(visiblePart, font, renderer, x, y).draw(renderer);
-
+                word = '\r' + word;
+                cursorEnd += 1;
+                cursorStart += 1;
                 y += h;
-                x = space_size_x;
-
-                word = word.substr(cutIndex);
-                TTF_SizeText(font, word.c_str(), &w, &h);
+                x = 0;
             }
 
-            if (!word.empty())
+            if (cursorStart <= 0 + word.length())
             {
-                Texture(word, font, renderer, x, y).draw(renderer);
-                x += w;
+                int ax = 0;
+                int aw = 0;
+                TTF_SizeText(font, word.substr(0, cursorStart).c_str(), &ax, nullptr);
+                if (cursorEnd <= 0 + word.length())
+                {
+                    TTF_SizeText(font, word.substr(cursorStart, cursorEnd - cursorStart).c_str(), &aw, nullptr);
+                }
+                else
+                {
+                    TTF_SizeText(font, word.substr(cursorStart, word.length()).c_str(), &aw, nullptr);
+                    cursorStart += word.length() - cursorStart;
+                }
+                drawCursor(x + ax, y, aw, h);
             }
+
+            cursorStart -= word.length();
+            cursorEnd -= word.length();
+
+            Texture(word, font, renderer, x, y).draw(renderer);
+
+            x += w;
         }
         x = 0;
         y += h;
