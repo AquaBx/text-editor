@@ -119,7 +119,7 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
             break;
         case (SDLK_RIGHT):
             MoveCursorCommand(*this, selectionStart + (shift ? 0 : 1),
-                              (selectionEnd == textBuffer.length() ? selectionEnd : selectionEnd + 1)).execute();
+                              (selectionEnd > textBuffer.length() ? selectionEnd : selectionEnd + 1)).execute();
         default: ;
         }
     }
