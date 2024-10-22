@@ -17,14 +17,13 @@ void test_case()
     unsigned long long start = editor.getSelectionStart();
     unsigned long long end = editor.getSelectionEnd();
 
-    Tools::assert_equals(start, end, "start et end ne sont pas égaux à l'init");
+    Tools::assert_equals(start, end, "1 : start et end ne sont pas égaux à l'initialisation");
 
     editor.keyPressed(false, false, false, 'a');
-
-    Tools::assert_equals(editor.getSelectionStart(), start + 1, "Position du curseur pas bon");
-    Tools::assert_equals(editor.getSelectionEnd(), end + 1, "Position du curseur pas bon");
-
-    Tools::assert_equals(editor.getTextBuffer(), std::string("aThis is a test"), "Textepas bon");
+    
+    Tools::assert_equals(editor.getSelectionStart(), start + 1, "2 : Mauvaise position du curseur de début");
+    Tools::assert_equals(editor.getSelectionEnd(), end + 1, "3 : Mauvaise position du curseur de fin");
+    Tools::assert_equals(editor.getTextBuffer(), std::string("aThis is a test"), "4 : Mauvais texte : affiche '" + editor.getTextBuffer() + "'" );
 }
 
 int main()

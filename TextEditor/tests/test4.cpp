@@ -18,10 +18,12 @@ void test_case()
 
     unsigned long long start = editor.getSelectionStart();
     unsigned long long end = editor.getSelectionEnd();
-    Tools::assert_equals(start, (unsigned long long) 0, "1 : La sélection ne commence pas au début du texte.");
+
+    Tools::assert_equals(start, (unsigned long long) 0, "1 : La sélection ne commence pas au début du texte. Actual: " + std::to_string(start) + "; Expected: " + std::to_string(0));
     Tools::assert_equals(end, editor.getTextBuffer().length(), "2 : La sélection ne couvre pas tout le texte.");
 
     editor.keyPressed(true, false, false, 'c');
+
     Tools::assert_equals(editor.getClipboard(), editor.getTextBuffer(), "3 : Le presse-papier ne contient pas tout le texte.");
     Tools::assert_equals(editor.getSelectionStart(), start, "4 : Le début de la sélection a changé après la copie.");
     Tools::assert_equals(editor.getSelectionEnd(), end, "5 : La fin de la sélection a changé après la copie.");

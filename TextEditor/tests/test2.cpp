@@ -19,13 +19,13 @@ void test_case()
     unsigned long long start = editor.getSelectionStart();
     unsigned long long end = editor.getSelectionEnd();
 
-    Tools::assert_equals(start, end, "start et end ne sont pas égaux à l'init");
-    Tools::assert_equals(start, static_cast<unsigned long long>(14), "start n'est pas à la fin de la string à l'init");
+    Tools::assert_equals(start, end, "1 : start et end ne sont pas égaux à l'initialisation");
+    Tools::assert_equals(start, static_cast<unsigned long long>(14), "1 : start n'est pas à la fin de la string à l'initialisation");
 
     editor.keyPressed(false, false, false, SDLK_RIGHT);
 
-    Tools::assert_equals(editor.getSelectionStart(), start, "start a bougé malgré qu'il soit à la fin de la string");
-    Tools::assert_equals(editor.getSelectionEnd(), end, "end a bougé malgré qu'il soit à la fin de la string");
+    Tools::assert_equals(editor.getSelectionStart(), start, "3 : start a bougé malgré qu'il soit à la fin de la string");
+    Tools::assert_equals(editor.getSelectionEnd(), end, "4 : end a bougé malgré qu'il soit à la fin de la string");
 }
 
 int main()
