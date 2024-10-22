@@ -14,5 +14,6 @@ void DeleteTextCommand::execute()
         textEditor.setTextBuffer(textEditor.getTextBuffer().erase(start, end - start));
         textEditor.setSelectionStart(start);
         textEditor.setSelectionEnd(start);
+        textEditor.setPosition(start);
     }
 }

@@ -29,6 +29,16 @@ void TextEditor::setClipboard(std::string c)
     clipboard = c;
 }
 
+unsigned long long TextEditor::getPosition() const
+{
+    return position;
+}
+
+void TextEditor::setPosition(const unsigned long long p)
+{
+    position = p;
+}
+
 unsigned long long TextEditor::getSelectionStart() const
 {
     return selectionStart;
@@ -100,6 +110,8 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
         case 'a':
         case 'A':
             MoveCursorCommand(*this, 0, textBuffer.length()).execute();
+            position = 0;
+            break;
         default: ;
         }
     }
@@ -109,22 +121,45 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
         {
         case (SDLK_UP):
             MoveCursorCommand(*this, 0, 0).execute();
+            position = 0;
             break;
         case (SDLK_DOWN):
             MoveCursorCommand(*this, textBuffer.length(), textBuffer.length()).execute();
+            position = textBuffer.length();
             break;
         case (SDLK_LEFT):
-            if (shift) {
-                if (selectionStart > 0) {
-                    MoveCursorCommand(*this, selectionStart, selectionEnd - 1).execute();
+            if (selectionStart > 0) {
+                if (shift) {
+                    if (position == selectionStart) {
+                        MoveCursorCommand(*this, selectionStart - 1, selectionEnd).execute();
+                        position = selectionStart;
+                    } else if (position == selectionEnd) {
+                        MoveCursorCommand(*this, selectionStart, selectionEnd - 1).execute();
+                        position = selectionEnd;
+                    }
+                } else {
+                    MoveCursorCommand(*this, selectionStart - 1, selectionStart - 1).execute();
+                    position = selectionStart;
                 }
-            } else {
-                MoveCursorCommand(*this, (selectionStart == 0 ? 0 : selectionStart - 1), (selectionStart == 0 ? 0 : selectionStart - 1)).execute();
             }
             break;
         case (SDLK_RIGHT):
-            MoveCursorCommand(*this, selectionStart + (shift ? 0 : 1),
-                              (selectionEnd > textBuffer.length() ? selectionEnd : selectionEnd + 1)).execute();
+            if (selectionEnd < textBuffer.length()) {
+                if (shift) {
+                    if (position == selectionEnd) {
+                        MoveCursorCommand(*this, selectionStart, selectionEnd + 1).execute();
+                        position = selectionEnd;
+                    }
+                    else if (position == selectionStart) {
+                        MoveCursorCommand(*this, selectionStart + 1, selectionEnd).execute();
+                        position = selectionStart;
+                    }
+                } else {
+                    MoveCursorCommand(*this, selectionEnd + 1, selectionEnd + 1).execute();
+                    position = selectionEnd;
+                }
+            }
+            break;
         default: ;
         }
     }

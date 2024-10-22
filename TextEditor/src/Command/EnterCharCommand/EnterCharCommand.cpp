@@ -20,13 +20,12 @@ void EnterCharCommand::execute()
         std::string textBuffer = textEditor.getTextBuffer();
         if (start == end) {
             textBuffer.insert(start, 1, character);
-            textEditor.setSelectionStart(start+1);
-            textEditor.setSelectionEnd(end+1);
         } else {
             textBuffer.replace(start, end - start, 1, character);
-            textEditor.setSelectionStart(start+1);
-            textEditor.setSelectionEnd(start+1);
         }
+        textEditor.setSelectionStart(start+1);
+        textEditor.setSelectionEnd(start+1);
+        textEditor.setPosition(start);
         textEditor.setTextBuffer(textBuffer);
     }
 }

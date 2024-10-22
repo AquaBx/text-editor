@@ -23,4 +23,5 @@ void PasteCommand::execute()
     const unsigned long long position = start + clipboardContent.length();
     textEditor.setSelectionStart(position);
     textEditor.setSelectionEnd(position);
+    textEditor.setPosition(position);
 }

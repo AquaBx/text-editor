@@ -15,5 +15,6 @@ void CutCommand::execute()
         textEditor.setClipboard(selectedText);
         textEditor.setTextBuffer(textEditor.getTextBuffer().erase(start, end - start));
         textEditor.setSelectionEnd(textEditor.getSelectionStart());
+        textEditor.setPosition(textEditor.getSelectionStart());
     }
 }

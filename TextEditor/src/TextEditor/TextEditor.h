@@ -6,9 +6,11 @@
 
 class TextEditor
 {
+private:       
     Command* command = nullptr;
     std::string textBuffer;
     std::string clipboard;
+    unsigned long long position = 0;
     unsigned long long selectionStart = 0;
     unsigned long long selectionEnd = 0;
 public :
@@ -17,6 +19,8 @@ public :
     void setTextBuffer(std::string t);
     std::string getClipboard();
     void setClipboard(std::string c);
+    unsigned long long getPosition() const;
+    void setPosition(unsigned long long p);
     unsigned long long getSelectionStart() const;
     void setSelectionStart(unsigned long long start);
     unsigned long long getSelectionEnd() const;
