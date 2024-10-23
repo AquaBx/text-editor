@@ -1,5 +1,8 @@
 #include "TextEditor.h"
 
+#include <iostream>
+#include <ostream>
+
 #include "../Command/CopyCommand/CopyCommand.h"
 #include "../Command/CutCommand/CutCommand.h"
 #include "../Command/DeleteTextCommand/DeleteTextCommand.h"
@@ -95,21 +98,20 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
     {
         switch (key)
         {
-        case 'c':
-        case 'C':
+        case SDLK_c:
             CopyCommand(*this, selectionStart, selectionEnd).execute();
             break;
-        case 'v':
-        case 'V':
+        case SDLK_v:
             PasteCommand(*this, selectionStart, selectionEnd).execute();
             break;
-        case 'x':
-        case 'X':
+        case SDLK_x:
             CutCommand(*this, selectionStart, selectionEnd).execute();
             break;
-        case 'a':
-        case 'A':
+        case SDLK_a:
             MoveCursorCommand(*this, 0, textBuffer.length()).execute();
+            std::cout << textBuffer << std::endl;
+            std::cout << selectionStart << std::endl;
+            std::cout << selectionEnd << std::endl;
             position = 0;
             break;
         default: ;
