@@ -6,7 +6,7 @@ EnterCharCommand::~EnterCharCommand() = default;
 
 EnterCharCommand::EnterCharCommand(TextEditor& textEditor, const std::size_t start, const std::size_t end,
                                    const char character)
-    : textEditor(textEditor),
+    : Command(textEditor),
       start(start),
       end(end),
       character(character)

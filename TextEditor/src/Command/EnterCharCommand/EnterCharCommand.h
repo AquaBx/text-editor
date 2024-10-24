@@ -5,7 +5,6 @@
 
 class EnterCharCommand final : public Command
 {
-    TextEditor& textEditor;
     std::size_t start, end;
     char character;
 

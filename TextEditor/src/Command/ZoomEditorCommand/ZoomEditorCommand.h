@@ -5,7 +5,6 @@
 
 class ZoomEditorCommand final : public Command
 {
-    TextEditor& textEditor;
     float zoom;
 
 public :

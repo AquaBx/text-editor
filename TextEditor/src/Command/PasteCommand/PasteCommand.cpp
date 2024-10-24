@@ -4,7 +4,7 @@
 PasteCommand::~PasteCommand() = default;
 
 PasteCommand::PasteCommand(TextEditor& textEditor, const std::size_t start, const std::size_t end)
-    : textEditor(textEditor),
+    : Command(textEditor),
       start(start),
       end(end)
 {

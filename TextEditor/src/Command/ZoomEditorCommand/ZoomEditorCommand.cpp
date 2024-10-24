@@ -3,16 +3,14 @@
 
 ZoomEditorCommand::~ZoomEditorCommand() = default;
 
-ZoomEditorCommand::ZoomEditorCommand(TextEditor& textEditor, float zoom)
-    : textEditor(textEditor),
-      zoom(zoom)
+ZoomEditorCommand::ZoomEditorCommand(TextEditor& textEditor, const float zoom)
+    : Command(textEditor), zoom(zoom)
 {
 }
 
 void ZoomEditorCommand::execute()
 {
-  float newZoom = textEditor.getFontScale()+zoom;
-    if (newZoom >= 0.5 && newZoom <= 1.5) {
+    if (const float newZoom = textEditor.getFontScale()+zoom; newZoom >= 0.5 && newZoom <= 1.5) {
         textEditor.setFontScale(newZoom);
     }
 }

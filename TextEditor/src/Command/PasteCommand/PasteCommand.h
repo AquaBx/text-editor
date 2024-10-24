@@ -5,7 +5,6 @@
 
 class PasteCommand final : public Command
 {
-    TextEditor& textEditor;
     std::size_t start, end;
 
 public :

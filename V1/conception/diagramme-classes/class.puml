@@ -1,96 +1,123 @@
 @startuml
 interface Command {
-    + execute() : void
-}
-
-class MoveCursorCommand {
     - textEditor : TextEditor&
-    - start : unsigned long long
-    - end : unsigned long long
-    + MoveCursorCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end)
-    + ~MoveCursorCommand()
-}
-
-class EnterCharCommand {
-    - textEditor : TextEditor&
-    - start : unsigned long long
-    - end : unsigned long long
-    - character : char
-    + EnterCharCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end, \nchar character) 
-    + ~EnterCharCommand()
-}
-
-class DeleteTextCommand {
-    - textEditor : TextEditor&
-    - start : unsigned long long
-    - end : unsigned long long
-    + DeleteTextCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end)
-    + ~DeleteTextCommand()
+    + Command(TextEditor& textEditor)
+    + ~Command()
+    + void execute()
 }
 
 class CopyCommand {
-    - textEditor : TextEditor&
-    - start : unsigned long long
-    - end : unsigned long long
-    + CopyCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end)
+    - std::size_t start
+    - std::size_t end
+    + CopyCommand(\n\tTextEditor& textEditor,\n\t std::size_t start,\n\t std::size_t end\n)
     + ~CopyCommand()
 }
 
-class PasteCommand {
-    - textEditor : TextEditor&
-    - start : unsigned long long
-    - end : unsigned long long
-    + PasteCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end)
-    + ~PasteCommand()
-}
-
 class CutCommand {
-    - textEditor : TextEditor&
-    - start : unsigned long long
-    - end : unsigned long long
-    + CutCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end)
+    - std::size_t start
+    - std::size_t end
+    + CutCommand(\n\tTextEditor& textEditor,\n\t std::size_t start,\n\t std::size_t end\n)
     + ~CutCommand()
 }
 
+class DeleteTextCommand {
+    - std::size_t start
+    - std::size_t end
+    + DeleteTextCommand(\n\tTextEditor& textEditor,\n\t std::size_t start,\n\t std::size_t end\n)
+    + ~DeleteTextCommand()
+}
+
+class EnterCharCommand {
+    - std::size_t start
+    - std::size_t end
+    - char character
+    + EnterCharCommand(\n\tTextEditor& textEditor,\n\t std::size_t start,\n\t std::size_t end,\n\t char character\n)
+    + ~EnterCharCommand()
+}
+
+class MoveCursorCommand {
+    - std::size_t start
+    - std::size_t end
+    - std::size_t position
+    + MoveCursorCommand(\n\tTextEditor& textEditor,\n\t std::size_t position,\n\t std::size_t start,\n\t std::size_t end\n)
+    + ~MoveCursorCommand()
+}
+
+class PasteCommand {
+    - std::size_t start
+    - std::size_t end
+    + PasteCommand(\n\tTextEditor& textEditor,\n\t std::size_t start,\n\t std::size_t end\n)
+    + ~PasteCommand()
+}
+
+class ZoomEditorCommand {
+    - float zoom
+    + ZoomEditorCommand(\n\tTextEditor& textEditor,\n\t float zoom\n)
+    + ~ZoomEditorCommand()
+}
+
 class Client {
-    - textEditor : TextEditor
-    - renderer : Renderer
-    - pollEvent() : void
-    + Client(int width, int height)
-    + run()
+   - TextEditor textEditor
+   - Renderer renderer
+   - bool quit
+   - void pollEvent()
+   + Client(int width, int height)
+   + void run()
 }
 
 class Renderer {
-    - int width : 
-    - int height : 
-
-    - TTF_Font* font : 
-    - SDL_Renderer* renderer{} : 
-    - SDL_Window* window{} : 
-
-    + void drawText(std::string text, size_t cursorStart, size_t cursorEnd) const : 
-    + void drawCursor(int x, int y, int w, int h) const : 
-    + void render() const : 
-    + Renderer(int width, int height) : 
-    + void clear() const : 
-    + void resize(int width, int height) : 
-
-    + ~Renderer() : 
+    - int width
+    - int height
+    - TTF_Font* font
+    - SDL_Renderer* renderer{}
+    - SDL_Window* window{}
+    + void drawText(std::string text, size_t cursorStart, size_t cursorEnd, float font_scale) const
+    + void drawCursor(int x, int y, int w, int h) const
+    + void render() const
+    + Renderer(int width, int height)
+    + void clear() const
+    + void resize(int width, int height)
+    + ~Renderer()
 }
 
 class TextEditor {
-    - command : Command
-    - textBuffer : string
-    - clipboard : string
-    - selectionStart : int
-    - selectionEnd : int
-    + draw(renderer : Renderer) : void
-    + setCommand(cmd : Command) : void
-    + executeCommand() : void
-    + undoCommand() : void
-    +keyPressedctrl : boolean, alt : boolean, Key : string
+    - Command* command
+    - std::string textBuffer
+    - std::string clipboard
+    - std::size_t positio
+    - std::size_t selectionStart
+    - std::size_t selectionEnd
+    - float fontScale
+    - std::string getTextBuffer()
+    - void setTextBuffer(std::string t)
+    - std::string getClipboard()
+    - void setClipboard(std::string c)
+    - std::size_t getPosition() const
+    - void setPosition(std::size_t p)
+    - std::size_t getSelectionStart() const
+    - void setSelectionStart(std::size_t start)
+    - std::size_t getSelectionEnd() const
+    - void setSelectionEnd(std::size_t end)
+    - float getFontScale() const
+    - void setFontScale(float font_scale)
+    + void draw(const Renderer& renderer) const
+    + void setCommand(Command* cmd)
+    + void keyPressed(bool ctrl, bool alt, bool shift, char key)
+    + void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key)
+    + void executeCommand()
+    + void undoCommand()
+    + ~TextEditor()
+    + TextEditor()
 }
 
+class Texture {
+    - SDL_Texture* texture
+    - SDL_Rect rect
+    - SDL_Surface* surface
+    + Texture(const std::string& text, TTF_Font* font, SDL_Renderer* renderer, int x, int y)
+    + void draw(SDL_Renderer* renderer) const
+    + ~Texture()
+}
 
 Command <|.. MoveCursorCommand
 Command <|.. EnterCharCommand
@@ -98,9 +125,10 @@ Command <|.. DeleteTextCommand
 Command <|.. CopyCommand
 Command <|.. PasteCommand
 Command <|.. CutCommand
+Command <|.. ZoomEditorCommand
 
-TextEditor o--> Command
-Client --> Renderer
-
-Client --> TextEditor
+Client *--> TextEditor
+TextEditor o---> Command
+Renderer --> Texture
+Client *--> Renderer
 @enduml

@@ -4,7 +4,6 @@
 #include "../../TextEditor/TextEditor.h"
 
 class DeleteTextCommand final : public Command {
-    TextEditor& textEditor;
     std::size_t start, end;
 
 public :

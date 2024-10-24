@@ -4,7 +4,7 @@
 CopyCommand::~CopyCommand() = default;
 
 CopyCommand::CopyCommand(TextEditor& textEditor, const std::size_t start,
-                         const std::size_t end): textEditor(textEditor), start(start), end(end)
+                         const std::size_t end): Command(textEditor), start(start), end(end)
 {
 }
 
