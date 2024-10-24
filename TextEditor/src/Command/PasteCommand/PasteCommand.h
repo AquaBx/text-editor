@@ -6,10 +6,10 @@
 class PasteCommand final : public Command
 {
     TextEditor& textEditor;
-    unsigned long long start, end;
+    std::size_t start, end;
 
 public :
-    explicit PasteCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end);
+    explicit PasteCommand(TextEditor& textEditor, std::size_t start, std::size_t end);
     ~PasteCommand() override;
     void execute() override;
 };

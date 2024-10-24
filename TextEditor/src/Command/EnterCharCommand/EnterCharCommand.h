@@ -6,11 +6,11 @@
 class EnterCharCommand final : public Command
 {
     TextEditor& textEditor;
-    unsigned long long start, end;
+    std::size_t start, end;
     char character;
 
 public :
-    explicit EnterCharCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end, char character);
+    explicit EnterCharCommand(TextEditor& textEditor, std::size_t start, std::size_t end, char character);
     void execute() override;
 
     ~EnterCharCommand() override;

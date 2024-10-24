@@ -19,7 +19,7 @@ class Renderer
     SDL_Window* window{};
 
 public:
-    void drawText(std::string text, size_t cursorStart, size_t cursorEnd) const;
+    void drawText(std::string text, size_t cursorStart, size_t cursorEnd, float font_scale) const;
     void drawCursor(int x, int y, int w, int h) const;
     void render() const;
     Renderer(int width, int height);

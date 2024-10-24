@@ -8,7 +8,8 @@
 
 Renderer::Renderer(const int width, const int height) : width(width), height(height)
 {
-    const char* fontPath = "resources/OpenSans.ttf";
+    //const char* fontPath = "resources/OpenSans.ttf";
+    const char* fontPath = "resources/AzeretMono.ttf";
 
     SDL_Init(SDL_INIT_TIMER | SDL_INIT_VIDEO);
     SDL_CreateWindowAndRenderer(width, height, SDL_WINDOW_RESIZABLE, &window, &renderer);
@@ -48,13 +49,14 @@ Renderer::~Renderer()
     SDL_Quit();
 }
 
-void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) const
+void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd, float font_scale) const
 {
     int x = 0;
     int y = 0;
 
     int space_size_x = 0;
     int space_size_y = 0;
+    TTF_SetFontSize(font, static_cast<int>(30 * font_scale) );
     TTF_SizeText(font, " ", &space_size_x, &space_size_y);
 
     // ceci est juste pour décalé à droite la première ligne
@@ -78,6 +80,7 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd) 
         }
         int w = 0;
         int h = space_size_y;
+
 
         while (!ligne.empty())
         {

@@ -10,24 +10,29 @@ private:
     Command* command = nullptr;
     std::string textBuffer;
     std::string clipboard;
-    unsigned long long position = 0;
-    unsigned long long selectionStart = 0;
-    unsigned long long selectionEnd = 0;
-public :
+    std::size_t position = 0;
+    std::size_t selectionStart = 0;
+    std::size_t selectionEnd = 0;
+    float fontScale = 1.0f;
+
+public:
+    float getFontScale() const;
+    void setFontScale(float font_scale);
+
     void draw(const Renderer& renderer) const;
     std::string getTextBuffer();
     void setTextBuffer(std::string t);
     std::string getClipboard();
     void setClipboard(std::string c);
-    unsigned long long getPosition() const;
-    void setPosition(unsigned long long p);
-    unsigned long long getSelectionStart() const;
-    void setSelectionStart(unsigned long long start);
-    unsigned long long getSelectionEnd() const;
-    void setSelectionEnd(unsigned long long end);
+    std::size_t getPosition() const;
+    void setPosition(std::size_t p);
+    std::size_t getSelectionStart() const;
+    void setSelectionStart(std::size_t start);
+    std::size_t getSelectionEnd() const;
+    void setSelectionEnd(std::size_t end);
     void setCommand(Command* cmd);
-    void keyPressed(const bool ctrl, const bool alt, const bool shift, const char key);
-    void keyPressed(const bool ctrl, const bool alt, const bool shift, const SDL_KeyCode key);
+    void keyPressed(bool ctrl, bool alt, bool shift, char key);
+    void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key);
     void executeCommand();
     void undoCommand();
     ~TextEditor();

@@ -11,8 +11,8 @@ add_subdirectory(libs/SDL_ttf)
 include_directories(libs/SDL_ttf)
 
 set(SourcesFiles
-        src/Renderer/Renderer.cpp
         src/Renderer/Renderer.h
+        src/Renderer/Renderer.cpp
         src/Command/Command.h
         src/Command/CopyCommand/CopyCommand.h
         src/Command/CopyCommand/CopyCommand.cpp
@@ -26,16 +26,16 @@ set(SourcesFiles
         src/Command/MoveCursorCommand/MoveCursorCommand.cpp
         src/Command/PasteCommand/PasteCommand.h
         src/Command/PasteCommand/PasteCommand.cpp
+        src/Command/ZoomEditorCommand/ZoomEditorCommand.h
+        src/Command/ZoomEditorCommand/ZoomEditorCommand.cpp
         src/Client/Client.h
         src/Client/Client.cpp
         src/TextEditor/TextEditor.h
         src/TextEditor/TextEditor.cpp
-        src/Texture/Texture.cpp
         src/Texture/Texture.h
-        src/Command/Command.h
+        src/Texture/Texture.cpp
+        src/Debug/Debug.h
         src/Debug/Debug.cpp
-        src/Debug/Debug.h
-        src/Debug/Debug.h
 )
 
 # Build

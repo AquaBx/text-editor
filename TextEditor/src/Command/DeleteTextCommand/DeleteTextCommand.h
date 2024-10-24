@@ -5,10 +5,10 @@
 
 class DeleteTextCommand final : public Command {
     TextEditor& textEditor;
-    unsigned long long start, end;
+    std::size_t start, end;
 
 public :
-    explicit DeleteTextCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end);
+    explicit DeleteTextCommand(TextEditor& textEditor, std::size_t start, std::size_t end);
     ~DeleteTextCommand() override;
     void execute() override;
 };

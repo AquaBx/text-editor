@@ -10,6 +10,7 @@
 #include "../Command/EnterCharCommand/EnterCharCommand.h"
 #include "../Command/MoveCursorCommand/MoveCursorCommand.h"
 #include "../Command/PasteCommand/PasteCommand.h"
+#include "../Command/ZoomEditorCommand/ZoomEditorCommand.h"
 
 TextEditor::TextEditor() = default;
 
@@ -63,9 +64,19 @@ void TextEditor::setSelectionEnd(const std::size_t end)
     selectionEnd = end;
 }
 
+float TextEditor::getFontScale() const
+{
+    return fontScale;
+}
+
+void TextEditor::setFontScale(const float font_scale)
+{
+    fontScale = font_scale;
+}
+
 void TextEditor::draw(const Renderer& renderer) const
 {
-    renderer.drawText(textBuffer, selectionStart, selectionEnd);
+    renderer.drawText(textBuffer, selectionStart, selectionEnd, fontScale);
 }
 
 void TextEditor::setCommand(Command* cmd)
@@ -110,6 +121,12 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
             break;
         case SDLK_a:
             MoveCursorCommand(*this,0, 0, textBuffer.length()).execute();
+            break;
+        case SDLK_KP_MINUS:
+            ZoomEditorCommand(*this,-0.25).execute();
+            break;
+        case SDLK_KP_PLUS:
+            ZoomEditorCommand(*this,0.25).execute();
             break;
         default: ;
         }
