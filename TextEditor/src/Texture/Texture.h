@@ -19,7 +19,7 @@ class Texture
 public:
     Texture(const std::string& text, TTF_Font* font, SDL_Renderer* renderer, int x, int y)
     {
-        constexpr SDL_Color textColor = {255, 255, 255, 0};
+        constexpr SDL_Color textColor = {8, 9, 10, 0};
         surface = TTF_RenderText_Blended(font, text.c_str(), textColor);
         texture = SDL_CreateTextureFromSurface(renderer, surface);
 

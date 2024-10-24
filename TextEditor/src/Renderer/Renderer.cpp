@@ -28,7 +28,7 @@ Renderer::Renderer(const int width, const int height) : width(width), height(hei
 
 void Renderer::clear() const
 {
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0);
+    SDL_SetRenderDrawColor(renderer, 255, 255, 255, 0);
     SDL_RenderClear(renderer);
 }
 
@@ -149,6 +149,6 @@ void Renderer::drawCursor(int x, int y, int w, int h) const
 
     const SDL_Rect r{x, y, w, h};
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 255, 100);
+    SDL_SetRenderDrawColor(renderer, 128, 192, 255, 255);
     SDL_RenderFillRect(renderer, &r);
 }

@@ -6,10 +6,10 @@
 class MoveCursorCommand final : public Command
 {
     TextEditor& textEditor;
-    unsigned long long start, end;
+    std::size_t start, position, end;
 
 public :
-    explicit MoveCursorCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end);
+    explicit MoveCursorCommand(TextEditor& textEditor, std::size_t position, std::size_t start, std::size_t end);
 
     void execute() override;
 

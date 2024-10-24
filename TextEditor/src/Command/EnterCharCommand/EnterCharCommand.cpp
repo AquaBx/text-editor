@@ -25,7 +25,7 @@ void EnterCharCommand::execute()
         }
         textEditor.setSelectionStart(start+1);
         textEditor.setSelectionEnd(start+1);
-        textEditor.setPosition(start);
+        textEditor.setPosition(start+1);
         textEditor.setTextBuffer(textBuffer);
     }
 }
