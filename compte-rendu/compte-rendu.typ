@@ -136,15 +136,18 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
 
 #set text(8.49pt)
 #table(
-  columns: (auto, auto, auto, auto),
+  columns: (78pt, 170pt, auto, auto),
   inset: 3pt,
   
   // Headers
   [*Cas \d'utilisation*], [*Scénario nominal*], [*Scénario alternatif*], [*Scénario exception*],
 
   [Déplacer le curseur], [
-    1. L'utilisateur #highlight("clique sur l'écran") ou appuie sur les touches directionnelles.
-    2. Le curseur se déplace sa nouvelle position est affichée.
+    1. L'utilisateur appuie sur les touches directionnelles.
+      - gauche/droite pour aller à gauche/droite
+      - bas/haut pour aller à début/à la fin
+    2. Le curseur se déplace
+    3. Sa nouvelle position est affichée.
   ], [
   ], [
     1. La position cible du curseur est invalide (en dehors du texte) : le curseur s'arrête à la limite valide.
@@ -152,16 +155,18 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
 
   [Entrer du texte], [
     1. L'utilisateur saisit des caractères.
-    2. Les caractères sont ajoutés à la position du curseur et la zone de texte est mise à jour avec le nouveau contenu.
+    2. Les caractères sont ajoutés à la position du curseur
+    3. La zone de texte est mise à jour.
   ], [
     1. Le texte est ajouté à une sélection existante : remplace la sélection.
   ], [
-    1. Le buffer de texte est plein : impossible d'ajouter plus de texte.
+    1. Caractère non autorisé (caractères spéciaux) : remplacement par dièse
   ],
 
   [Effacer du texte], [
     1. L'utilisateur appuie sur la touche "Supprimer" ou "Backspace".
-    2. Le caractère ou le texte sélectionné est supprimé et la zone de texte est mise à jour.
+    2. Le caractère ou le texte sélectionné est supprimé
+    3. a zone de texte est mise à jour.
   ], [
     1. Aucun texte à supprimer (curseur au début du texte).
   ], [
@@ -169,11 +174,10 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
   ],
 
   [Sélectionner du texte], [
-    1. L'utilisateur #highlight("clique et fait glisser la souris") ou utilise Shift + touches directionnelles.
+    1. L'utilisateur utilise Shift + touches directionnelles. (gauche/droite : selectionne à gauche/droite)
     2. La portion du texte souhaitée est sélectionnée.
   ], [
-    1. L'utilisateur peut #highlight("double-cliquer pour sélectionner un mot entier").
-    2. L'utilisateur peut sélectionner tout le texte avec Ctrl + A
+    1. L'utilisateur peut sélectionner tout le texte avec Ctrl + A
   ], [
     1. Tentative de sélectionner au-delà des limites du texte : sélection seulement jusqu'aux limites autorisées
   ],
@@ -204,7 +208,6 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
   ], [
     1. Aucun texte sélectionné : vide le presse-papier et rien n'est copié.
   ], [
-    1. Le presse-papier est plein.
   ]
 )
 
@@ -228,7 +231,14 @@ Voici la structure exposée par ce design pattern :
 
 Cette structure est très générale. Nous devons l'adapter à notre problème. Pour ce faire, nous avons du comprendre la structure ci-dessus. Une fois cela fait, nous avons pu la customiser pour produire notre propre diagramme de classes modélisant notre problème. Voici comment nous l'avons adapté :
 
-#highlight("mettre diagramme + expliquer nos choix en se référant au design pattern")
+#figure(
+  image("../V1/conception/diagramme-classes/class.png"),
+  caption: [
+    Diagramme de classe basé sur le Design Pattern Command pour la Version 1
+  ],
+)
+
+Comme vous pouvez le constater, nous avons repris la même structure que le Design Pattern Command, adapté au langage de programmation choisi. Nous avons choisi C++ qui nous semblait être un bon choix étant donné que nous pouvons utiliser la SDL.
 
 #pagebreak()
 == Diagrammes de séquence

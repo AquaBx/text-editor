@@ -1,45 +1,81 @@
-@startuml classDiagram
+@startuml
 interface Command {
     + execute() : void
-    + undo() : void
 }
 
 class MoveCursorCommand {
+    - textEditor : TextEditor&
+    - start : unsigned long long
+    - end : unsigned long long
+    + MoveCursorCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end)
+    + ~MoveCursorCommand()
 }
 
 class EnterCharCommand {
+    - textEditor : TextEditor&
+    - start : unsigned long long
+    - end : unsigned long long
+    - character : char
+    + EnterCharCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end, \nchar character) 
+    + ~EnterCharCommand()
 }
 
 class DeleteTextCommand {
+    - textEditor : TextEditor&
+    - start : unsigned long long
+    - end : unsigned long long
+    + DeleteTextCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end)
+    + ~DeleteTextCommand()
 }
 
 class CopyCommand {
+    - textEditor : TextEditor&
+    - start : unsigned long long
+    - end : unsigned long long
+    + CopyCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end)
+    + ~CopyCommand()
 }
 
 class PasteCommand {
+    - textEditor : TextEditor&
+    - start : unsigned long long
+    - end : unsigned long long
+    + PasteCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end)
+    + ~PasteCommand()
 }
 
 class CutCommand {
+    - textEditor : TextEditor&
+    - start : unsigned long long
+    - end : unsigned long long
+    + CutCommand(TextEditor& textEditor, \nunsigned long long start, \nunsigned long long end)
+    + ~CutCommand()
 }
 
 class Client {
     - textEditor : TextEditor
     - renderer : Renderer
-    - event : SDL_event
     - pollEvent() : void
+    + Client(int width, int height)
     + run()
 }
 
 class Renderer {
-    - renderer: SDL_Renderer;
-    - width : int
-    - height : int
-    - fontPath : string
-    - resize() : void
+    - int width : 
+    - int height : 
 
-    + Renderer(...)
-    + clear()
-    + ~Renderer()
+    - TTF_Font* font : 
+    - SDL_Renderer* renderer{} : 
+    - SDL_Window* window{} : 
+
+    + void drawText(std::string text, size_t cursorStart, size_t cursorEnd) const : 
+    + void drawCursor(int x, int y, int w, int h) const : 
+    + void render() const : 
+    + Renderer(int width, int height) : 
+    + void clear() const : 
+    + void resize(int width, int height) : 
+
+    + ~Renderer() : 
 }
 
 class TextEditor {
@@ -67,5 +103,4 @@ TextEditor o--> Command
 Client --> Renderer
 
 Client --> TextEditor
-
 @enduml

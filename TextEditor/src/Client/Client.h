@@ -9,11 +9,10 @@
 class Client {
     TextEditor textEditor;
     Renderer renderer;
-    //SDL_Event event;
     bool quit = false;
     void pollEvent();
 
 public:
-    Client(int width,int height);
+    Client(int width, int height);
     void run();
 };

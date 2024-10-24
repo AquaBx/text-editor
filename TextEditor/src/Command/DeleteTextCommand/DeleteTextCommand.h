@@ -10,5 +10,5 @@ class DeleteTextCommand final : public Command {
 public :
     explicit DeleteTextCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end);
     ~DeleteTextCommand() override;
-        void execute() override;
+    void execute() override;
 };

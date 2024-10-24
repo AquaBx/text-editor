@@ -10,5 +10,5 @@ class CopyCommand final : public Command {
 public :
     explicit CopyCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end);
     ~CopyCommand() override;
-        void execute() override;
+    void execute() override;
 };

@@ -10,5 +10,5 @@ class CutCommand final : public Command {
 public :
     explicit CutCommand(TextEditor& textEditor, unsigned long long start, unsigned long long end);
     ~CutCommand() override;
-        void execute() override;
+    void execute() override;
 };
