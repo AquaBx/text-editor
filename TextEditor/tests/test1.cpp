@@ -28,10 +28,9 @@ void test_case()
 
 int main()
 {
-    int result;
     std::cout << "--------- test --------" << std::endl;
     std::cout << "Description : ajouter un caractère ajoute la lettre et décale de 1 notre curseur" << std::endl;
-    result = Tools::test(test_case);
+    const int result = Tools::test(test_case);
     std::cout << "Error Code : " << result << std::endl;
     std::cout << "---- test finished ----" << std::endl;
 

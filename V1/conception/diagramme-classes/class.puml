@@ -88,18 +88,18 @@ class TextEditor {
     - std::size_t selectionStart
     - std::size_t selectionEnd
     - float fontScale
-    - std::string getTextBuffer()
-    - void setTextBuffer(std::string t)
-    - std::string getClipboard()
-    - void setClipboard(std::string c)
-    - std::size_t getPosition() const
-    - void setPosition(std::size_t p)
-    - std::size_t getSelectionStart() const
-    - void setSelectionStart(std::size_t start)
-    - std::size_t getSelectionEnd() const
-    - void setSelectionEnd(std::size_t end)
-    - float getFontScale() const
-    - void setFontScale(float font_scale)
+    + std::string getTextBuffer()
+    + void setTextBuffer(std::string t)
+    + std::string getClipboard()
+    + void setClipboard(std::string c)
+    + std::size_t getPosition() const
+    + void setPosition(std::size_t p)
+    + std::size_t getSelectionStart() const
+    + void setSelectionStart(std::size_t start)
+    + std::size_t getSelectionEnd() const
+    + void setSelectionEnd(std::size_t end)
+    + float getFontScale() const
+    + void setFontScale(float font_scale)
     + void draw(const Renderer& renderer) const
     + void setCommand(Command* cmd)
     + void keyPressed(bool ctrl, bool alt, bool shift, char key)
