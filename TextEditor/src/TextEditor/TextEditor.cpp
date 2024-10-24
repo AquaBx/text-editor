@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <ostream>
+#include <cctype> 
 
 #include "../Command/CopyCommand/CopyCommand.h"
 #include "../Command/CutCommand/CutCommand.h"
@@ -167,10 +168,19 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
     }
 }
 
-
 void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, const char key)
 {
-    EnterCharCommand(*this, selectionStart, selectionEnd, key).execute();
+    unsigned char unsignedKey = static_cast<unsigned char>(key);
+
+    if ((std::isalpha(unsignedKey) && key >= 'a' && key <= 'z') || 
+        (std::isalpha(unsignedKey) && key >= 'A' && key <= 'Z') || 
+        std::ispunct(unsignedKey) || 
+        key == ' ') {
+        EnterCharCommand(*this, selectionStart, selectionEnd, key).execute();
+    }
+    else {
+        EnterCharCommand(*this, selectionStart, selectionEnd, '#').execute();
+    }
 }
 
 void TextEditor::undoCommand()
