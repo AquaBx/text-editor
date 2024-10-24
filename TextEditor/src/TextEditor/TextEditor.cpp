@@ -146,7 +146,7 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
             {
                 if (position == selectionEnd && selectionStart > 0) {
                     MoveCursorCommand(*this,position, selectionStart - 1, selectionEnd).execute();
-                } else if (position == selectionStart)
+                } else if (position == selectionStart && selectionEnd > 0)
                 {
                     MoveCursorCommand(*this,position, selectionStart, selectionEnd - 1).execute();
                 }
@@ -161,7 +161,7 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
                 if (position == selectionStart && selectionEnd < textBuffer.length()) {
                     MoveCursorCommand(*this,position, selectionStart, selectionEnd + 1).execute();
                 }
-                else if ( position == selectionEnd ) {
+                else if ( position == selectionEnd && selectionStart < textBuffer.length()) {
                     MoveCursorCommand(*this,position, selectionStart + 1, selectionEnd).execute();
                 }
             }
