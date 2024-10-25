@@ -4,6 +4,7 @@ skinparam sequenceMessageAlign center
 
 actor Utilisateur
 participant "Editeur de texte"
+participant "EnterCharCommand"
 
 activate Utilisateur
 activate "Editeur de texte"
@@ -15,14 +16,26 @@ Utilisateur <-- "Editeur de texte": Accepte la demande
 
 == Entrée du texte ==
 
-Utilisateur -> "Editeur de texte": Appuie sur une lettre/caractères
+Utilisateur -> "Editeur de texte": Appuie sur une lettre/caractère
 
-alt Du texte est sélectionné lors de l'appui
-  Utilisateur <- "Editeur de texte": Remplace le texte sélectionné \n par la lettre/caractère saisi
+alt Texte sélectionné
+  "Editeur de texte" -> "EnterCharCommand": Remplace le texte sélectionné
+else Pas de texte sélectionné
+  "Editeur de texte" -> "EnterCharCommand": Insère le caractère
 end
 
-Utilisateur <-- "Editeur de texte": Modifie le textBuffer
-Utilisateur <-- "Editeur de texte": Actualise l'affichage
+activate "EnterCharCommand"
+
+alt Caractère non autorisé
+  "EnterCharCommand" -> "Editeur de texte": Remplace le caractère par '#'
+else Caractère autorisé
+  "EnterCharCommand" -> "Editeur de texte": Ajoute le caractère au `textBuffer`
+end
+
+"EnterCharCommand" -> "Editeur de texte": Met à jour la position du curseur
+deactivate "EnterCharCommand"
+
+"Editeur de texte" -> Utilisateur: Mise à jour du texte à afficher
 
 deactivate Utilisateur
 deactivate "Editeur de texte"
