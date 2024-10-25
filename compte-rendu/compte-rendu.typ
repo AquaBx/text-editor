@@ -264,15 +264,6 @@ Pour bien comprendre commment vont se produire les interactions avec les classes
 
 === Couper la sélection
 
-Voici notre diagramme de séquence pour la situation où l'on souhaite couper la sélection.
-
-#figure(
-  image("../V1/conception/diagramme-sequence/sequence-couper/couper.png", width:10cm),
-  caption: [
-    Diagramme de séquence pour couper la sélection
-  ],
-)
-
 Le cas d'utilisation "Couper la sélection" a été décrit ainsi dans la partie précédente :
 - Scénario nominal :
   - 1. L'utilisateur sélectionne du texte.
@@ -283,6 +274,12 @@ Le cas d'utilisation "Couper la sélection" a été décrit ainsi dans la partie
 
 Un diagramme de séquence correspondant pourrait être illustré comme suit :
 
+#figure(
+  image("../V1/conception/diagramme-sequence/sequence-couper/couper.png", width:10cm),
+  caption: [
+    Diagramme de séquence pour couper la sélection
+  ],
+)
 #pagebreak()
 === Entrer du texte
 
