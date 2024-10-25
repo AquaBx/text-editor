@@ -218,12 +218,12 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
 
 Au vu du problème que nous avons à modéliser, après avoir consulté le #link("https://refactoring.guru/design-patterns/catalog")[catalogue] des design pattern présent sur #link("https://refactoring.guru/")[Refactoring GURU], nous avons décidé de nous baser sur le design pattern nommé #link("https://refactoring.guru/design-patterns/command")[Command]. 
 
-Ce design pattern est de type comportemental, c'est-à-dire qu'ils concernent les algorithmes et l'attribution des responsabilités entre les objets. Plus précisément, le design-pattern Command permet de transformer une requête en un objet qui contient toutes les informations relatives à la requête. Cette transformation est utile car elle permet de transmettre des requêtes en tant qu'arguments de méthode, de retarder ou de mettre en file d'attente l'exécution d'une requête et de prendre en charge des opérations annulables. C'est exactement le type de structure que l'on recherche pour notre mini-éditeur.
+Ce design pattern est de type comportemental, c'est-à-dire qu'ils concernent les algorithmes et l'attribution des responsabilités entre les objets. Plus précisément, le design-pattern Command permet de transformer une requête en un objet qui contient toutes les informations relatives à la requête. Cette transformation est utile car elle encapsule chaque action sous forme d'objet, ce qui permet au client de les transmettre en tant qu'arguments de méthode, de les retarder, de les mettre en file d'attente ou bien de les prendre en charge des opérations annulables. C'est exactement le type de structure que l'on recherche pour notre mini-éditeur.
 
 Voici la structure exposée par ce design pattern : 
 
 #figure(
-  image("../V1/conception/design-pattern/command.png"),
+  image("../V1/conception/design-pattern/command.png", height: 6cm),
   caption: [
     Design Pattern Command
   ],
@@ -240,6 +240,23 @@ Cette structure est très générale. Nous devons l'adapter à notre problème. 
 
 Comme vous pouvez le constater, nous avons repris la même structure que le Design Pattern Command, adapté au langage de programmation choisi. Nous avons choisi C++ qui nous semblait être un bon choix étant donné que nous pouvons utiliser la SDL.
 
+Chaque action spécifique de l'éditeur sera modélisée sous forme de classes dérivées de la classe abstraite Command. Cette abstraction nous permettra de nous assurer que toutes les commandes disposent d'une méthode execute() qui est appelée par l'éditeur lorsque l'utilisateur effectue une action.
+
+Chacune de ces classes dérivées encapsulera des détails spécifiques à une commande particulière. Par exemple, la classe CopyCommand contiendra des attributs pour indiquer la portion de texte à copier. Elles seront créées avec un lien vers l'éditeur de texte (TextEditor&), pour pouvoir manipuler directement le contenu du buffer de texte, de la position du curseur, ou du presse-papier.
+
+La classe TextEditor sera le centre de l'application et maintiendra l'état du texte et de gérer les interactions de l'utilisateur. Elle contiendra :
+- Un buffer de texte (textBuffer)
+- Un presse-papier (clipboard)
+- La position du curseur (position)
+- La sélection de texte (selectionStart, selectionEnd)
+- Une référence à la commande en cours (pointeur de Command) pour déléguer les actions à une commande via la méthode executeCommand().
+
+La classe Client sera point d'entrée pour l'application car elle gèrera la boucle principale de l'éditeur, surveillera les événements, et interagira avec l'éditeur de texte pour lui demander d'exécuter des actions spécifiques.
+
+Le Renderer s'occupera de l'affichage visuel (texte, curseur et redimensionnement de la fenêtre) grâce à la bibliothèque SDL. Il utilisera la classe Texture pour gérer les surfaces et textures SDL.
+
+Nous avons également choisi de définir les classes de commande comme amies de TextEditor pour qu'elles puissent accéder directement aux données privées de l'éditeur. Cela permettra également d'améliorer la sécurité et évitera d'exposer des méthodes publiques qui pourraient être mal utilisées ailleurs dans le code.
+
 #pagebreak()
 == Diagrammes de séquence
 
@@ -255,6 +272,8 @@ Voici notre diagramme de séquence pour la situation où l'on souhaite couper la
     Diagramme de séquence pour couper la sélection
   ],
 )
+
+#highlight("== rendue ici")
 
 #highlight("expliquer")
 
@@ -276,6 +295,7 @@ Voici notre diagramme de séquence pour la situation où l'on souhaite couper la
 Conformément aux consignes et aux diagrammes que nous avons pu établir, nous avons réalisé la première version de l'éditeur de texte. Vous pourrez le trouver #highlight("dire où")
 
 #highlight("il faudra pas non plus oublier de séparer les deux versions et de revoir les diagrammes si besoin -> surtout le diagramme des classes")
+
 
 #pagebreak()
 = Version 2
