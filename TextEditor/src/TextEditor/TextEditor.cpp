@@ -102,7 +102,7 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
     {
         DeleteTextCommand(*this, selectionStart, selectionStart + 1).execute();
     }
-    else if (key == SDLK_RETURN)
+    else if (key == SDLK_RETURN || key ==  SDLK_KP_ENTER)
     {
         EnterCharCommand(*this, selectionStart, selectionEnd, '\n').execute();
     }
