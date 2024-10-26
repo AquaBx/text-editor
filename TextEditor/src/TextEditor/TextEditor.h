@@ -2,10 +2,24 @@
 
 #include <stack>
 #include <string>
+#include <variant>
+#include <vector>
+
 #include "../Renderer/Renderer.h"
 #include "../Snapshot/Snapshot.h"
 
 class Command;
+
+enum class CombinaisonType { KEYCODE, CHARCODE };
+
+struct Combinaison{
+    bool ctrl, alt, shift;
+    CombinaisonType type;
+    union {
+        SDL_Keycode keyCode;
+        char charCode;
+    };
+};
 
 class TextEditor
 {
@@ -20,6 +34,11 @@ class TextEditor
 
     std::stack<Snapshot*> snapshotHistory;
     std::stack<Snapshot*> snapshotRedoHistory;
+
+    bool macroRecord = false;
+
+    std::vector<Combinaison> macroHistory;
+
     std::string textBuffer;
     std::string clipboard;
     std::size_t position = 0;
@@ -45,7 +64,7 @@ public:
     void keyPressed(bool ctrl, bool alt, bool shift, char key);
     void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key);
     void executeCommand(Command* command);
-    void restoreSnapshot(Snapshot* snapshot);
+    void restoreSnapshot(const Snapshot* snapshot);
     void undoCommand();
     void redoCommand();
     ~TextEditor();

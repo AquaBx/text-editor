@@ -83,7 +83,18 @@ void TextEditor::draw(const Renderer& renderer) const
 
 void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, const SDL_KeyCode key)
 {
-    if ((key == SDLK_BACKSPACE || key == SDLK_DELETE) && selectionStart != selectionEnd)
+    if (ctrl && key==SDLK_m)
+    {
+        macroRecord=!macroRecord;
+        if (macroRecord)
+        {
+            macroHistory = {};
+        }
+    }
+    else if (macroRecord) {
+        macroHistory.push_back({ctrl,alt,shift,CombinaisonType::KEYCODE, static_cast<SDL_Keycode>(key)});
+    }
+    else if ((key == SDLK_BACKSPACE || key == SDLK_DELETE) && selectionStart != selectionEnd)
     {
         executeCommand(new DeleteTextCommand(*this, selectionStart, selectionEnd));
     }
@@ -128,6 +139,26 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
             ZoomEditorCommand(*this, 0.25).execute();
             break;
         default: ;
+        }
+    }
+    else if (alt)
+    {
+        switch (key)
+        {
+        case SDLK_m:
+                for (const Combinaison c:macroHistory)
+                {
+                    if (c.type == CombinaisonType::KEYCODE)
+                    {
+                        keyPressed(c.ctrl,c.alt,c.shift,static_cast<SDL_KeyCode>(c.keyCode));
+                    }
+                    else
+                    {
+                        keyPressed(c.ctrl,c.alt,c.shift,c.charCode);
+                    }
+                };
+            default:
+                break;
         }
     }
     else
@@ -189,12 +220,14 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
 
 void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, const char key)
 {
-    unsigned char unsignedKey = static_cast<unsigned char>(key);
-
-    if ((std::isalpha(unsignedKey) && key >= 'a' && key <= 'z') ||
-        (std::isalpha(unsignedKey) && key >= 'A' && key <= 'Z') ||
-        std::ispunct(unsignedKey) ||
-        key == ' ')
+    if (macroRecord)
+    {
+        macroHistory.push_back({ctrl,alt,shift,CombinaisonType::CHARCODE, key});
+    }
+    else if (
+        (std::isalpha(key) && ((key >= 'a' && key <= 'z') || key >= 'A' && key <= 'Z'))
+        || std::ispunct(key) || key == ' '
+    )
     {
         executeCommand(new EnterCharCommand(*this, selectionStart, selectionEnd, key));
     }
@@ -218,7 +251,7 @@ TextEditor::~TextEditor()
     }
 };
 
-void TextEditor::restoreSnapshot(Snapshot* snapshot)
+void TextEditor::restoreSnapshot(const Snapshot* snapshot)
 {
     position = snapshot->position;
     textBuffer = snapshot->textBuffer;
@@ -244,7 +277,7 @@ void TextEditor::undoCommand()
     Snapshot* snapshot2 = new Snapshot(textBuffer, position, selectionStart, selectionEnd);
     if (!snapshotHistory.empty())
     {
-        Snapshot* snapshot = snapshotHistory.top();
+        const Snapshot* snapshot = snapshotHistory.top();
         snapshotHistory.pop();
         snapshotRedoHistory.push(snapshot2);
         restoreSnapshot(snapshot);
@@ -256,7 +289,7 @@ void TextEditor::redoCommand()
     Snapshot* snapshot2 = new Snapshot(textBuffer, position, selectionStart, selectionEnd);
     if (!snapshotRedoHistory.empty())
     {
-        Snapshot* snapshot = snapshotRedoHistory.top();
+        const Snapshot* snapshot = snapshotRedoHistory.top();
         snapshotRedoHistory.pop();
         snapshotHistory.push(snapshot2);
         restoreSnapshot(snapshot);

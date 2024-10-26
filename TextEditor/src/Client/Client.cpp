@@ -15,8 +15,8 @@ void Client::pollEvent()
     SDL_Event event;
 
     const Uint8* stateh = SDL_GetKeyboardState(nullptr);
-    const bool ctrl = stateh[SDL_SCANCODE_LCTRL] || stateh[SDL_SCANCODE_RCTRL];
-    const bool alt = stateh[SDL_SCANCODE_LALT] || stateh[SDL_SCANCODE_RALT];
+    const bool ctrl =  stateh[SDL_SCANCODE_LCTRL]  || stateh[SDL_SCANCODE_RCTRL];
+    const bool alt =   stateh[SDL_SCANCODE_LALT]   || stateh[SDL_SCANCODE_RALT];
     const bool shift = stateh[SDL_SCANCODE_LSHIFT] || stateh[SDL_SCANCODE_RSHIFT];
 
     while (SDL_PollEvent(&event) == 1)
@@ -38,7 +38,18 @@ void Client::pollEvent()
         }
         else if (event.type == SDL_KEYDOWN)
         {
-            textEditor.keyPressed(ctrl, alt, shift, static_cast<SDL_KeyCode>(event.key.keysym.sym));
+            if (
+                event.key.keysym.sym != SDLK_UNKNOWN &&
+                event.key.keysym.sym != SDLK_LCTRL &&
+                event.key.keysym.sym != SDLK_RCTRL &&
+                event.key.keysym.sym != SDLK_LALT &&
+                event.key.keysym.sym != SDLK_RALT &&
+                event.key.keysym.sym != SDLK_LSHIFT &&
+                event.key.keysym.sym != SDLK_RSHIFT
+            )
+            {
+                textEditor.keyPressed(ctrl, alt, shift, static_cast<SDL_KeyCode>(event.key.keysym.sym));
+            }
         }
     }
 }
