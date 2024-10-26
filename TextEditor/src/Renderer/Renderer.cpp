@@ -65,6 +65,7 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd, 
     {
         int w = 0;
         int h = space_size_y;
+        int newLine = true;
 
         std::size_t retour = text.find('\n');
         std::string ligne;
@@ -109,7 +110,10 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd, 
             if (w + x > width)
             {
                 x = 0;
-                y += h;
+                if (!newLine)
+                {
+                    y += h;
+                }
 
                 if (w > width)
                 {
@@ -149,6 +153,7 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd, 
 
             Texture(word, font, renderer, x, y).draw(renderer);
             x += w;
+            newLine=false;
         }
         y += h;
         x = 0;
