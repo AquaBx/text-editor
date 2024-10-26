@@ -56,7 +56,7 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd, 
 
     int space_size_x = 0;
     int space_size_y = 0;
-    TTF_SetFontSize(font, static_cast<int>(30 * font_scale) );
+    TTF_SetFontSize(font, static_cast<int>(30 * font_scale));
     TTF_SizeText(font, " ", &space_size_x, &space_size_y);
 
     // ceci est juste pour décalé à droite la première ligne

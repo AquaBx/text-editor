@@ -6,7 +6,8 @@
 #include "../Renderer/Renderer.h"
 #include "../TextEditor/TextEditor.h"
 
-class Client {
+class Client
+{
     TextEditor textEditor;
     Renderer renderer;
     bool quit = false;

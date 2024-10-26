@@ -18,8 +18,8 @@ class TextEditor
     friend class PasteCommand;
     friend class ZoomEditorCommand;
 
-    std::stack<Command *>  commandHistory;
-    std::stack<Command *>  commandRedoHistory;
+    std::stack<Command*> commandHistory;
+    std::stack<Command*> commandRedoHistory;
     std::string textBuffer;
     std::string clipboard;
     std::size_t position = 0;
@@ -44,8 +44,8 @@ public:
     void draw(const Renderer& renderer) const;
     void keyPressed(bool ctrl, bool alt, bool shift, char key);
     void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key);
-    void executeCommand(Command * command);
-    void restoreSnapshot(Snapshot * snapshot);
+    void executeCommand(Command* command);
+    void restoreSnapshot(Snapshot* snapshot);
     void undoCommand();
     void redoCommand();
     ~TextEditor();

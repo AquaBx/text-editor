@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <ostream>
-#include <cctype> 
+#include <cctype>
 
 #include "../Command/CopyCommand/CopyCommand.h"
 #include "../Command/CutCommand/CutCommand.h"
@@ -85,19 +85,19 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
 {
     if ((key == SDLK_BACKSPACE || key == SDLK_DELETE) && selectionStart != selectionEnd)
     {
-        executeCommand( new DeleteTextCommand(*this, selectionStart, selectionEnd) );
+        executeCommand(new DeleteTextCommand(*this, selectionStart, selectionEnd));
     }
     else if (key == SDLK_BACKSPACE)
     {
-        executeCommand( new DeleteTextCommand(*this, selectionStart - 1, selectionStart) );
+        executeCommand(new DeleteTextCommand(*this, selectionStart - 1, selectionStart));
     }
     else if (key == SDLK_DELETE)
     {
-        executeCommand( new DeleteTextCommand(*this, selectionStart, selectionStart + 1) );
+        executeCommand(new DeleteTextCommand(*this, selectionStart, selectionStart + 1));
     }
     else if (key == SDLK_RETURN && SDLK_KP_ENTER)
     {
-        executeCommand( new EnterCharCommand(*this, selectionStart, selectionEnd, '\n') );
+        executeCommand(new EnterCharCommand(*this, selectionStart, selectionEnd, '\n'));
     }
     else if (ctrl)
     {
@@ -113,19 +113,19 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
             RedoCommand(*this).execute();
             break;
         case SDLK_v:
-            executeCommand( new  PasteCommand(*this, selectionStart, selectionEnd) );
+            executeCommand(new PasteCommand(*this, selectionStart, selectionEnd));
             break;
         case SDLK_x:
-            executeCommand( new CutCommand(*this, selectionStart, selectionEnd) );
+            executeCommand(new CutCommand(*this, selectionStart, selectionEnd));
             break;
         case SDLK_a:
-            MoveCursorCommand(*this,0, 0, textBuffer.length()).execute();
+            MoveCursorCommand(*this, 0, 0, textBuffer.length()).execute();
             break;
         case SDLK_KP_MINUS:
-            ZoomEditorCommand(*this,-0.25).execute();
+            ZoomEditorCommand(*this, -0.25).execute();
             break;
         case SDLK_KP_PLUS:
-            ZoomEditorCommand(*this,0.25).execute();
+            ZoomEditorCommand(*this, 0.25).execute();
             break;
         default: ;
         }
@@ -135,38 +135,50 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
         switch (key)
         {
         case (SDLK_UP):
-            MoveCursorCommand(*this,0, 0, 0).execute();
+            MoveCursorCommand(*this, 0, 0, 0).execute();
             break;
         case (SDLK_DOWN):
-            MoveCursorCommand(*this,textBuffer.length(), textBuffer.length(), textBuffer.length()).execute();
+            MoveCursorCommand(*this, textBuffer.length(), textBuffer.length(), textBuffer.length()).execute();
             break;
         case (SDLK_LEFT):
             if (shift)
             {
-                if (position == selectionEnd && selectionStart > 0) {
-                    MoveCursorCommand(*this,position, selectionStart - 1, selectionEnd).execute();
-                } else if (position == selectionStart && selectionEnd > 0)
+                if (position == selectionEnd && selectionStart > 0)
                 {
-                    MoveCursorCommand(*this,position, selectionStart, selectionEnd - 1).execute();
+                    MoveCursorCommand(*this, position, selectionStart - 1, selectionEnd).execute();
                 }
-            } else if ( selectionStart != selectionEnd ) {
+                else if (position == selectionStart && selectionEnd > 0)
+                {
+                    MoveCursorCommand(*this, position, selectionStart, selectionEnd - 1).execute();
+                }
+            }
+            else if (selectionStart != selectionEnd)
+            {
                 MoveCursorCommand(*this, selectionStart, selectionStart, selectionStart).execute();
-            } else if (selectionStart > 0) {
-                MoveCursorCommand(*this,selectionStart - 1, selectionStart - 1, selectionStart - 1).execute();
+            }
+            else if (selectionStart > 0)
+            {
+                MoveCursorCommand(*this, selectionStart - 1, selectionStart - 1, selectionStart - 1).execute();
             }
             break;
         case (SDLK_RIGHT):
-            if (shift) {
-                if (position == selectionStart && selectionEnd < textBuffer.length()) {
-                    MoveCursorCommand(*this,position, selectionStart, selectionEnd + 1).execute();
+            if (shift)
+            {
+                if (position == selectionStart && selectionEnd < textBuffer.length())
+                {
+                    MoveCursorCommand(*this, position, selectionStart, selectionEnd + 1).execute();
                 }
-                else if ( position == selectionEnd && selectionStart < textBuffer.length()) {
-                    MoveCursorCommand(*this,position, selectionStart + 1, selectionEnd).execute();
+                else if (position == selectionEnd && selectionStart < textBuffer.length())
+                {
+                    MoveCursorCommand(*this, position, selectionStart + 1, selectionEnd).execute();
                 }
             }
-            else if ( selectionStart != selectionEnd ) {
+            else if (selectionStart != selectionEnd)
+            {
                 MoveCursorCommand(*this, selectionEnd, selectionEnd, selectionEnd).execute();
-            } else if ( selectionEnd < textBuffer.length()){
+            }
+            else if (selectionEnd < textBuffer.length())
+            {
                 MoveCursorCommand(*this, selectionEnd + 1, selectionEnd + 1, selectionEnd + 1).execute();
             }
             break;
@@ -179,19 +191,21 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
 {
     unsigned char unsignedKey = static_cast<unsigned char>(key);
 
-    if ((std::isalpha(unsignedKey) && key >= 'a' && key <= 'z') || 
-        (std::isalpha(unsignedKey) && key >= 'A' && key <= 'Z') || 
-        std::ispunct(unsignedKey) || 
-        key == ' ') {
-
-        executeCommand( new EnterCharCommand(*this, selectionStart, selectionEnd, key) );
+    if ((std::isalpha(unsignedKey) && key >= 'a' && key <= 'z') ||
+        (std::isalpha(unsignedKey) && key >= 'A' && key <= 'Z') ||
+        std::ispunct(unsignedKey) ||
+        key == ' ')
+    {
+        executeCommand(new EnterCharCommand(*this, selectionStart, selectionEnd, key));
     }
-    else {
-        executeCommand( new EnterCharCommand(*this, selectionStart, selectionEnd, '#') );
+    else
+    {
+        executeCommand(new EnterCharCommand(*this, selectionStart, selectionEnd, '#'));
     }
 }
 
-TextEditor::~TextEditor() {
+TextEditor::~TextEditor()
+{
     while (!commandHistory.empty())
     {
         delete commandHistory.top();
@@ -204,16 +218,17 @@ TextEditor::~TextEditor() {
     }
 };
 
-void TextEditor::restoreSnapshot(Snapshot * snapshot){
+void TextEditor::restoreSnapshot(Snapshot* snapshot)
+{
     position = snapshot->position;
     textBuffer = snapshot->textBuffer;
     selectionStart = snapshot->selectionStart;
     selectionEnd = snapshot->selectionEnd;
 }
 
-void TextEditor::executeCommand(Command * command)
+void TextEditor::executeCommand(Command* command)
 {
-    command -> execute();
+    command->execute();
     commandHistory.push(command);
 
     while (!commandRedoHistory.empty())
@@ -223,20 +238,22 @@ void TextEditor::executeCommand(Command * command)
     }
 }
 
-void TextEditor::undoCommand(){
+void TextEditor::undoCommand()
+{
     if (!commandHistory.empty())
     {
-        Command * cmd = commandHistory.top();
+        Command* cmd = commandHistory.top();
         commandHistory.pop();
         commandRedoHistory.push(cmd);
         cmd->undo();
     }
 }
 
-void TextEditor::redoCommand(){
+void TextEditor::redoCommand()
+{
     if (!commandRedoHistory.empty())
     {
-        Command * cmd = commandRedoHistory.top();
+        Command* cmd = commandRedoHistory.top();
         commandRedoHistory.pop();
         commandHistory.push(cmd);
         cmd->execute();
