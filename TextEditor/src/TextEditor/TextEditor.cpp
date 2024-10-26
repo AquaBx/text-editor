@@ -85,19 +85,19 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
 {
     if ((key == SDLK_BACKSPACE || key == SDLK_DELETE) && selectionStart != selectionEnd)
     {
-        DeleteTextCommand(*this, selectionStart, selectionEnd).execute();
+        executeCommand( new DeleteTextCommand(*this, selectionStart, selectionEnd) );
     }
     else if (key == SDLK_BACKSPACE)
     {
-        DeleteTextCommand(*this, selectionStart - 1, selectionStart).execute();
+        executeCommand( new DeleteTextCommand(*this, selectionStart - 1, selectionStart) );
     }
     else if (key == SDLK_DELETE)
     {
-        DeleteTextCommand(*this, selectionStart, selectionStart + 1).execute();
+        executeCommand( new DeleteTextCommand(*this, selectionStart, selectionStart + 1) );
     }
-    else if (key == SDLK_RETURN)
+    else if (key == SDLK_RETURN && SDLK_KP_ENTER)
     {
-        EnterCharCommand(*this, selectionStart, selectionEnd, '\n').execute();
+        executeCommand( new EnterCharCommand(*this, selectionStart, selectionEnd, '\n') );
     }
     else if (ctrl)
     {
