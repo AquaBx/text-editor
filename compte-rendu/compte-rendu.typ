@@ -139,7 +139,6 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
   columns: (78pt, 170pt, auto, auto),
   inset: 3pt,
   
-  // Headers
   [*Cas \d'utilisation*], [*Scénario nominal*], [*Scénario alternatif*], [*Scénario exception*],
 
   [Déplacer le curseur], [
@@ -275,7 +274,7 @@ Le cas d'utilisation "Couper la sélection" a été décrit ainsi dans la partie
 Un diagramme de séquence correspondant pourrait être illustré comme suit :
 
 #figure(
-  image("../V1/conception/diagramme-sequence/sequence-couper/couper.png", width:10cm),
+  image("../V1/conception/diagramme-sequence/sequence-couper/couper.png"),
   caption: [
     Diagramme de séquence pour couper la sélection
   ],
@@ -296,7 +295,7 @@ Le cas d'utilisation "Entrer du texte" a été décrit ainsi dans la partie pré
 Un diagramme de séquence correspondant pourrait être illustré comme suit :
 
 #figure(
-  image("../V1/conception/diagramme-sequence/sequence-ecrire/ecrire.png", width:10cm),
+  image("../V1/conception/diagramme-sequence/sequence-ecrire/ecrire.png"),
   caption: [
     Diagramme de séquence pour entrer du texte
   ],
@@ -307,24 +306,166 @@ Un diagramme de séquence correspondant pourrait être illustré comme suit :
 
 Conformément aux consignes et aux diagrammes que nous avons pu établir, nous avons réalisé la première version de l'éditeur de texte. Vous pourrez le trouver #highlight("dire où")
 
-#highlight("il faudra pas non plus oublier de séparer les deux versions et de revoir les diagrammes si besoin -> surtout le diagramme des classes")
-
-
 #pagebreak()
 = Version 2
 
 Dans la seconde version, les fonctionnalités ajoutées par rapport à la première version sont les suivantes :
-- L'enregistrement des actions de l'utilisateur pour pouvoir les rejouer, par exemple dans un script
-- L'enregitrement de ses actions
-- L'annulation possiblité d'annuler de ses actions
+- l'enregistrement/relecture des actions de l’utilisateur (e.g., script),
+- la possibilité de défaire/refaire, avec une capacité quelconque dans le défaire (autrement dit on peut revenir au début).
 
 #pagebreak()
-== Diagramme de cas d'utilisation
+== Diagramme des cas d'utilisation
+
+Au vu des fonctionnalités supplémentaires que doit proposer la seconde version de l'éditeur de texte, voici un diagramme de cas d'utilisation envisageable. A noter que le diagramme d'utilisation de la première version vient s'y ajouter. Nous avons ajouté les nouveaux cas d'utilisation en bleu :
+
+#figure(
+  image("../V2/conception/cas-utilisation/usecase.png", width: 7cm),
+  caption: [
+    Diagramme de cas d'utilisation pour la seconde version.
+  ],
+)
+
 
 #pagebreak()
 == Description des cas d'utilisation
 
-#highlight("ceux de base + les autres")
+Voici la description de chaque cas d'utilisation. A noter que la description des cas d'utilisation de la première version vient s'y ajouter. Nous avons ajouté les nouvelles description de cas d'utilisation en bleu :
+
+#set text(8.49pt)
+#table(
+  columns: (78pt, 170pt, auto, auto),
+  inset: 3pt,
+  
+  // Headers
+  [*Cas \d'utilisation*], [*Scénario nominal*], [*Scénario alternatif*], [*Scénario exception*],
+
+  [Déplacer le curseur], [
+    1. L'utilisateur appuie sur les touches directionnelles.
+      - gauche/droite pour aller à gauche/droite
+      - bas/haut pour aller à début/à la fin
+    2. Le curseur se déplace
+    3. Sa nouvelle position est affichée.
+  ], [
+  ], [
+    1. La position cible du curseur est invalide (en dehors du texte) : le curseur s'arrête à la limite valide.
+  ],
+
+  [Entrer du texte], [
+    1. L'utilisateur saisit des caractères.
+    2. Les caractères sont ajoutés à la position du curseur
+    3. La zone de texte est mise à jour.
+  ], [
+    1. Le texte est ajouté à une sélection existante : remplace la sélection.
+  ], [
+    1. Caractère non autorisé (caractères spéciaux) : remplacement par dièse
+  ],
+
+  [Effacer du texte], [
+    1. L'utilisateur appuie sur la touche "Supprimer" ou "Backspace".
+    2. Le caractère ou le texte sélectionné est supprimé
+    3. a zone de texte est mise à jour.
+  ], [
+    1. Aucun texte à supprimer (curseur au début du texte).
+  ], [
+    
+  ],
+
+  [Sélectionner du texte], [
+    1. L'utilisateur utilise Shift + touches directionnelles. (gauche/droite : selectionne à gauche/droite)
+    2. La portion du texte souhaitée est sélectionnée.
+  ], [
+    1. L'utilisateur peut sélectionner tout le texte avec Ctrl + A
+  ], [
+    1. Tentative de sélectionner au-delà des limites du texte : sélection seulement jusqu'aux limites autorisées
+  ],
+
+  [Copier la sélection], [
+    1. L'utilisateur sélectionne du texte.
+    2. L'utilisateur appuie sur Ctrl+C.
+  ], [
+    1. Aucun texte sélectionné : vide le presse-papier et rien n'est copié.
+  ], [
+    1. Le presse-papier est plein.
+  ],
+
+  [Coller la sélection], [
+    1. L'utilisateur positionne le curseur à l'endroit souhaité.
+    2. L'utilisateur appuie sur Ctrl+V.
+    3. Le contenu du presse-papier est inséré à la position du curseur.
+  ], [
+    1. Le contenu du presse-papier est ajouté à une sélection existante : remplace la sélection.
+  ], [
+    1. Le presse-papier est vide : rien ne se passe
+  ],
+
+  [Couper la sélection], [
+    1. L'utilisateur sélectionne du texte.
+    2. L'utilisateur appuie sur Ctrl+X.
+    3. Le texte est supprimé de la zone de texte et copié dans le presse-papier.
+  ], [
+    1. Aucun texte sélectionné : vide le presse-papier et rien n'est copié.
+  ], [
+  ],
+
+[#text(blue)[Enregistrer les actions]], [
+  #text(blue)[
+    1. L'utilisateur active la fonction d'enregistrement (Ctrl+S).
+    2. Toutes les nouvelles actions de l'utilisateur sont ajoutées dans le fichier de script.
+  ]
+  ], [
+  #text(blue)[
+    1. Première fois que l'utilisateur appuie sur Ctrl+S : Création du fichier puis ajout des actions effectuées.
+  ]
+  ], [
+  #text(blue)[
+    1. Problème d'écriture (fichier inaccessible) : message d'erreur.
+  ]
+  ],
+
+[#text(blue)[Relire les actions]], [
+  #text(blue)[
+    1. L'utilisateur charge le fichier de script.
+    2. Le système exécute les actions enregistrées dans l'ordre.
+  ]
+  ], [
+  #text(blue)[
+  ]
+  ], [
+  #text(blue)[
+    1. Problème d'exécution (fichier inaccessible) : message d'erreur.
+  ]
+  ],
+
+[#text(blue)[Défaire les actions]], [
+  #text(blue)[
+    1. L'utilisateur active la fonction d'annulation (Ctrl+Z).
+    2. Le système revient à l'état précédent l'action la plus récente.
+    3. Le fichier de script est mis à jour (ajout de la fonction d'annulation)
+  ]
+  ], [
+  #text(blue)[
+  ]
+  ], [
+  #text(blue)[
+    1. Il n'y a plus d'actions à annuler : ne rien faire, nous sommes rendus à l'état initial.
+  ]
+  ],
+
+[#text(blue)[Refaire les actions]], [
+  #text(blue)[
+    1. L'utilisateur active la fonction de réexécution (Ctrl+Y).
+    2. Le système réapplique l'action précédemment annulée.
+  ]
+  ], [
+  #text(blue)[
+  ]
+  ], [
+  #text(blue)[
+    1. Aucune action à refaire : ne rien faire, nous sommes revenus à l'état final. 
+  ]
+  ],
+
+)
 
 #pagebreak()
 == Diagramme de classe 
