@@ -56,31 +56,37 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd, 
 
     int space_size_x = 0;
     int space_size_y = 0;
-    TTF_SetFontSize(font, static_cast<int>(30 * font_scale) );
+    TTF_SetFontSize(font, static_cast<int>(30 * font_scale));
     TTF_SizeText(font, " ", &space_size_x, &space_size_y);
 
-    // ceci est juste pour décalé à droite la première ligne
-    text = "\r" + text;
-    cursorStart += 1;
-    cursorEnd += 1;
+    char last = '\r';
 
     while (!text.empty())
     {
+        int w = 0;
+        int h = space_size_y;
+
         std::size_t retour = text.find('\n');
         std::string ligne;
         if (retour != std::string::npos)
         {
-            ligne = text.substr(0, retour);
-            text = '\r' + text.erase(0, retour + 1);
+            ligne = text.substr(0, retour) + "\r";
+            text = text.erase(0, retour + 1);
         }
         else
         {
             ligne = text;
             text = "";
         }
-        int w = 0;
-        int h = space_size_y;
 
+        if ((ligne.empty() || ligne.starts_with('\r')) && cursorStart == x + 1 && cursorEnd == x + 1)
+        {
+            drawCursor(0, y + space_size_y, 0, space_size_y);
+        }
+        else
+        {
+            last = ligne.back();
+        }
 
         while (!ligne.empty())
         {
@@ -99,20 +105,33 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd, 
             }
 
             TTF_SizeText(font, word.c_str(), &w, &h);
+
             if (w + x > width)
             {
-                word = '\r' + word;
-                cursorEnd += 1;
-                cursorStart += 1;
-                y += h;
                 x = 0;
+                y += h;
+
+                if (w > width)
+                {
+                    std::string tmpWord = "";
+                    do
+                    {
+                        tmpWord = word.back() + tmpWord;
+                        word.pop_back();
+                        TTF_SizeText(font, word.c_str(), &w, &h);
+                    }
+                    while (w + x > width);
+                    ligne = tmpWord + ligne;
+                }
             }
 
-            if (cursorStart <= 0 + word.length())
+            if (cursorStart <= 0 + word.length() - static_cast<int>(word.ends_with("\r")))
             {
                 int ax = 0;
                 int aw = 0;
+
                 TTF_SizeText(font, word.substr(0, cursorStart).c_str(), &ax, nullptr);
+
                 if (cursorEnd <= 0 + word.length())
                 {
                     TTF_SizeText(font, word.substr(cursorStart, cursorEnd - cursorStart).c_str(), &aw, nullptr);
@@ -129,11 +148,15 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd, 
             cursorEnd -= word.length();
 
             Texture(word, font, renderer, x, y).draw(renderer);
-
             x += w;
         }
-        x = 0;
         y += h;
+        x = 0;
+    }
+
+    if (text.empty() && cursorStart == x && cursorEnd == x && last == '\r')
+    {
+        drawCursor(0, y, 0, space_size_y);
     }
 }
 
