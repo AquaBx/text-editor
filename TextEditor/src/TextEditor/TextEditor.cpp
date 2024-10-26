@@ -92,7 +92,10 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
         }
     }
     else if (macroRecord) {
-        macroHistory.push_back({ctrl,alt,shift,CombinaisonType::KEYCODE, static_cast<SDL_Keycode>(key)});
+        if (!alt || key!=SDLK_m)
+        {
+            macroHistory.push_back({ctrl,alt,shift,CombinaisonType::KEYCODE, static_cast<SDL_Keycode>(key)});
+        }
     }
     else if ((key == SDLK_BACKSPACE || key == SDLK_DELETE) && selectionStart != selectionEnd)
     {
