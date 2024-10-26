@@ -7,6 +7,5 @@ class RedoCommand final : public Command
 {
     public :
         explicit RedoCommand(TextEditor& textEditor);
-        ~RedoCommand() override;
         void execute() override;
 };

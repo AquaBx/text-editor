@@ -18,8 +18,8 @@ class TextEditor
     friend class PasteCommand;
     friend class ZoomEditorCommand;
 
-    std::stack<Command*> commandHistory;
-    std::stack<Command*> commandRedoHistory;
+    std::stack<Snapshot*> snapshotHistory;
+    std::stack<Snapshot*> snapshotRedoHistory;
     std::string textBuffer;
     std::string clipboard;
     std::size_t position = 0;

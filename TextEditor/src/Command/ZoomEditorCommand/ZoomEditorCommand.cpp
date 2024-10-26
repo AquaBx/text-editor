@@ -1,7 +1,6 @@
 #include "ZoomEditorCommand.h"
 #include <string>
 
-ZoomEditorCommand::~ZoomEditorCommand() = default;
 
 ZoomEditorCommand::ZoomEditorCommand(TextEditor& textEditor, const float zoom)
     : Command(textEditor), zoom(zoom)
@@ -10,7 +9,8 @@ ZoomEditorCommand::ZoomEditorCommand(TextEditor& textEditor, const float zoom)
 
 void ZoomEditorCommand::execute()
 {
-    if (const float newZoom = textEditor.getFontScale()+zoom; newZoom >= 0.5 && newZoom <= 1.5) {
+    if (const float newZoom = textEditor.getFontScale() + zoom; newZoom >= 0.5 && newZoom <= 1.5)
+    {
         textEditor.setFontScale(newZoom);
     }
 }

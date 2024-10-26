@@ -4,8 +4,6 @@
 
 #include "RedoCommand.h"
 
-RedoCommand::~RedoCommand() = default;
-
 RedoCommand::RedoCommand(TextEditor& textEditor)
     : Command(textEditor)
 {

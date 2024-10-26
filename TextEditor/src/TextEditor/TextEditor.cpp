@@ -206,15 +206,15 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
 
 TextEditor::~TextEditor()
 {
-    while (!commandHistory.empty())
+    while (!snapshotHistory.empty())
     {
-        delete commandHistory.top();
-        commandHistory.pop();
+        delete snapshotHistory.top();
+        snapshotHistory.pop();
     }
-    while (!commandRedoHistory.empty())
+    while (!snapshotRedoHistory.empty())
     {
-        delete commandRedoHistory.top();
-        commandRedoHistory.pop();
+        delete snapshotRedoHistory.top();
+        snapshotRedoHistory.pop();
     }
 };
 
@@ -228,34 +228,37 @@ void TextEditor::restoreSnapshot(Snapshot* snapshot)
 
 void TextEditor::executeCommand(Command* command)
 {
+    Snapshot* snapshot = new Snapshot(textBuffer, position, selectionStart, selectionEnd);
+    snapshotHistory.push(snapshot);
     command->execute();
-    commandHistory.push(command);
 
-    while (!commandRedoHistory.empty())
+    while (!snapshotRedoHistory.empty())
     {
-        delete commandRedoHistory.top();
-        commandRedoHistory.pop();
+        delete snapshotRedoHistory.top();
+        snapshotRedoHistory.pop();
     }
 }
 
 void TextEditor::undoCommand()
 {
-    if (!commandHistory.empty())
+    Snapshot* snapshot2 = new Snapshot(textBuffer, position, selectionStart, selectionEnd);
+    if (!snapshotHistory.empty())
     {
-        Command* cmd = commandHistory.top();
-        commandHistory.pop();
-        commandRedoHistory.push(cmd);
-        cmd->undo();
+        Snapshot* snapshot = snapshotHistory.top();
+        snapshotHistory.pop();
+        snapshotRedoHistory.push(snapshot2);
+        restoreSnapshot(snapshot);
     }
 }
 
 void TextEditor::redoCommand()
 {
-    if (!commandRedoHistory.empty())
+    Snapshot* snapshot2 = new Snapshot(textBuffer, position, selectionStart, selectionEnd);
+    if (!snapshotRedoHistory.empty())
     {
-        Command* cmd = commandRedoHistory.top();
-        commandRedoHistory.pop();
-        commandHistory.push(cmd);
-        cmd->execute();
+        Snapshot* snapshot = snapshotRedoHistory.top();
+        snapshotRedoHistory.pop();
+        snapshotHistory.push(snapshot2);
+        restoreSnapshot(snapshot);
     }
 }

@@ -1,7 +1,6 @@
 #include "PasteCommand.h"
 #include <string>
 
-PasteCommand::~PasteCommand() = default;
 
 PasteCommand::PasteCommand(TextEditor& textEditor, const std::size_t start, const std::size_t end)
     : Command(textEditor),

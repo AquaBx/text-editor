@@ -7,6 +7,5 @@ class UndoCommand final : public Command
 {
     public :
         explicit UndoCommand(TextEditor& textEditor);
-        ~UndoCommand() override;
         void execute() override;
 };

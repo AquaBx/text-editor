@@ -9,6 +9,5 @@ class ZoomEditorCommand final : public Command
 
 public :
     explicit ZoomEditorCommand(TextEditor& textEditor, float zoom);
-    ~ZoomEditorCommand() override;
     void execute() override;
 };

@@ -9,6 +9,5 @@ class PasteCommand final : public Command
 
 public :
     explicit PasteCommand(TextEditor& textEditor, std::size_t start, std::size_t end);
-    ~PasteCommand() override;
     void execute() override;
 };

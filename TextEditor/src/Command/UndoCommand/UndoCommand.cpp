@@ -4,8 +4,6 @@
 
 #include "UndoCommand.h"
 
-UndoCommand::~UndoCommand() = default;
-
 UndoCommand::UndoCommand(TextEditor& textEditor)
     : Command(textEditor)
 {
