@@ -16,7 +16,6 @@ Texture::Texture(const std::string& text, TTF_Font* font, SDL_Renderer* renderer
         surface->w,
         surface->h
     };
-    SDL_FreeSurface(surface);
 };
 
 void Texture::draw(SDL_Renderer* renderer) const
@@ -26,5 +25,6 @@ void Texture::draw(SDL_Renderer* renderer) const
 
 Texture::~Texture()
 {
+    SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
 };

@@ -1,0 +1,26 @@
+@startuml
+left to right direction
+Actor Utilisateur
+package "Mini-éditeur" {
+  (Couper la sélection) .> (Copier la sélection) : extend
+  Utilisateur -- (Couper la sélection)
+  Utilisateur -- (Copier la sélection)
+  Utilisateur -- (Déplacer le curseur)
+  Utilisateur -- (Entrer du texte)
+  Utilisateur -- (Effacer du texte)
+  Utilisateur -- (Sélectionner du texte)
+  Utilisateur -- (Coller la sélection)
+
+  (Enregistrer les actions) #LightBlue
+  Utilisateur -- (Enregistrer les actions)
+
+  (Relire les actions) #LightBlue
+  Utilisateur -- (Relire les actions)
+
+  (Refaire les actions) #LightBlue
+  Utilisateur -- (Refaire les actions)
+  
+  (Défaire les actions) #LightBlue
+  Utilisateur -- (Défaire les actions)
+}
+@enduml
