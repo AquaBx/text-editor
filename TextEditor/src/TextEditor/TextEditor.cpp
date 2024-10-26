@@ -11,10 +11,12 @@
 #include "../Command/MoveCursorCommand/MoveCursorCommand.h"
 #include "../Command/PasteCommand/PasteCommand.h"
 #include "../Command/ZoomEditorCommand/ZoomEditorCommand.h"
+#include "../Command/UndoCommand/UndoCommand.h"
+#include "../Command/RedoCommand/RedoCommand.h"
 
 TextEditor::TextEditor() = default;
 
-std::string TextEditor::getTextBuffer()
+std::string TextEditor::getTextBuffer() const
 {
     return textBuffer;
 }
@@ -24,7 +26,7 @@ void TextEditor::setTextBuffer(std::string t)
     textBuffer = t;
 }
 
-std::string TextEditor::getClipboard()
+std::string TextEditor::getClipboard() const
 {
     return clipboard;
 }
@@ -79,15 +81,6 @@ void TextEditor::draw(const Renderer& renderer) const
     renderer.drawText(textBuffer, selectionStart, selectionEnd, fontScale);
 }
 
-void TextEditor::setCommand(Command* cmd)
-{
-    this->command = cmd;
-}
-
-void TextEditor::executeCommand()
-{
-}
-
 void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, const SDL_KeyCode key)
 {
     if ((key == SDLK_BACKSPACE || key == SDLK_DELETE) && selectionStart != selectionEnd)
@@ -113,11 +106,17 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
         case SDLK_c:
             CopyCommand(*this, selectionStart, selectionEnd).execute();
             break;
+        case SDLK_z:
+            UndoCommand(*this).execute();
+            break;
+        case SDLK_y:
+            RedoCommand(*this).execute();
+            break;
         case SDLK_v:
-            PasteCommand(*this, selectionStart, selectionEnd).execute();
+            executeCommand( new  PasteCommand(*this, selectionStart, selectionEnd) );
             break;
         case SDLK_x:
-            CutCommand(*this, selectionStart, selectionEnd).execute();
+            executeCommand( new CutCommand(*this, selectionStart, selectionEnd) );
             break;
         case SDLK_a:
             MoveCursorCommand(*this,0, 0, textBuffer.length()).execute();
@@ -184,16 +183,62 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
         (std::isalpha(unsignedKey) && key >= 'A' && key <= 'Z') || 
         std::ispunct(unsignedKey) || 
         key == ' ') {
-        EnterCharCommand(*this, selectionStart, selectionEnd, key).execute();
+
+        executeCommand( new EnterCharCommand(*this, selectionStart, selectionEnd, key) );
     }
     else {
-        EnterCharCommand(*this, selectionStart, selectionEnd, '#').execute();
+        executeCommand( new EnterCharCommand(*this, selectionStart, selectionEnd, '#') );
     }
 }
 
-void TextEditor::undoCommand()
-{
-    // pour V2 ça non ???
+TextEditor::~TextEditor() {
+    while (!commandHistory.empty())
+    {
+        delete commandHistory.top();
+        commandHistory.pop();
+    }
+    while (!commandRedoHistory.empty())
+    {
+        delete commandRedoHistory.top();
+        commandRedoHistory.pop();
+    }
+};
+
+void TextEditor::restoreSnapshot(Snapshot * snapshot){
+    position = snapshot->position;
+    textBuffer = snapshot->textBuffer;
+    selectionStart = snapshot->selectionStart;
+    selectionEnd = snapshot->selectionEnd;
 }
 
-TextEditor::~TextEditor() = default;
+void TextEditor::executeCommand(Command * command)
+{
+    command -> execute();
+    commandHistory.push(command);
+
+    while (!commandRedoHistory.empty())
+    {
+        delete commandRedoHistory.top();
+        commandRedoHistory.pop();
+    }
+}
+
+void TextEditor::undoCommand(){
+    if (!commandHistory.empty())
+    {
+        Command * cmd = commandHistory.top();
+        commandHistory.pop();
+        commandRedoHistory.push(cmd);
+        cmd->undo();
+    }
+}
+
+void TextEditor::redoCommand(){
+    if (!commandRedoHistory.empty())
+    {
+        Command * cmd = commandRedoHistory.top();
+        commandRedoHistory.pop();
+        commandHistory.push(cmd);
+        cmd->execute();
+    }
+}

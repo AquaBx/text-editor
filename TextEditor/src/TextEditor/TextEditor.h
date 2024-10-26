@@ -1,13 +1,16 @@
 #pragma once
 
+#include <stack>
 #include <string>
 #include "../Renderer/Renderer.h"
+#include "../Snapshot/Snapshot.h"
 
-class Command; // sera override par l'interface Command.h, surtout ne pas importer Command.h sinon on importe en boucle
+class Command;
 
 class TextEditor
 {
     friend class CopyCommand;
+    friend class Command;
     friend class CutCommand;
     friend class DeleteTextCommand;
     friend class EnterCharCommand;
@@ -15,7 +18,8 @@ class TextEditor
     friend class PasteCommand;
     friend class ZoomEditorCommand;
 
-    Command* command = nullptr;
+    std::stack<Command *>  commandHistory;
+    std::stack<Command *>  commandRedoHistory;
     std::string textBuffer;
     std::string clipboard;
     std::size_t position = 0;
@@ -24,13 +28,12 @@ class TextEditor
     float fontScale = 1.0f;
 
 public:
-    std::string getTextBuffer();
-    std::string getClipboard();
-    std::size_t getPosition() const;
-    std::size_t getSelectionStart() const;
-    std::size_t getSelectionEnd() const;
-
-    float getFontScale() const;
+    [[nodiscard]] std::string getTextBuffer() const;
+    [[nodiscard]] std::string getClipboard() const;
+    [[nodiscard]] std::size_t getPosition() const;
+    [[nodiscard]] std::size_t getSelectionStart() const;
+    [[nodiscard]] std::size_t getSelectionEnd() const;
+    [[nodiscard]] float getFontScale() const;
     void setTextBuffer(std::string t);
     void setClipboard(std::string c);
     void setPosition(std::size_t p);
@@ -39,11 +42,12 @@ public:
     void setFontScale(float font_scale);
 
     void draw(const Renderer& renderer) const;
-    void setCommand(Command* cmd);
     void keyPressed(bool ctrl, bool alt, bool shift, char key);
     void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key);
-    void executeCommand();
+    void executeCommand(Command * command);
+    void restoreSnapshot(Snapshot * snapshot);
     void undoCommand();
+    void redoCommand();
     ~TextEditor();
     TextEditor();
 };

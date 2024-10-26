@@ -1,9 +1,11 @@
 @startuml
 interface Command {
     - textEditor : TextEditor&
+    - backup : Snapshot
     + Command(TextEditor& textEditor)
     + ~Command()
     + void execute()
+    + undo()
 }
 
 class CopyCommand {
@@ -56,6 +58,21 @@ class ZoomEditorCommand {
     + ~ZoomEditorCommand()
 }
 
+class UndoCommand {
+    + UndoCommand(\n\tTextEditor& textEditor)
+    + ~UndoCommand()
+}
+
+class Snapshot {
+    friend class TextEditor
+    - std::string textBuffer
+    - std::string clipboard
+    - std::size_t position
+    - std::size_t selectionStart
+    - std::size_t selectionEnd
+    + Snapshot(std::string textBuffer, std::string clipboard, std::size_t position, std::size_t selectionStart, std::size_t selectionEnd)
+}
+
 class Client {
    - TextEditor textEditor
    - Renderer renderer
@@ -81,10 +98,12 @@ class Renderer {
 }
 
 class TextEditor {
-    - Command* command
+    friend class Command
+
+    - std::stackCommand> command_history[]
     - std::string textBuffer
     - std::string clipboard
-    - std::size_t positio
+    - std::size_t position
     - std::size_t selectionStart
     - std::size_t selectionEnd
     - float fontScale
@@ -104,11 +123,14 @@ class TextEditor {
     + void setCommand(Command* cmd)
     + void keyPressed(bool ctrl, bool alt, bool shift, char key)
     + void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key)
-    + void executeCommand()
+    + void executeCommand(Command & command)
     + void undoCommand()
+    + void restore(Snapshot & snap)
     + ~TextEditor()
     + TextEditor()
 }
+
+
 
 class Texture {
     - SDL_Texture* texture
@@ -126,6 +148,10 @@ Command <|.. CopyCommand
 Command <|.. PasteCommand
 Command <|.. CutCommand
 Command <|.. ZoomEditorCommand
+Command <|.. UndoCommand
+
+Snapshot <--* Command
+TextEditor --> Snapshot
 
 Client *--> TextEditor
 TextEditor o---> Command

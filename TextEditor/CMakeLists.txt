@@ -28,6 +28,10 @@ set(SourcesFiles
         src/Command/PasteCommand/PasteCommand.cpp
         src/Command/ZoomEditorCommand/ZoomEditorCommand.h
         src/Command/ZoomEditorCommand/ZoomEditorCommand.cpp
+        src/Command/UndoCommand/UndoCommand.cpp
+        src/Command/UndoCommand/UndoCommand.h
+        src/Command/RedoCommand/RedoCommand.cpp
+        src/Command/RedoCommand/RedoCommand.h
         src/Client/Client.h
         src/Client/Client.cpp
         src/TextEditor/TextEditor.h
@@ -36,6 +40,8 @@ set(SourcesFiles
         src/Texture/Texture.cpp
         src/Debug/Debug.h
         src/Debug/Debug.cpp
+        src/Snapshot/Snapshot.cpp
+        src/Snapshot/Snapshot.h
 )
 
 # Build
