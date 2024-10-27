@@ -223,13 +223,15 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
 
 void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, const char key)
 {
+    unsigned char unsignedKey = key; 
+
     if (macroRecord)
     {
         macroHistory.push_back({ctrl,alt,shift,CombinaisonType::CHARCODE, key});
     }
     else if (
-        (std::isalpha(key) && ((key >= 'a' && key <= 'z') || key >= 'A' && key <= 'Z'))
-        || std::ispunct(key) || key == ' '
+        (std::isalpha(unsignedKey) && ((key >= 'a' && key <= 'z') || key >= 'A' && key <= 'Z'))
+        || std::ispunct(unsignedKey) || key == ' '
     )
     {
         executeCommand(new EnterCharCommand(*this, selectionStart, selectionEnd, key));
