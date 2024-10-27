@@ -6,15 +6,15 @@ MoveCursorCommand::MoveCursorCommand(TextEditor& textEditor, const std::size_t p
                                      const std::size_t end)
     : Command(textEditor),
       start(start),
-      end(end),
-      position(position)
+      position(position),
+      end(end)
 {
 }
 
 void MoveCursorCommand::execute()
 {
-    if (start >= 0 && end <= textEditor.getTextBuffer().length() && position >= 0 && position <= textEditor.
-        getTextBuffer().length())
+    if (end <= textEditor.getTextBuffer().length() && position <= textEditor.
+                                                                  getTextBuffer().length())
     {
         textEditor.setSelectionStart(start);
         textEditor.setSelectionEnd(end);

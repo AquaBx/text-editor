@@ -1,4 +1,3 @@
-#include <SDL.h>
 #include "src/Client/Client.h"
 
 int main()

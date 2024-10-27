@@ -24,15 +24,15 @@ class TextEditor
     float fontScale = 1.0f;
 
 public:
-    std::string getTextBuffer();
-    std::string getClipboard();
-    std::size_t getPosition() const;
-    std::size_t getSelectionStart() const;
-    std::size_t getSelectionEnd() const;
+    [[nodiscard]] std::string getTextBuffer();
+    [[nodiscard]] std::string getClipboard();
+    [[nodiscard]] std::size_t getPosition() const;
+    [[nodiscard]] std::size_t getSelectionStart() const;
+    [[nodiscard]] std::size_t getSelectionEnd() const;
 
-    float getFontScale() const;
-    void setTextBuffer(std::string t);
-    void setClipboard(std::string c);
+    [[nodiscard]] float getFontScale() const;
+    void setTextBuffer(const std::string& t);
+    void setClipboard(const std::string& c);
     void setPosition(std::size_t p);
     void setSelectionStart(std::size_t start);
     void setSelectionEnd(std::size_t end);

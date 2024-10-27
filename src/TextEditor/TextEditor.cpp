@@ -2,7 +2,7 @@
 
 #include <iostream>
 #include <ostream>
-#include <cctype> 
+#include <cctype>
 
 #include "../Command/CopyCommand/CopyCommand.h"
 #include "../Command/CutCommand/CutCommand.h"
@@ -19,7 +19,7 @@ std::string TextEditor::getTextBuffer()
     return textBuffer;
 }
 
-void TextEditor::setTextBuffer(std::string t)
+void TextEditor::setTextBuffer(const std::string& t)
 {
     textBuffer = t;
 }
@@ -29,7 +29,7 @@ std::string TextEditor::getClipboard()
     return clipboard;
 }
 
-void TextEditor::setClipboard(std::string c)
+void TextEditor::setClipboard(const std::string& c)
 {
     clipboard = c;
 }
@@ -93,7 +93,7 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
     {
         DeleteTextCommand(*this, selectionStart, selectionStart + 1).execute();
     }
-    else if (key == SDLK_RETURN || key ==  SDLK_KP_ENTER)
+    else if (key == SDLK_RETURN || key == SDLK_KP_ENTER)
     {
         EnterCharCommand(*this, selectionStart, selectionEnd, '\n').execute();
     }
@@ -111,13 +111,13 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
             CutCommand(*this, selectionStart, selectionEnd).execute();
             break;
         case SDLK_a:
-            MoveCursorCommand(*this,0, 0, textBuffer.length()).execute();
+            MoveCursorCommand(*this, 0, 0, textBuffer.length()).execute();
             break;
         case SDLK_KP_MINUS:
-            ZoomEditorCommand(*this,-0.25).execute();
+            ZoomEditorCommand(*this, -0.25).execute();
             break;
         case SDLK_KP_PLUS:
-            ZoomEditorCommand(*this,0.25).execute();
+            ZoomEditorCommand(*this, 0.25).execute();
             break;
         default: ;
         }
@@ -126,39 +126,51 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
     {
         switch (key)
         {
-        case (SDLK_UP):
-            MoveCursorCommand(*this,0, 0, 0).execute();
+        case SDLK_UP:
+            MoveCursorCommand(*this, 0, 0, 0).execute();
             break;
-        case (SDLK_DOWN):
-            MoveCursorCommand(*this,textBuffer.length(), textBuffer.length(), textBuffer.length()).execute();
+        case SDLK_DOWN:
+            MoveCursorCommand(*this, textBuffer.length(), textBuffer.length(), textBuffer.length()).execute();
             break;
-        case (SDLK_LEFT):
+        case SDLK_LEFT:
             if (shift)
             {
-                if (position == selectionEnd && selectionStart > 0) {
-                    MoveCursorCommand(*this,position, selectionStart - 1, selectionEnd).execute();
-                } else if (position == selectionStart && selectionEnd > 0)
+                if (position == selectionEnd && selectionStart > 0)
                 {
-                    MoveCursorCommand(*this,position, selectionStart, selectionEnd - 1).execute();
+                    MoveCursorCommand(*this, position, selectionStart - 1, selectionEnd).execute();
                 }
-            } else if ( selectionStart != selectionEnd ) {
+                else if (position == selectionStart && selectionEnd > 0)
+                {
+                    MoveCursorCommand(*this, position, selectionStart, selectionEnd - 1).execute();
+                }
+            }
+            else if (selectionStart != selectionEnd)
+            {
                 MoveCursorCommand(*this, selectionStart, selectionStart, selectionStart).execute();
-            } else if (selectionStart > 0) {
-                MoveCursorCommand(*this,selectionStart - 1, selectionStart - 1, selectionStart - 1).execute();
+            }
+            else if (selectionStart > 0)
+            {
+                MoveCursorCommand(*this, selectionStart - 1, selectionStart - 1, selectionStart - 1).execute();
             }
             break;
-        case (SDLK_RIGHT):
-            if (shift) {
-                if (position == selectionStart && selectionEnd < textBuffer.length()) {
-                    MoveCursorCommand(*this,position, selectionStart, selectionEnd + 1).execute();
+        case SDLK_RIGHT:
+            if (shift)
+            {
+                if (position == selectionStart && selectionEnd < textBuffer.length())
+                {
+                    MoveCursorCommand(*this, position, selectionStart, selectionEnd + 1).execute();
                 }
-                else if ( position == selectionEnd && selectionStart < textBuffer.length()) {
-                    MoveCursorCommand(*this,position, selectionStart + 1, selectionEnd).execute();
+                else if (position == selectionEnd && selectionStart < textBuffer.length())
+                {
+                    MoveCursorCommand(*this, position, selectionStart + 1, selectionEnd).execute();
                 }
             }
-            else if ( selectionStart != selectionEnd ) {
+            else if (selectionStart != selectionEnd)
+            {
                 MoveCursorCommand(*this, selectionEnd, selectionEnd, selectionEnd).execute();
-            } else if ( selectionEnd < textBuffer.length()){
+            }
+            else if (selectionEnd < textBuffer.length())
+            {
                 MoveCursorCommand(*this, selectionEnd + 1, selectionEnd + 1, selectionEnd + 1).execute();
             }
             break;
@@ -169,15 +181,17 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
 
 void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, const char key)
 {
-    unsigned char unsignedKey = static_cast<unsigned char>(key);
+    unsigned char unsignedKey = key;
 
-    if ((std::isalpha(unsignedKey) && key >= 'a' && key <= 'z') || 
-        (std::isalpha(unsignedKey) && key >= 'A' && key <= 'Z') || 
-        std::ispunct(unsignedKey) || 
-        key == ' ') {
+    if ((std::isalpha(unsignedKey) && key >= 'a' && key <= 'z') ||
+        (std::isalpha(unsignedKey) && key >= 'A' && key <= 'Z') ||
+        std::ispunct(unsignedKey) ||
+        key == ' ')
+    {
         EnterCharCommand(*this, selectionStart, selectionEnd, key).execute();
     }
-    else {
+    else
+    {
         EnterCharCommand(*this, selectionStart, selectionEnd, '#').execute();
     }
 }
