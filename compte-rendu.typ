@@ -304,7 +304,7 @@ Un diagramme de séquence correspondant pourrait être illustré comme suit :
 #pagebreak()
 == Implémentation du code
 
-Conformément aux consignes et aux diagrammes que nous avons pu établir, nous avons réalisé la première version de l'éditeur de texte. Vous pourrez le trouver #highlight("dire où")
+Conformément aux consignes et aux diagrammes que nous avons pu établir, nous avons réalisé la première version de l'éditeur de texte. Vous pourrez la trouver dans la branche nommée "V1" du dépôt Gitlab.
 
 #pagebreak()
 = Version 2
@@ -467,6 +467,8 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
 
 )
 
+#set text(11pt)
+
 #pagebreak()
 == Diagramme de classe 
 
@@ -477,7 +479,9 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
 #pagebreak()
 == Implémentation du code
 
+Conformément aux consignes et aux diagrammes que nous avons pu établir, nous avons réalisé la seconde version de l'éditeur de texte. Vous pourrez la trouver dans la branche nommée "V2" du dépôt Gitlab.
 
+#pagebreak()
 = Conclusion
 faire (max 10 lignes)
 il fallait bien penser dès la v1 à la v2 pour avoir un code maintenable
