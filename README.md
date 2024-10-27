@@ -3,19 +3,20 @@
 ## Description
 
 Ce projet est un éditeur de texte **ascii** basique, implémentant des commandes de base :
-- déplacement (flèches)
-- sélection (shift + flèches)
+- déplacement (flèches directionnelles)
+- sélection (shift + flèches directionnelles)
 - copier (ctrl c)
 - couper (ctrl x)
 - coller (ctrl v)
 - zoom / dézoom (ctrl + / ctrl -)
 
 La version 2 obtient ces ajouts:
-- L'historique des actions avec fonction de rewind (ctrl z)
-- 
--
--
--
+- enregistrement des actions de l'utilisateur (ctrl s)
+- annulation de la dernière action de l'utilisateur (ctrl z)
+- réajout de la dernière annulée action de l'utilisateur (ctrl y)
+- écoute des actions de l’utilisateur (ctrl m)
+- arrêt de l'écoute des actions de l’utilisateur (ctrl m)
+- rééxécution de la combinaison d'actions de l'utilisateur (alt m)
 
 ⚠️ Comme mentionné précedemment, seuls les caractères ascii sont supportés, il se peut de ce fait que tous vos caractères ne soient pas affichés correctement.
 

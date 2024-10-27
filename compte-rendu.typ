@@ -310,8 +310,11 @@ Conformément aux consignes et aux diagrammes que nous avons pu établir, nous a
 = Version 2
 
 Dans la seconde version, les fonctionnalités ajoutées par rapport à la première version sont les suivantes :
-- l'enregistrement/relecture des actions de l’utilisateur (e.g., script),
-- la possibilité de défaire/refaire, avec une capacité quelconque dans le défaire (autrement dit on peut revenir au début).
+- enregistrement des actions de l'utilisateur (ctrl s)
+- annulation de la dernière action de l'utilisateur (ctrl z)
+- réajout de la dernière annulée action de l'utilisateur (ctrl y)
+- écoute/arrêt de l'écoute des actions de l’utilisateur (ctrl m)
+- rééxécution de la combinaison d'actions de l'utilisateur (alt m)
 
 #pagebreak()
 == Diagramme des cas d'utilisation
@@ -407,63 +410,86 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
   ], [
   ],
 
-[#text(blue)[Enregistrer les actions]], [
-  #text(blue)[
-    1. L'utilisateur active la fonction d'enregistrement (Ctrl+S).
-    2. Toutes les nouvelles actions de l'utilisateur sont ajoutées dans le fichier de script.
-  ]
-  ], [
-  #text(blue)[
-    1. Première fois que l'utilisateur appuie sur Ctrl+S : Création du fichier puis ajout des actions effectuées.
-  ]
-  ], [
-  #text(blue)[
-    1. Problème d'écriture (fichier inaccessible) : message d'erreur.
-  ]
-  ],
+  [#text(blue)[Enregistrer les actions]], [
+    #text(blue)[
+      1. L'utilisateur active la fonction d'enregistrement (Ctrl+S).
+      2. Toutes les nouvelles actions de l'utilisateur sont ajoutées dans le fichier de script.
+    ]
+    ], [
+    #text(blue)[
+      1. Première fois que l'utilisateur appuie sur Ctrl+S : Création du fichier puis ajout des actions effectuées.
+    ]
+    ], [
+    #text(blue)[
+      1. Problème d'écriture (fichier inaccessible) : message d'erreur.
+    ]
+    ],
 
-[#text(blue)[Relire les actions]], [
-  #text(blue)[
-    1. L'utilisateur charge le fichier de script.
-    2. Le système exécute les actions enregistrées dans l'ordre.
-  ]
-  ], [
-  #text(blue)[
-  ]
-  ], [
-  #text(blue)[
-    1. Problème d'exécution (fichier inaccessible) : message d'erreur.
-  ]
-  ],
+  [#text(blue)[Refaire les actions]], [
+    #text(blue)[
+      1. L'utilisateur active la fonction de réexécution (Ctrl+Y).
+      2. Le système réapplique l'action précédemment annulée.
+    ]
+    ], [
+    #text(blue)[
+    ]
+    ], [
+    #text(blue)[
+      1. Aucune action à refaire : ne rien faire, nous sommes revenus à l'état final. 
+    ]
+    ],
 
-[#text(blue)[Défaire les actions]], [
-  #text(blue)[
-    1. L'utilisateur active la fonction d'annulation (Ctrl+Z).
-    2. Le système revient à l'état précédent l'action la plus récente.
-    3. Le fichier de script est mis à jour (ajout de la fonction d'annulation)
-  ]
-  ], [
-  #text(blue)[
-  ]
-  ], [
-  #text(blue)[
-    1. Il n'y a plus d'actions à annuler : ne rien faire, nous sommes rendus à l'état initial.
-  ]
-  ],
+  [#text(blue)[Défaire les actions]], [
+    #text(blue)[
+      1. L'utilisateur active la fonction d'annulation (Ctrl+Z).
+      2. Le système revient à l'état précédent l'action la plus récente.
+      3. Le fichier de script est mis à jour (ajout de la fonction d'annulation)
+    ]
+    ], [
+    #text(blue)[
+    ]
+    ], [
+    #text(blue)[
+      1. Il n'y a plus d'actions à annuler : ne rien faire, nous sommes rendus à l'état initial.
+    ]
+    ],
 
-[#text(blue)[Refaire les actions]], [
-  #text(blue)[
-    1. L'utilisateur active la fonction de réexécution (Ctrl+Y).
-    2. Le système réapplique l'action précédemment annulée.
-  ]
-  ], [
-  #text(blue)[
-  ]
-  ], [
-  #text(blue)[
-    1. Aucune action à refaire : ne rien faire, nous sommes revenus à l'état final. 
-  ]
-  ],
+  [#text(blue)[Réexécuter les actions]], [
+    #text(blue)[
+      faire alt m
+    ]
+    ], [
+    #text(blue)[
+    ]
+    ], [
+    #text(blue)[
+      1. Problème d'exécution (fichier inaccessible) : message d'erreur.
+    ]
+    ],
+
+  [#text(blue)[Ecouter les actions]], [
+    #text(blue)[
+      faire ctrl m
+    ]
+    ], [
+    #text(blue)[
+    ]
+    ], [
+    #text(blue)[
+    ]
+    ],
+
+  [#text(blue)[Arrêter l'écoute des actions]], [
+    #text(blue)[
+      faire ctrl m
+    ]
+    ], [
+    #text(blue)[
+    ]
+    ], [
+    #text(blue)[
+    ]
+    ],
 
 )
 
