@@ -1,0 +1,36 @@
+@startuml faire-défaire
+hide footbox
+skinparam sequenceMessageAlign center
+
+actor Utilisateur
+participant "TextEditor" as editor
+participant "UndoCommand" as undo
+participant "RedoCommand" as redo
+participant "Snapshot" as snapshot
+
+== L'utilisateur fait des actions ==
+loop L'utilisateur fait des actions
+    Utilisateur -> editor : demande d'exécuter une commande
+    editor -> snapshot : crée un nouveau snapshot
+    editor -> Command : exécute la commande associée
+end
+
+== L'utilisateur défait les actions en boucle ==
+loop Tant qu'il y a des actions à défaire
+    Utilisateur -> undo : appuie sur ctrl z
+    undo -> editor : annule la dernière action effectuée
+    editor -> snapshot : crée un nouveau snapshot
+    editor -> snapshot : restaure le snapshot
+end
+
+note right: Plus d'actions à défaire :\nArrivé à l'état initial
+
+== L'utilisateur refait les actions en boucle ==
+loop Tant qu'il y a des actions à refaire
+    Utilisateur -> redo : appuie sur ctrl y
+    redo -> editor : exécute la dernière action annulée
+    editor -> snapshot : restaure le snapshot précédent
+end
+
+note right: Plus d'actions à refaire :\nRevenu à l'état d'origine
+@enduml
