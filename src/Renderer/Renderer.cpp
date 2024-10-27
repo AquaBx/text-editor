@@ -117,7 +117,7 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd, 
 
                 if (w > width)
                 {
-                    std::string tmpWord = "";
+                    std::string tmpWord;
                     do
                     {
                         tmpWord = word.back() + tmpWord;
@@ -153,7 +153,7 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd, 
 
             Texture(word, font, renderer, x, y).draw(renderer);
             x += w;
-            newLine=false;
+            newLine = false;
         }
         y += h;
         x = 0;
@@ -168,9 +168,9 @@ void Renderer::drawText(std::string text, size_t cursorStart, size_t cursorEnd, 
 void Renderer::render() const
 {
     SDL_RenderPresent(renderer);
-};
+}
 
-void Renderer::drawCursor(int x, int y, int w, int h) const
+void Renderer::drawCursor(int x, const int y, int w, const int h) const
 {
     if (w == 0)
     {

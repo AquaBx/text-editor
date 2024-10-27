@@ -4,8 +4,6 @@
 
 #include "Client.h"
 
-#include "../Texture/Texture.h"
-
 Client::Client(const int width, const int height) : textEditor(TextEditor()), renderer(Renderer(width, height))
 {
 }

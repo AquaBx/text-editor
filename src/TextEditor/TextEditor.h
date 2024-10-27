@@ -53,8 +53,8 @@ public:
     [[nodiscard]] std::size_t getSelectionStart() const;
     [[nodiscard]] std::size_t getSelectionEnd() const;
     [[nodiscard]] float getFontScale() const;
-    void setTextBuffer(std::string t);
-    void setClipboard(std::string c);
+    void setTextBuffer(const std::string& t);
+    void setClipboard(const std::string& c);
     void setPosition(std::size_t p);
     void setSelectionStart(std::size_t start);
     void setSelectionEnd(std::size_t end);

@@ -21,7 +21,7 @@ std::string TextEditor::getTextBuffer() const
     return textBuffer;
 }
 
-void TextEditor::setTextBuffer(std::string t)
+void TextEditor::setTextBuffer(const std::string& t)
 {
     textBuffer = t;
 }
@@ -31,7 +31,7 @@ std::string TextEditor::getClipboard() const
     return clipboard;
 }
 
-void TextEditor::setClipboard(std::string c)
+void TextEditor::setClipboard(const std::string& c)
 {
     clipboard = c;
 }
@@ -195,7 +195,7 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
                 MoveCursorCommand(*this, selectionStart - 1, selectionStart - 1, selectionStart - 1).execute();
             }
             break;
-        case (SDLK_RIGHT):
+        case SDLK_RIGHT:
             if (shift)
             {
                 if (position == selectionStart && selectionEnd < textBuffer.length())
