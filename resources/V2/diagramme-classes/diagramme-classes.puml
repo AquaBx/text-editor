@@ -1,4 +1,4 @@
-@startuml diagramme-classes
+@startuml
 interface Command {
     - textEditor : TextEditor&
     + Command(TextEditor& textEditor)
@@ -56,6 +56,60 @@ class ZoomEditorCommand {
     + ~ZoomEditorCommand()
 }
 
+class RedoCommand #line.bold:336B8B {
+    + RedoCommand(\n\tTextEditor& textEditor\n)
+    + ~RedoCommand()
+}
+
+class UndoCommand #line.bold:336B8B {
+    + UndoCommand(\n\tTextEditor& textEditor\n)
+    + ~UndoCommand()
+}
+
+class Snapshot #line.bold:336B8B {
+    - textBuffer : std::string
+    - position : std::size_t
+    - selectionStart : std::size_t
+    - selectionEnd : std::size_t
+    + Snapshot(\n\ttextBuffer : std::string,\n\t position : std::size_t,\n\t selectionStart : std::size_t,\n\t selectionEnd : std::size_t\n)
+    + ~Snapshot()
+}
+
+class TextEditor {
+    - Command* command
+    - std::string textBuffer
+    - std::string clipboard
+    - std::size_t position
+    - std::size_t selectionStart
+    - std::size_t selectionEnd
+    - float fontScale
+    - <b><color:336B8B>std::stack<Snapshot*> snapshotHistory</color></b>
+    - <b><color:336B8B>std::stack<Snapshot*> snapshotRedoHistory</color></b>
+    - <b><color:336B8B>bool macroRecord</color></b>
+    - <b><color:336B8B>std::vector<Combinaison> macroHistory</color></b>
+    + std::string getTextBuffer()
+    + void setTextBuffer(std::string t)
+    + std::string getClipboard()
+    + void setClipboard(std::string c)
+    + std::size_t getPosition() const
+    + void setPosition(std::size_t p)
+    + std::size_t getSelectionStart() const
+    + void setSelectionStart(std::size_t start)
+    + std::size_t getSelectionEnd() const
+    + void setSelectionEnd(std::size_t end)
+    + float getFontScale() const
+    + void setFontScale(float font_scale)
+    + void draw(const Renderer& renderer) const
+    + void setCommand(Command* cmd)
+    + void keyPressed(bool ctrl, bool alt, bool shift, char key)
+    + void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key)
+    + void executeCommand()
+    + <b><color:336B8B>void undoCommand()</color></b>
+    + <b><color:336B8B>void redoCommand()</color></b>
+    + ~TextEditor()
+    + TextEditor()
+}
+
 class Client {
    - TextEditor textEditor
    - Renderer renderer
@@ -80,36 +134,6 @@ class Renderer {
     + ~Renderer()
 }
 
-class TextEditor {
-    - Command* command
-    - std::string textBuffer
-    - std::string clipboard
-    - std::size_t position
-    - std::size_t selectionStart
-    - std::size_t selectionEnd
-    - float fontScale
-    + std::string getTextBuffer()
-    + void setTextBuffer(std::string t)
-    + std::string getClipboard()
-    + void setClipboard(std::string c)
-    + std::size_t getPosition() const
-    + void setPosition(std::size_t p)
-    + std::size_t getSelectionStart() const
-    + void setSelectionStart(std::size_t start)
-    + std::size_t getSelectionEnd() const
-    + void setSelectionEnd(std::size_t end)
-    + float getFontScale() const
-    + void setFontScale(float font_scale)
-    + void draw(const Renderer& renderer) const
-    + void setCommand(Command* cmd)
-    + void keyPressed(bool ctrl, bool alt, bool shift, char key)
-    + void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key)
-    + void executeCommand()
-    + void undoCommand()
-    + ~TextEditor()
-    + TextEditor()
-}
-
 class Texture {
     - SDL_Texture* texture
     - SDL_Rect rect
@@ -126,9 +150,15 @@ Command <|.. CopyCommand
 Command <|.. PasteCommand
 Command <|.. CutCommand
 Command <|.. ZoomEditorCommand
+Command <|.. RedoCommand
+Command <|.. UndoCommand
 
 Client *--> TextEditor
 TextEditor o---> Command
 Renderer --> Texture
 Client *--> Renderer
+
+TextEditor o-- Snapshot
+UndoCommand ..> Snapshot
+RedoCommand ..> Snapshot
 @enduml

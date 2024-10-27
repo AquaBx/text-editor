@@ -518,11 +518,25 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
 #set text(11pt)
 
 #pagebreak()
-== Diagramme de classe 
+== Diagramme de classes
+
+- on s'est inspiré du memento : https://refactoring.guru/design-patterns/memento
+- on a mis en bleu ce qui change
+
+#figure(
+  image("resources/V2/diagramme-classes/diagramme-classes.png"),
+  caption: [
+    Diagramme de classe basé sur le Design Pattern Command pour la Version 2
+  ],
+)
+
+- expliquer ajouts
+
 
 #pagebreak()
 == Diagramme de séquence
 
+on en fait ? si oui lesquels ??
 
 #pagebreak()
 == Implémentation du code
@@ -534,7 +548,3 @@ Conformément aux consignes et aux diagrammes que nous avons pu établir, nous a
 faire (max 10 lignes)
 il fallait bien penser dès la v1 à la v2 pour avoir un code maintenable
 
-https://refactoring.guru/design-patterns
-https://refactoring.guru/design-patterns/catalog
-
-https://refactoring.guru/design-patterns/memento
