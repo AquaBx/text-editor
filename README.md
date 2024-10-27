@@ -3,7 +3,11 @@
 
 ## Description
 
-Ce projet est un éditeur de texte **ascii** basique, implémentant des commandes de base :
+Ce projet est un éditeur de texte **ascii** basique. Il est décomposé en 2 versions.
+- Une première version sur la branche `V1` de ce dépôt.
+- Une seconde version améliorant la première version sur la branche `V2` de ce dépôt.
+
+La première version implémente des commandes de base :
 - déplacement (flèches directionnelles)
 - sélection (shift + flèches directionnelles)
 - copier (ctrl c)
