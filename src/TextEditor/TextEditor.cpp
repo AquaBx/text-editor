@@ -83,18 +83,19 @@ void TextEditor::draw(const Renderer& renderer) const
 
 void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, const SDL_KeyCode key)
 {
-    if (ctrl && key==SDLK_m)
+    if (ctrl && key == SDLK_m)
     {
-        macroRecord=!macroRecord;
+        macroRecord = !macroRecord;
         if (macroRecord)
         {
             macroHistory = {};
         }
     }
-    else if (macroRecord) {
-        if (!alt || key!=SDLK_m)
+    else if (macroRecord)
+    {
+        if (!alt || key != SDLK_m)
         {
-            macroHistory.push_back({ctrl,alt,shift,CombinaisonType::KEYCODE, static_cast<SDL_Keycode>(key)});
+            macroHistory.push_back({ctrl, alt, shift, CombinaisonType::KEYCODE, static_cast<SDL_Keycode>(key)});
         }
     }
     else if ((key == SDLK_BACKSPACE || key == SDLK_DELETE) && selectionStart != selectionEnd)
@@ -109,7 +110,7 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
     {
         executeCommand(new DeleteTextCommand(*this, selectionStart, selectionStart + 1));
     }
-    else if (key == SDLK_RETURN || key ==  SDLK_KP_ENTER)
+    else if (key == SDLK_RETURN || key == SDLK_KP_ENTER)
     {
         executeCommand(new EnterCharCommand(*this, selectionStart, selectionEnd, '\n'));
     }
@@ -149,32 +150,32 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
         switch (key)
         {
         case SDLK_m:
-                for (const Combinaison c:macroHistory)
+            for (const Combinaison c : macroHistory)
+            {
+                if (c.type == CombinaisonType::KEYCODE)
                 {
-                    if (c.type == CombinaisonType::KEYCODE)
-                    {
-                        keyPressed(c.ctrl,c.alt,c.shift,static_cast<SDL_KeyCode>(c.keyCode));
-                    }
-                    else
-                    {
-                        keyPressed(c.ctrl,c.alt,c.shift,c.charCode);
-                    }
-                };
-            default:
-                break;
+                    keyPressed(c.ctrl, c.alt, c.shift, static_cast<SDL_KeyCode>(c.keyCode));
+                }
+                else
+                {
+                    keyPressed(c.ctrl, c.alt, c.shift, c.charCode);
+                }
+            }
+        default:
+            break;
         }
     }
     else
     {
         switch (key)
         {
-        case (SDLK_UP):
+        case SDLK_UP:
             MoveCursorCommand(*this, 0, 0, 0).execute();
             break;
-        case (SDLK_DOWN):
+        case SDLK_DOWN:
             MoveCursorCommand(*this, textBuffer.length(), textBuffer.length(), textBuffer.length()).execute();
             break;
-        case (SDLK_LEFT):
+        case SDLK_LEFT:
             if (shift)
             {
                 if (position == selectionEnd && selectionStart > 0)
@@ -223,11 +224,11 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
 
 void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, const char key)
 {
-    unsigned char unsignedKey = key; 
+    const unsigned char unsignedKey = key;
 
     if (macroRecord)
     {
-        macroHistory.push_back({ctrl,alt,shift,CombinaisonType::CHARCODE, key});
+        macroHistory.push_back({ctrl, alt, shift, CombinaisonType::CHARCODE, key});
     }
     else if (
         (std::isalpha(unsignedKey) && ((key >= 'a' && key <= 'z') || key >= 'A' && key <= 'Z'))
@@ -254,7 +255,7 @@ TextEditor::~TextEditor()
         delete snapshotRedoHistory.top();
         snapshotRedoHistory.pop();
     }
-};
+}
 
 void TextEditor::restoreSnapshot(const Snapshot* snapshot)
 {

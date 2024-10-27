@@ -2,7 +2,6 @@
 
 #include <stack>
 #include <string>
-#include <variant>
 #include <vector>
 
 #include "../Renderer/Renderer.h"
@@ -12,10 +11,13 @@ class Command;
 
 enum class CombinaisonType { KEYCODE, CHARCODE };
 
-struct Combinaison{
+struct Combinaison
+{
     bool ctrl, alt, shift;
     CombinaisonType type;
-    union {
+
+    union
+    {
         SDL_Keycode keyCode;
         char charCode;
     };

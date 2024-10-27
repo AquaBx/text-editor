@@ -1,6 +1,4 @@
 #include "ZoomEditorCommand.h"
-#include <string>
-
 
 ZoomEditorCommand::ZoomEditorCommand(TextEditor& textEditor, const float zoom)
     : Command(textEditor), zoom(zoom)

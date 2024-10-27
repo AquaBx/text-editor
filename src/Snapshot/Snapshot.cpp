@@ -6,10 +6,10 @@
 
 Snapshot::Snapshot(const std::string& textBuffer, const std::size_t position,
                    const std::size_t selectionStart, const std::size_t selectionEnd)
-        : textBuffer(textBuffer),
-          position(position),
-          selectionStart(selectionStart),
-          selectionEnd(selectionEnd)
+    : textBuffer(textBuffer),
+      position(position),
+      selectionStart(selectionStart),
+      selectionEnd(selectionEnd)
 {
 }
 

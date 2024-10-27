@@ -13,8 +13,8 @@ void Client::pollEvent()
     SDL_Event event;
 
     const Uint8* stateh = SDL_GetKeyboardState(nullptr);
-    const bool ctrl =  stateh[SDL_SCANCODE_LCTRL]  || stateh[SDL_SCANCODE_RCTRL];
-    const bool alt =   stateh[SDL_SCANCODE_LALT]   || stateh[SDL_SCANCODE_RALT];
+    const bool ctrl = stateh[SDL_SCANCODE_LCTRL] || stateh[SDL_SCANCODE_RCTRL];
+    const bool alt = stateh[SDL_SCANCODE_LALT] || stateh[SDL_SCANCODE_RALT];
     const bool shift = stateh[SDL_SCANCODE_LSHIFT] || stateh[SDL_SCANCODE_RSHIFT];
 
     while (SDL_PollEvent(&event) == 1)

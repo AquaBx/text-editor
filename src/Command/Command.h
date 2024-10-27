@@ -12,7 +12,7 @@ protected:
 public :
     explicit Command(TextEditor& textEditor) : textEditor(textEditor)
     {
-    };
+    }
 
     virtual ~Command() = default;
     virtual void execute() = 0;
