@@ -1,5 +1,6 @@
 # Éditeur de texte (OMD-TP2)
-![resources/readme.png](resources/readme.png)
+<img src="resources/readme.png" alt="Description de l'image" width="200"/>
+
 ## Description
 
 Ce projet est un éditeur de texte **ascii** basique, implémentant des commandes de base :
@@ -17,6 +18,19 @@ La version 2 obtient ces ajouts:
 - arrêt de l'écoute des actions de l’utilisateur (ctrl m)
 - rééxécution de la combinaison d'actions de l'utilisateur (alt m)
 
+Finalement, voici un récapitulatif des commandes disponibles :
+```
+ctrl m : commence / arrête l'écoute des macros
+alt m  : joue la macro
+ctrl z : revient en arrière
+ctrl y : revient en avant
+ctrl a : sélectionne tout
+shift ← / shift → : sélectionne à gauche / droite
+↑ / ↓ : va au début / à la fin
+← / → : déplacement à gauche / à droite
+ctrl + / ctrl - : zoom / dézoom
+```
+
 ⚠️ Comme mentionné précedemment, seuls les caractères ascii sont supportés, il se peut de ce fait que tous vos caractères ne soient pas affichés correctement.
 
 ## Build et tests
@@ -26,6 +40,14 @@ La version 2 obtient ces ajouts:
 Les outils nécessaires sont : 
 - MSVC C++ (Visual Studio)
 - CMake
+
+#### Pour importer le projet avec la SDL
+```
+git clone --recurse-submodules -b V1 https://gitlab.istic.univ-rennes1.fr/cejosso/omd-tp2
+cd omd-tp2
+git checkout V2
+git submodule update --init --recursive
+```
 
 #### Pour génerer le projet
 ```
