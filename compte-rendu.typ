@@ -123,11 +123,13 @@ Dans la première version, les fonctionnalités présentes sont :
 Au vu des fonctionnalités que doit proposer la première version de l'éditeur de texte, voici un diagramme de cas d'utilisation envisageable :
 
 #figure(
-  image("img/V1/cas-utilisation/cas-utilisation.png", width: 7cm),
+  image("resources/V1/cas-utilisation/cas-utilisation.png", width: 7cm),
   caption: [
     Diagramme de cas d'utilisation pour la première version.
   ],
 )
+
+_Remarque :_ Nous avons ajouté une fonctionnalité supplémentaire qui est le zoom/dezoom de la fenêtre pour rendre notre éditeur plus confortable pour l'utilisateur.
 
 #pagebreak()
 == Description des cas d'utilisation
@@ -165,7 +167,7 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
   [Effacer du texte], [
     1. L'utilisateur appuie sur la touche "Supprimer" ou "Backspace".
     2. Le caractère ou le texte sélectionné est supprimé
-    3. a zone de texte est mise à jour.
+    3. La zone de texte est mise à jour.
   ], [
     1. Aucun texte à supprimer (curseur au début du texte).
   ], [
@@ -207,6 +209,14 @@ Voici la description de chaque cas d'utilisation. Nous ne détaillerons pas les 
   ], [
     1. Aucun texte sélectionné : vide le presse-papier et rien n'est copié.
   ], [
+  ],
+
+  [Zoomer/dézoomer la fenêtre], [
+    1. L'utilisateur sélectionne appuie sur Ctrl+ ou Ctrl-.
+    2. Le zoom de la fenêtre est mis à jour.
+    3. L'affichage de la fenêtre est mis à jour.
+  ], [
+  ], [
   ]
 )
 
@@ -222,7 +232,7 @@ Ce design pattern est de type comportemental, c'est-à-dire qu'ils concernent le
 Voici la structure exposée par ce design pattern : 
 
 #figure(
-  image("img/V1/design-pattern/design-pattern.png", height: 6cm),
+  image("resources/V1/design-pattern/design-pattern.png", height: 5cm),
   caption: [
     Design Pattern Command
   ],
@@ -231,7 +241,7 @@ Voici la structure exposée par ce design pattern :
 Cette structure est très générale. Nous devons l'adapter à notre problème. Pour ce faire, nous avons du comprendre la structure ci-dessus. Une fois cela fait, nous avons pu la customiser pour produire notre propre diagramme de classes modélisant notre problème. Voici comment nous l'avons adapté :
 
 #figure(
-  image("img/V1/diagramme-classes/diagramme-classes.png"),
+  image("resources/V1/diagramme-classes/diagramme-classes.png"),
   caption: [
     Diagramme de classe basé sur le Design Pattern Command pour la Version 1
   ],
@@ -274,7 +284,7 @@ Le cas d'utilisation "Couper la sélection" a été décrit ainsi dans la partie
 Un diagramme de séquence correspondant pourrait être illustré comme suit :
 
 #figure(
-  image("img/V1/diagramme-sequence/diagramme-sequence-couper/diagramme-sequence-couper.png"),
+  image("resources/V1/diagramme-sequence/diagramme-sequence-couper/diagramme-sequence-couper.png"),
   caption: [
     Diagramme de séquence pour couper la sélection
   ],
@@ -295,7 +305,7 @@ Le cas d'utilisation "Entrer du texte" a été décrit ainsi dans la partie pré
 Un diagramme de séquence correspondant pourrait être illustré comme suit :
 
 #figure(
-  image("img/V1/diagramme-sequence/diagramme-sequence-ecrire/diagramme-sequence-ecrire.png"),
+  image("resources/V1/diagramme-sequence/diagramme-sequence-ecrire/diagramme-sequence-ecrire.png"),
   caption: [
     Diagramme de séquence pour entrer du texte
   ],
@@ -322,7 +332,7 @@ Dans la seconde version, les fonctionnalités ajoutées par rapport à la premi�
 Au vu des fonctionnalités supplémentaires que doit proposer la seconde version de l'éditeur de texte, voici un diagramme de cas d'utilisation envisageable. A noter que le diagramme d'utilisation de la première version vient s'y ajouter. Nous avons ajouté les nouveaux cas d'utilisation en bleu :
 
 #figure(
-  image("img/V2/cas-utilisation/cas-utilisation.png", width: 7cm),
+  image("resources/V2/cas-utilisation/cas-utilisation.png", width: 7cm),
   caption: [
     Diagramme de cas d'utilisation pour la seconde version.
   ],
@@ -407,6 +417,14 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
     3. Le texte est supprimé de la zone de texte et copié dans le presse-papier.
   ], [
     1. Aucun texte sélectionné : vide le presse-papier et rien n'est copié.
+  ], [
+  ],
+
+  [Zoomer/dézoomer la fenêtre], [
+    1. L'utilisateur sélectionne appuie sur Ctrl+ ou Ctrl-.
+    2. Le zoom de la fenêtre est mis à jour.
+    3. L'affichage de la fenêtre est mis à jour.
+  ], [
   ], [
   ],
 
