@@ -1,5 +1,5 @@
 # Éditeur de texte (OMD-TP2)
-![img/readme.png](img.png)
+![resources/readme.png](img.png)
 ## Description
 
 Ce projet est un éditeur de texte **ascii** basique, implémentant des commandes de base :
@@ -11,7 +11,6 @@ Ce projet est un éditeur de texte **ascii** basique, implémentant des commande
 - zoom / dézoom (ctrl + / ctrl -)
 
 La version 2 obtient ces ajouts:
-- enregistrement des actions de l'utilisateur (ctrl s)
 - annulation de la dernière action de l'utilisateur (ctrl z)
 - réajout de la dernière annulée action de l'utilisateur (ctrl y)
 - écoute des actions de l’utilisateur (ctrl m)
