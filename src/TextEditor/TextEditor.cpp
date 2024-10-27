@@ -79,15 +79,6 @@ void TextEditor::draw(const Renderer& renderer) const
     renderer.drawText(textBuffer, selectionStart, selectionEnd, fontScale);
 }
 
-void TextEditor::setCommand(Command* cmd)
-{
-    this->command = cmd;
-}
-
-void TextEditor::executeCommand()
-{
-}
-
 void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, const SDL_KeyCode key)
 {
     if ((key == SDLK_BACKSPACE || key == SDLK_DELETE) && selectionStart != selectionEnd)
@@ -189,11 +180,6 @@ void TextEditor::keyPressed(const bool ctrl, const bool alt, const bool shift, c
     else {
         EnterCharCommand(*this, selectionStart, selectionEnd, '#').execute();
     }
-}
-
-void TextEditor::undoCommand()
-{
-    // pour V2 ça non ???
 }
 
 TextEditor::~TextEditor() = default;

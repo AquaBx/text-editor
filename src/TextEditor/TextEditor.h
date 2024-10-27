@@ -39,11 +39,8 @@ public:
     void setFontScale(float font_scale);
 
     void draw(const Renderer& renderer) const;
-    void setCommand(Command* cmd);
     void keyPressed(bool ctrl, bool alt, bool shift, char key);
     void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key);
-    void executeCommand();
-    void undoCommand();
     ~TextEditor();
     TextEditor();
 };
