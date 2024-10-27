@@ -84,7 +84,7 @@ class TextEditor {
     - Command* command
     - std::string textBuffer
     - std::string clipboard
-    - std::size_t positio
+    - std::size_t position
     - std::size_t selectionStart
     - std::size_t selectionEnd
     - float fontScale
