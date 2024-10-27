@@ -338,13 +338,12 @@ Au vu des fonctionnalités supplémentaires que doit proposer la seconde version
   ],
 )
 
-
 #pagebreak()
 == Description des cas d'utilisation
 
 Voici la description de chaque cas d'utilisation. A noter que la description des cas d'utilisation de la première version vient s'y ajouter. Nous avons ajouté les nouvelles description de cas d'utilisation en bleu :
 
-#set text(8.49pt)
+#set text(7.25pt)
 #table(
   columns: (78pt, 170pt, auto, auto),
   inset: 3pt,
@@ -474,23 +473,27 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
 
   [#text(blue)[Réexécuter les actions]], [
     #text(blue)[
-      faire alt m
+      1. L'utilisateur appuie sur Alt+M.
+      2. Le système exécute de manière séquentielle les actions enregistrées dans l'historique de la macro.
     ]
     ], [
     #text(blue)[
     ]
     ], [
     #text(blue)[
-      1. Problème d'exécution (fichier inaccessible) : message d'erreur.
+      1. Fichier de script inaccessible : message d'erreur.
+      2. Aucune action dans l'historique : aucune action n'est exécutée.
     ]
     ],
 
   [#text(blue)[Ecouter les actions]], [
     #text(blue)[
-      faire ctrl m
+      1. L'utilisateur appuie sur Ctrl+M pour démarrer l'écoute.
+      2. Toutes les actions de l'utilisateur sont enregistrées dans l'historique de la macro jusqu'à ce que l'écoute soit arrêtée.
     ]
     ], [
     #text(blue)[
+        1. L'écoute démarre automatiquement en vidant l'historique précédent.
     ]
     ], [
     #text(blue)[
@@ -499,7 +502,8 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
 
   [#text(blue)[Arrêter l'écoute des actions]], [
     #text(blue)[
-      faire ctrl m
+      1. L'utilisateur appuie de nouveau sur Ctrl+M.
+      2. L'écoute s'arrête et les actions de l'utilisateur ne sont plus enregistrées.
     ]
     ], [
     #text(blue)[
