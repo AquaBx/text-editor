@@ -427,21 +427,6 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
   ], [
   ],
 
-  [#text(blue)[Enregistrer les actions]], [
-    #text(blue)[
-      1. L'utilisateur active la fonction d'enregistrement (Ctrl+S).
-      2. Toutes les nouvelles actions de l'utilisateur sont ajoutées dans le fichier de script.
-    ]
-    ], [
-    #text(blue)[
-      1. Première fois que l'utilisateur appuie sur Ctrl+S : Création du fichier puis ajout des actions effectuées.
-    ]
-    ], [
-    #text(blue)[
-      1. Problème d'écriture (fichier inaccessible) : message d'erreur.
-    ]
-    ],
-
   [#text(blue)[Refaire les actions]], [
     #text(blue)[
       1. L'utilisateur active la fonction de réexécution (Ctrl+Y).

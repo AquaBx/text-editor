@@ -11,9 +11,6 @@ package "Mini-éditeur" {
   Utilisateur -- (Sélectionner du texte)
   Utilisateur -- (Coller la sélection)
 
-  (Enregistrer les actions) #LightBlue
-  Utilisateur -- (Enregistrer les actions)
-
   (Refaire les actions) #LightBlue
   Utilisateur -- (Refaire les actions)
 
@@ -21,12 +18,12 @@ package "Mini-éditeur" {
   Utilisateur -- (Défaire les actions)
 
   (Réexécuter les actions) #LightBlue
-  Utilisateur -- (Relire les actions)
+  Utilisateur -- (Réexécuter les actions)
 
   (Ecouter les actions) #LightBlue
-  Utilisateur -- (Ecoute les actions)
+  Utilisateur -- (Ecouter les actions)
 
   (Arrêter l'écoute des actions) #LightBlue
-  Utilisateur -- (Arrête l'écoute des actions)
+  Utilisateur -- (Arrêter l'écoute des actions)
 }
 @enduml
