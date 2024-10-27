@@ -505,8 +505,15 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
 #pagebreak()
 == Diagramme de classes
 
-- on s'est inspiré du memento : https://refactoring.guru/design-patterns/memento
-- on a mis en bleu ce qui change
+Dans cette seconde version du mini-éditeur de texte, nous avons repris la structure de la première version tout en l’enrichissant pour intégrer les nouvelles fonctionnalités demandées. 
+
+Voici les principales nouveautés :
+- Nous avons introduit les classes `UndoCommand` et `RedoCommand`, qui permettent de revenir en arrière ou d’avancer dans l’historique des actions. Elles utilisent des snapshots (classe `Snapshot`) pour sauvegarder les états du texte et de la sélection pour chaque action effectuée par l'utilisateur.
+- Pour gérer l'état d'enregistrement des actions de l’utilisateur, nous avons introduit un champ `macroRecord` dans la classe `TextEditor`, ainsi qu'un vecteur `macroHistory` qui stocke l’historique des macros est stocké pour pouvoir rejouer les macros ultérieurement.
+
+Pour ce faire, nous avons conservé la structure de base de la première version, c'est-à-dire le design pattern Command. Nous l'avons simplement étendu pour intégrer les commandes `Undo` et `Redo`. Cependant, nous y avons également incorporé le design pattern Memento pour stocker l’état du texte et des sélections pour permettre de pouvoir défaire/refaire comme demandé. Ce dernier est représenté par la classe `Snapshot`.
+
+Voici le diagramme de classes en conséquence.
 
 #figure(
   image("resources/V2/diagramme-classes/diagramme-classes.png"),
@@ -514,9 +521,6 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
     Diagramme de classe basé sur le Design Pattern Command pour la Version 2
   ],
 )
-
-- expliquer ajouts
-
 
 #pagebreak()
 == Diagramme de séquence
@@ -532,4 +536,4 @@ Conformément aux consignes et aux diagrammes que nous avons pu établir, nous a
 = Conclusion
 faire (max 10 lignes)
 il fallait bien penser dès la v1 à la v2 pour avoir un code maintenable
-
+parler de la spirale
