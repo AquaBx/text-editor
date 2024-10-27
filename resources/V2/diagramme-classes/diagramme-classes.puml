@@ -66,6 +66,30 @@ class UndoCommand #line.bold:336B8B {
     + ~UndoCommand()
 }
 
+class Client {
+   - TextEditor textEditor
+   - Renderer renderer
+   - bool quit
+   - void pollEvent()
+   + Client(int width, int height)
+   + void run()
+}
+
+class Renderer {
+    - int width
+    - int height
+    - TTF_Font* font
+    - SDL_Renderer* renderer
+    - SDL_Window* window
+    + void drawText(std::string text, size_t cursorStart, size_t cursorEnd, float font_scale) const
+    + void drawCursor(int x, int y, int w, int h) const
+    + void render() const
+    + Renderer(int width, int height)
+    + void clear() const
+    + void resize(int width, int height)
+    + ~Renderer()
+}
+
 class Snapshot #line.bold:336B8B {
     - textBuffer : std::string
     - position : std::size_t
@@ -88,50 +112,25 @@ class TextEditor {
     - <b><color:336B8B>bool macroRecord</color></b>
     - <b><color:336B8B>std::vector<Combinaison> macroHistory</color></b>
     + std::string getTextBuffer()
-    + void setTextBuffer(std::string t)
     + std::string getClipboard()
-    + void setClipboard(std::string c)
     + std::size_t getPosition() const
-    + void setPosition(std::size_t p)
     + std::size_t getSelectionStart() const
-    + void setSelectionStart(std::size_t start)
     + std::size_t getSelectionEnd() const
-    + void setSelectionEnd(std::size_t end)
     + float getFontScale() const
+    + void setTextBuffer(const std::string& t)
+    + void setClipboard(const std::string& c)
+    + void setPosition(std::size_t p)
+    + void setSelectionStart(std::size_t start)
+    + void setSelectionEnd(std::size_t end)
     + void setFontScale(float font_scale)
     + void draw(const Renderer& renderer) const
-    + void setCommand(Command* cmd)
     + void keyPressed(bool ctrl, bool alt, bool shift, char key)
     + void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key)
-    + void executeCommand()
     + <b><color:336B8B>void undoCommand()</color></b>
     + <b><color:336B8B>void redoCommand()</color></b>
+    + <b><color:336B8B>void executeCommand()</color></b>
     + ~TextEditor()
     + TextEditor()
-}
-
-class Client {
-   - TextEditor textEditor
-   - Renderer renderer
-   - bool quit
-   - void pollEvent()
-   + Client(int width, int height)
-   + void run()
-}
-
-class Renderer {
-    - int width
-    - int height
-    - TTF_Font* font
-    - SDL_Renderer* renderer{}
-    - SDL_Window* window{}
-    + void drawText(std::string text, size_t cursorStart, size_t cursorEnd, float font_scale) const
-    + void drawCursor(int x, int y, int w, int h) const
-    + void render() const
-    + Renderer(int width, int height)
-    + void clear() const
-    + void resize(int width, int height)
-    + ~Renderer()
 }
 
 class Texture {
@@ -143,6 +142,26 @@ class Texture {
     + ~Texture()
 }
 
+enum CombinaisonType #line.bold:336B8B { 
+    KEYCODE
+    CHARCODE 
+}
+
+struct Combinaison #line.bold:336B8B {
+    + bool ctrl
+    + bool alt
+    + alt shift
+    + CombinaisonType type
+
+    + SDL_Keycode keyCode
+    + char charCode
+}
+
+Combinaison *--> CombinaisonType
+TextEditor --> Combinaison
+TextEditor --> Renderer
+
+
 Command <|.. MoveCursorCommand
 Command <|.. EnterCharCommand
 Command <|.. DeleteTextCommand
@@ -153,12 +172,12 @@ Command <|.. ZoomEditorCommand
 Command <|.. RedoCommand
 Command <|.. UndoCommand
 
-Client *--> TextEditor
-TextEditor o---> Command
+Client *-> TextEditor
+TextEditor o-----> Command
+TextEditor <---- Command
 Renderer --> Texture
-Client *--> Renderer
+Client *-> Renderer
 
-TextEditor o-- Snapshot
-UndoCommand ..> Snapshot
-RedoCommand ..> Snapshot
+TextEditor *-> Snapshot
+
 @enduml

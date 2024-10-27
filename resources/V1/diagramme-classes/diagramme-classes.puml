@@ -69,8 +69,8 @@ class Renderer {
     - int width
     - int height
     - TTF_Font* font
-    - SDL_Renderer* renderer{}
-    - SDL_Window* window{}
+    - SDL_Renderer* renderer
+    - SDL_Window* window
     + void drawText(std::string text, size_t cursorStart, size_t cursorEnd, float font_scale) const
     + void drawCursor(int x, int y, int w, int h) const
     + void render() const
@@ -89,23 +89,20 @@ class TextEditor {
     - std::size_t selectionEnd
     - float fontScale
     + std::string getTextBuffer()
-    + void setTextBuffer(std::string t)
     + std::string getClipboard()
-    + void setClipboard(std::string c)
     + std::size_t getPosition() const
-    + void setPosition(std::size_t p)
     + std::size_t getSelectionStart() const
-    + void setSelectionStart(std::size_t start)
     + std::size_t getSelectionEnd() const
-    + void setSelectionEnd(std::size_t end)
     + float getFontScale() const
+    + void setTextBuffer(const std::string& t)
+    + void setClipboard(const std::string& c)
+    + void setPosition(std::size_t p)
+    + void setSelectionStart(std::size_t start)
+    + void setSelectionEnd(std::size_t end)
     + void setFontScale(float font_scale)
     + void draw(const Renderer& renderer) const
-    + void setCommand(Command* cmd)
     + void keyPressed(bool ctrl, bool alt, bool shift, char key)
     + void keyPressed(bool ctrl, bool alt, bool shift, SDL_KeyCode key)
-    + void executeCommand()
-    + void undoCommand()
     + ~TextEditor()
     + TextEditor()
 }
@@ -127,8 +124,11 @@ Command <|.. PasteCommand
 Command <|.. CutCommand
 Command <|.. ZoomEditorCommand
 
-Client *--> TextEditor
-TextEditor o---> Command
+Client *-> TextEditor
+TextEditor o----> Command
+TextEditor <-- Command
+TextEditor --> Renderer
+
 Renderer --> Texture
-Client *--> Renderer
+Client *-> Renderer
 @enduml
