@@ -258,13 +258,10 @@ La classe TextEditor sera le centre de l'application et maintiendra l'état du t
 - Un presse-papier (clipboard)
 - La position du curseur (position)
 - La sélection de texte (selectionStart, selectionEnd)
-- Une référence à la commande en cours (pointeur de Command) pour déléguer les actions à une commande via la méthode executeCommand().
 
-La classe Client sera point d'entrée pour l'application car elle gèrera la boucle principale de l'éditeur, surveillera les événements, et interagira avec l'éditeur de texte pour lui demander d'exécuter des actions spécifiques.
+La classe Client sera le point d'entrée pour l'application car elle gèrera la boucle principale de l'éditeur, surveillera les événements, et interagira avec l'éditeur de texte pour lui demander d'exécuter des actions spécifiques.
 
 Le Renderer s'occupera de l'affichage visuel (texte, curseur et redimensionnement de la fenêtre) grâce à la bibliothèque SDL. Il utilisera la classe Texture pour gérer les surfaces et textures SDL.
-
-Nous avons également choisi de définir les classes de commande comme amies de TextEditor pour qu'elles puissent accéder directement aux données privées de l'éditeur. Cela permettra également d'améliorer la sécurité et évitera d'exposer des méthodes publiques qui pourraient être mal utilisées ailleurs dans le code.
 
 #pagebreak()
 == Diagrammes de séquence
@@ -466,8 +463,7 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
     ]
     ], [
     #text(blue)[
-      1. Fichier de script inaccessible : message d'erreur.
-      2. Aucune action dans l'historique : aucune action n'est exécutée.
+      1. Aucune action dans l'historique : aucune action n'est exécutée.
     ]
     ],
 
@@ -500,6 +496,8 @@ Voici la description de chaque cas d'utilisation. A noter que la description des
 
 )
 
+_Remarque:_ A noter que si l'utilisateur défait (ctrl z) puis écrit du texte, alors la file des actions à refaire (ctrl y) est vidée.
+
 #set text(11pt)
 
 #pagebreak()
@@ -509,7 +507,7 @@ Dans cette seconde version du mini-éditeur de texte, nous avons repris la struc
 
 Voici les principales nouveautés :
 - Nous avons introduit les classes `UndoCommand` et `RedoCommand`, qui permettent de revenir en arrière ou d’avancer dans l’historique des actions. Elles utilisent des snapshots (classe `Snapshot`) pour sauvegarder les états du texte et de la sélection pour chaque action effectuée par l'utilisateur.
-- Pour gérer l'état d'enregistrement des actions de l’utilisateur, nous avons introduit un champ `macroRecord` dans la classe `TextEditor`, ainsi qu'un vecteur `macroHistory` qui stocke l’historique des macros est stocké pour pouvoir rejouer les macros ultérieurement.
+- Pour gérer l'état d'enregistrement des actions de l’utilisateur, nous avons introduit un champ `macroRecord` dans la classe `TextEditor`, ainsi qu'un vecteur `macroHistory` qui stocke l’historique des macros est stocké pour pouvoir rejouer les macros ultérieurement. De plus, elle possède une référence à la commande en cours (pointeur de Command) pour déléguer les actions à une commande via la méthode executeCommand().
 
 Pour ce faire, nous avons conservé la structure de base de la première version, c'est-à-dire le design pattern Command. Nous l'avons simplement étendu pour intégrer les commandes `Undo` et `Redo`. Cependant, nous y avons également incorporé le design pattern Memento pour stocker l’état du texte et des sélections pour permettre de pouvoir défaire/refaire comme demandé. Ce dernier est représenté par la classe `Snapshot`.
 

@@ -1,0 +1,21 @@
+@startuml reexecution
+hide footbox
+skinparam sequenceMessageAlign center
+
+actor Utilisateur
+participant "TextEditor" as editor
+participant "Macro" as macro
+participant "Command" as command
+
+== L'utilisateur joue la macro ==
+Utilisateur -> editor : appuie sur Alt + M
+alt Pas d'actions dans la macro
+    editor -> Utilisateur : Aucune action à exécuter
+else
+    loop Tant qu'il y a des actions
+        editor -> macro : exécute l'action de la macro
+        macro -> command : crée une nouvelle commande
+        command -> editor : exécute la commande
+    end
+end
+@enduml
