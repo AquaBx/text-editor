@@ -1,5 +1,5 @@
 # Éditeur de texte (OMD-TP2)
-![img.png](img.png)
+![img/readme.png](img.png)
 ## Description
 
 Ce projet est un éditeur de texte **ascii** basique, implémentant des commandes de base :

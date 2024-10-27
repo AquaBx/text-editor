@@ -1,0 +1,45 @@
+@startuml diagramme-sequence-couper
+hide footbox
+skinparam sequenceMessageAlign center
+
+actor Utilisateur
+participant "Editeur de texte"
+participant "CutCommand"
+
+activate Utilisateur
+activate "Editeur de texte"
+
+== Accès à la plateforme ==
+
+Utilisateur -> "Editeur de texte": Demande l'accès à la plateforme
+Utilisateur <-- "Editeur de texte": Accepte la demande
+
+== Sélection du texte ==
+
+Utilisateur -> "Editeur de texte": Sélectionne du texte
+Utilisateur <-- "Editeur de texte": Affiche en surbrillance le texte sélectionné
+
+== Initialisation de la commande Couper ==
+
+Utilisateur -> "Editeur de texte": Presse Ctrl + X pour couper la sélection
+"Editeur de texte" -> "CutCommand": Initialise la commande Couper avec la sélection (start, end)
+
+== Exécution de la commande Couper ==
+
+activate "CutCommand"
+alt La sélection est valide
+    "CutCommand" -> "Editeur de texte": Récupère le texte sélectionné
+    "CutCommand" -> "Editeur de texte": Stocke le texte dans le presse-papier
+    "CutCommand" -> "Editeur de texte": Supprime le texte sélectionné
+    "CutCommand" -> "Editeur de texte": Met à jour la position du curseur et la sélection
+    "CutCommand" <-- "Editeur de texte": Opérations effectuées
+else La sélection est vide
+    "Editeur de texte" <-- "CutCommand": Vide le presse-papier
+end
+deactivate "CutCommand"
+
+Utilisateur <-- "Editeur de texte": Mise à jour du texte affiché
+
+deactivate Utilisateur
+deactivate "Editeur de texte"
+@enduml
