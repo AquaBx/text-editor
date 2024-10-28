@@ -554,7 +554,7 @@ Voici un scénario que nous avons inventé pour modéliser l'action de réxecuti
 Voici un scénario que nous avons inventé pour modéliser les actions d'écoute/arrêt de l'écoute : 
 
 #figure(
-  image("resources/V2/diagramme-sequence/diagramme-sequence-reexecution/diagramme-sequence-reexecution.png"),
+  image("resources/V2/diagramme-sequence/diagramme-sequence-ecoute/diagramme-sequence-ecoute.png"),
   caption: [
     Diagramme de séquence pour écouter/arrêter l'écoute des actions
   ],
