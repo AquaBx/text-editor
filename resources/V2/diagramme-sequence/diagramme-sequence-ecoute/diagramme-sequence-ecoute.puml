@@ -1,0 +1,23 @@
+@startuml ecoute
+hide footbox
+skinparam sequenceMessageAlign center
+
+actor Utilisateur
+participant "TextEditor" as editor
+participant "Macro" as macro
+
+== L'utilisateur commence/arrête l'écoute des macros ==
+Utilisateur -> editor : appuie sur Ctrl + M
+alt Commencer l'enregistrement
+    editor -> macro : active l'enregistrement des macros
+    macro -> editor : initialise l'historique des macros
+else Arrêter l'enregistrement
+    editor -> macro : désactive l'enregistrement des macros
+end
+
+== Écoute des actions de l’utilisateur ==
+loop Tant que l'écoute est active
+    Utilisateur -> editor : effectue une action
+    editor -> macro : enregistre l'action
+end
+@enduml

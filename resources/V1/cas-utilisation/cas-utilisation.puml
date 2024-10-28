@@ -1,4 +1,4 @@
-@startuml diagoramme-cas-utlisation_mini-editeur
+@startuml cas-utilisation
 left to right direction
 Actor Utilisateur
 package "Mini-éditeur" {
