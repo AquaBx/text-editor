@@ -514,7 +514,7 @@ Pour ce faire, nous avons conservé la structure de base de la première version
 Voici le diagramme de classes en conséquence.
 
 #figure(
-  image("resources/V2/diagramme-classes/diagramme-classes.png"),
+  image("resources/V2/diagramme-classes/diagramme-classes.png", height:12cm),
   caption: [
     Diagramme de classe basé sur le Design Pattern Command pour la Version 2
   ],
@@ -523,7 +523,42 @@ Voici le diagramme de classes en conséquence.
 #pagebreak()
 == Diagramme de séquence
 
-on en fait ? si oui lesquels ??
+Pour bien comprendre commment vont se produire les interactions avec les classes lors de l'utilisation de l'application, nous avons produit trois diagrammes de séquences.
+
+=== Faire/défaire
+
+Voici un scénario que nous avons inventé pour modéliser les actions de faire/défaire : 
+
+#figure(
+  image("resources/V2/diagramme-sequence/diagramme-sequence-faire_defaire/diagramme-sequence-faire_defaire.png"),
+  caption: [
+    Diagramme de séquence pour faire et défaire les actions
+  ],
+)
+
+#pagebreak()
+=== Réxectuter les actions
+
+Voici un scénario que nous avons inventé pour modéliser l'action de réxecution des actions : 
+
+#figure(
+  image("resources/V2/diagramme-sequence/diagramme-sequence-reexecution/diagramme-sequence-reexecution.png"),
+  caption: [
+    Diagramme de séquence pour réxécuter les actions
+  ],
+)
+
+#pagebreak()
+=== Ecouter/Arrêter l'écoute
+
+Voici un scénario que nous avons inventé pour modéliser les actions d'écoute/arrêt de l'écoute : 
+
+#figure(
+  image("resources/V2/diagramme-sequence/diagramme-sequence-reexecution/diagramme-sequence-reexecution.png"),
+  caption: [
+    Diagramme de séquence pour écouter/arrêter l'écoute des actions
+  ],
+)
 
 #pagebreak()
 == Implémentation du code
@@ -532,6 +567,7 @@ Conformément aux consignes et aux diagrammes que nous avons pu établir, nous a
 
 #pagebreak()
 = Conclusion
-faire (max 10 lignes)
-il fallait bien penser dès la v1 à la v2 pour avoir un code maintenable
-parler de la spirale
+
+Pour conclure, ce projet d'éditeur de texte nous a permis de comprendre l'importance de concevoir un code dès la version initiale en prévision des évolutions futures, afin de garantir qu'il soit maintenable.
+
+Grâce à cette approche en spirale, nous avons avoir un code factorisé et optimisé dès le début, mais facilitant tout de même les ajustements. Finalement, elle permet l’amélioration continue tout en conservant une version finale plus stable et robuste.
